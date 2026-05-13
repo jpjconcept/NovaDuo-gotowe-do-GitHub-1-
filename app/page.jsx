@@ -41,32 +41,35 @@ export default function Page() {
               <a href="#dokumenty" className="inline-flex h-12 items-center justify-center rounded-full border border-black/20 bg-white/50 px-7 text-base">Pobierz prospekt</a>
             </div>
           </motion.div>
-          <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.7, delay: 0.15 }}>
-            <div className="grid gap-4">
-              <div className="overflow-hidden rounded-[2rem] shadow-2xl">
-  <img
-    src="/images/postprodukcja_0003_Scene-27_upscale01.webp"
-    alt="NovaDuo"
-    className="h-[420px] w-full object-cover"
-  />
-</div><div><div className="text-3xl font-semibold text-[#1f3d2b]">NovaDuo</div><div className="mt-4 text-black/60">Tu wstawimy główną wizualizację inwestycji</div></div></div>
-              <div className="grid grid-cols-3 gap-4"><img
-  src="/images/postprodukcja_0004_Scene-26_upscale01.webp"
-  className="h-40 w-full rounded-3xl object-cover"
-/>
+         <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.7, delay: 0.15 }}>
+  <div className="grid gap-4">
+    <div className="overflow-hidden rounded-[2rem] shadow-2xl">
+      <img
+        src="/images/postprodukcja_0003_Scene-27_upscale01.webp"
+        alt="NovaDuo"
+        className="h-[420px] w-full object-cover"
+      />
+    </div>
 
-<img
-  src="/images/postprodukcja_0005_Scene-25_upscale01.webp"
-  className="h-40 w-full rounded-3xl object-cover"
-/>
-
-<img
-  src="/images/postprodukcja_0006_Scene-24_upscale01.webp"
-  className="h-40 w-full rounded-3xl object-cover"
-/>
-</div>
-            </div>
-          </motion.div>
+    <div className="grid grid-cols-3 gap-4">
+      <img
+        src="/images/postprodukcja_0004_Scene-26_upscale01.webp"
+        alt="NovaDuo"
+        className="h-40 w-full rounded-3xl object-cover"
+      />
+      <img
+        src="/images/postprodukcja_0005_Scene-25_upscale01.webp"
+        alt="NovaDuo"
+        className="h-40 w-full rounded-3xl object-cover"
+      />
+      <img
+        src="/images/postprodukcja_0006_Scene-24_upscale01.webp"
+        alt="NovaDuo"
+        className="h-40 w-full rounded-3xl object-cover"
+      />
+    </div>
+  </div>
+</motion.div>
         </div>
       </section>
 
