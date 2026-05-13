@@ -138,5 +138,5 @@ export default function Page() {
     </div>
   </div>
 </section>
-<p>kontakt@jpjconcept.pl</p>
-<p>Agent nieruchomości: 509 123 619</p>
+<p>E-mail: kontakt@jpjconcept.pl</p>
+<p>Agent nieruchomości Anna Bieńka: 509 123 619</p>
