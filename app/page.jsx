@@ -93,7 +93,7 @@ export default function Page() {
         </div>
 
         <div>
-          <p className="text-gray-400 text-sm">Agent nieruchomości</p>
+          <p className="text-gray-400 text-sm">Agent nieruchomości Anna Bieńka</p>
           <p className="text-2xl">509 123 619</p>
         </div>
 
@@ -101,8 +101,7 @@ export default function Page() {
           <p className="text-gray-400 text-sm">E-mail</p>
           <p className="text-2xl">kontakt@jpjconcept.pl</p>
         </div>
-      </div>
-
+      </div>ń
       <form className="space-y-4">
         <input
           type="text"
@@ -137,6 +136,7 @@ export default function Page() {
 
     </div>
   </div>
-<p>E-mail: kontakt@jpjconcept.pl</p>
+<p className="flex items-center gap-2"><Phone className="h-4 w-4" /> JPJConcept: 600 397 399</p>
 <p>Agent nieruchomości Anna Bieńka: 509 123 619</p>
+<p>E-mail: kontakt@jpjconcept.pl</p>
 </section>
