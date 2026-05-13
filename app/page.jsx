@@ -50,7 +50,21 @@ export default function Page() {
     className="h-[420px] w-full object-cover"
   />
 </div><div><div className="text-3xl font-semibold text-[#1f3d2b]">NovaDuo</div><div className="mt-4 text-black/60">Tu wstawimy główną wizualizację inwestycji</div></div></div>
-              <div className="grid grid-cols-3 gap-4">{[1,2,3].map((item)=><div key={item} className="flex h-40 items-center justify-center rounded-3xl bg-white/70 text-sm text-black/50">Wizualizacja {item}</div>)}</div>
+              <div className="grid grid-cols-3 gap-4"><img
+  src="/images/postprodukcja_0004_Scene-26_upscale01.webp"
+  className="h-40 w-full rounded-3xl object-cover"
+/>
+
+<img
+  src="/images/postprodukcja_0005_Scene-25_upscale01.webp"
+  className="h-40 w-full rounded-3xl object-cover"
+/>
+
+<img
+  src="/images/postprodukcja_0006_Scene-24_upscale01.webp"
+  className="h-40 w-full rounded-3xl object-cover"
+/>
+</div>
             </div>
           </motion.div>
         </div>
