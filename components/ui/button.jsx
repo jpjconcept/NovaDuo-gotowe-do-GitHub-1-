@@ -1,0 +1,1 @@
+export function Button({ className="", children, ...props }) { return <button className={`inline-flex items-center justify-center font-medium transition ${className}`} {...props}>{children}</button>; }
