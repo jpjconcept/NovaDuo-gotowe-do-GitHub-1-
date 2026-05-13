@@ -43,7 +43,13 @@ export default function Page() {
           </motion.div>
           <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.7, delay: 0.15 }}>
             <div className="grid gap-4">
-              <div className="flex h-[420px] w-full items-center justify-center rounded-[2rem] bg-[#dfe5d1] p-10 text-center shadow-2xl"><div><div className="text-3xl font-semibold text-[#1f3d2b]">NovaDuo</div><div className="mt-4 text-black/60">Tu wstawimy główną wizualizację inwestycji</div></div></div>
+              <div className="overflow-hidden rounded-[2rem] shadow-2xl">
+  <img
+    src="/images/postprodukcja_0003_Scene-27_upscale01.webp"
+    alt="NovaDuo"
+    className="h-[420px] w-full object-cover"
+  />
+</div><div><div className="text-3xl font-semibold text-[#1f3d2b]">NovaDuo</div><div className="mt-4 text-black/60">Tu wstawimy główną wizualizację inwestycji</div></div></div>
               <div className="grid grid-cols-3 gap-4">{[1,2,3].map((item)=><div key={item} className="flex h-40 items-center justify-center rounded-3xl bg-white/70 text-sm text-black/50">Wizualizacja {item}</div>)}</div>
             </div>
           </motion.div>
