@@ -68,75 +68,9 @@ export default function Page() {
 
       <section id="dokumenty" className="mx-auto max-w-7xl px-6 pb-20"><Card className="rounded-[2rem] border-black/5 bg-white shadow-sm"><CardContent className="grid gap-8 p-8 md:grid-cols-[0.8fr_1.2fr] md:p-12"><div><FileText className="mb-5 h-9 w-9 text-[#1f3d2b]" /><h2 className="text-3xl font-semibold">Dokumenty i informacje wymagane prawem</h2></div><div className="grid gap-4 sm:grid-cols-2">{["Prospekt informacyjny","Rzuty lokali","Standard wykończenia","Ceny i historia zmian"].map((item)=><div key={item} className="rounded-2xl border border-black/10 p-5"><ShieldCheck className="mb-3 h-5 w-5 text-[#1f3d2b]" /><div className="font-medium">{item}</div><p className="mt-2 text-sm text-black/55">Miejsce na plik PDF lub tabelę do publikacji na stronie.</p></div>)}</div></CardContent></Card></section>
 
-      <section id="kontakt" className="bg-[#e4e6d7] py-20"><div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-2"><div><div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">Kontakt</div><h2 className="text-4xl font-semibold tracking-tight">Zapytaj o lokal w inwestycji Zaczarowany Pogroszew.</h2><div className="mt-8 space-y-3 text-black/65"><p>JPJ Concept Sp. z o.o.</p><p>ul. Nowowiejska 58A, Pogroszew</p><p className="flex items-center gap-2"><Phone className="h-4 w-4" /> +48 600 397 399</p></div></div><Card className="rounded-[2rem] border-white/70 bg-white/80 shadow-sm"><CardContent className="space-y-4 p-8"><input className="w-full rounded-2xl border border-black/10 bg-white px-5 py-4 outline-none" placeholder="Imię i nazwisko" /><input className="w-full rounded-2xl border border-black/10 bg-white px-5 py-4 outline-none" placeholder="Telefon / e-mail" /><textarea className="min-h-32 w-full rounded-2xl border border-black/10 bg-white px-5 py-4 outline-none" placeholder="Wiadomość" /><p className="text-xs leading-5 text-black/45">Wysyłając formularz akceptujesz kontakt w sprawie inwestycji. Tu należy dodać właściwe klauzule RODO.</p><Button className="h-12 w-full rounded-full bg-[#1f3d2b] px-5 text-white hover:bg-[#152b1e]">Wyślij zapytanie</Button></CardContent></Card></div></section>
+      <section id="kontakt" className="bg-[#e4e6d7] py-20"><div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-2"><div><div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">Kontakt</div><h2 className="text-4xl font-semibold tracking-tight">Zapytaj o lokal w inwestycji Zaczarowany Pogroszew.</h2><div className="mt-8 space-y-3 text-black/65"><p>JPJ Concept Sp. z o.o.</p><p>ul. Nowowiejska 58A, Pogroszew</p><p className="flex items-center gap-2"><Phone className="h-4 w-4" /> JPJConcept: 600 397 399</p>
+<p>Agent nieruchomości Anna Bieńka: 509 123 619</p>
+<p>E-mail: kontakt@jpjconcept.pl</p></div></div><Card className="rounded-[2rem] border-white/70 bg-white/80 shadow-sm"><CardContent className="space-y-4 p-8"><input className="w-full rounded-2xl border border-black/10 bg-white px-5 py-4 outline-none" placeholder="Imię i nazwisko" /><input className="w-full rounded-2xl border border-black/10 bg-white px-5 py-4 outline-none" placeholder="Telefon / e-mail" /><textarea className="min-h-32 w-full rounded-2xl border border-black/10 bg-white px-5 py-4 outline-none" placeholder="Wiadomość" /><p className="text-xs leading-5 text-black/45">Wysyłając formularz akceptujesz kontakt w sprawie inwestycji. Tu należy dodać właściwe klauzule RODO.</p><Button className="h-12 w-full rounded-full bg-[#1f3d2b] px-5 text-white hover:bg-[#152b1e]">Wyślij zapytanie</Button></CardContent></Card></div></section>
     </main>
   );
 }
-<section className="py-24 bg-black text-white">
-  <div className="max-w-6xl mx-auto px-6">
-    
-    <h2 className="text-4xl font-light mb-12">
-      Kontakt
-    </h2>
-
-    <div className="grid md:grid-cols-2 gap-12">
-
-      <div className="space-y-6">
-        <div>
-          <p className="text-gray-400 text-sm">Inwestor</p>
-          <p className="text-2xl">JPJConcept Sp. z o.o.</p>
-        </div>
-
-        <div>
-          <p className="text-gray-400 text-sm">Telefon</p>
-          <p className="text-2xl">600 397 399</p>
-        </div>
-
-        <div>
-          <p className="text-gray-400 text-sm">Agent nieruchomości Anna Bieńka</p>
-          <p className="text-2xl">509 123 619</p>
-        </div>
-
-        <div>
-          <p className="text-gray-400 text-sm">E-mail</p>
-          <p className="text-2xl">kontakt@jpjconcept.pl</p>
-        </div>
-      </div>ń
-      <form className="space-y-4">
-        <input
-          type="text"
-          placeholder="Imię i nazwisko"
-          className="w-full p-4 bg-zinc-900 border border-zinc-700"
-        />
-
-        <input
-          type="email"
-          placeholder="Adres e-mail"
-          className="w-full p-4 bg-zinc-900 border border-zinc-700"
-        />
-
-        <input
-          type="tel"
-          placeholder="Telefon"
-          className="w-full p-4 bg-zinc-900 border border-zinc-700"
-        />
-
-        <textarea
-          placeholder="Wiadomość"
-          rows={5}
-          className="w-full p-4 bg-zinc-900 border border-zinc-700"
-        />
-
-        <button
-          className="bg-white text-black px-8 py-4 hover:bg-gray-200 transition"
-        >
-          Wyślij wiadomość
-        </button>
-      </form>
-
-    </div>
-  </div>
-<p className="flex items-center gap-2"><Phone className="h-4 w-4" /> JPJConcept: 600 397 399</p>
-<p>Agent nieruchomości Anna Bieńka: 509 123 619</p>
-<p>E-mail: kontakt@jpjconcept.pl</p>
-</section>
