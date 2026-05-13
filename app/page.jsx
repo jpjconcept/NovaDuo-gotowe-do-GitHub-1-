@@ -72,3 +72,69 @@ export default function Page() {
     </main>
   );
 }
+<section className="py-24 bg-black text-white">
+  <div className="max-w-6xl mx-auto px-6">
+    
+    <h2 className="text-4xl font-light mb-12">
+      Kontakt
+    </h2>
+
+    <div className="grid md:grid-cols-2 gap-12">
+
+      <div className="space-y-6">
+        <div>
+          <p className="text-gray-400 text-sm">Inwestor</p>
+          <p className="text-2xl">JPJConcept Sp. z o.o.</p>
+        </div>
+
+        <div>
+          <p className="text-gray-400 text-sm">Telefon</p>
+          <p className="text-2xl">600 397 399</p>
+        </div>
+
+        <div>
+          <p className="text-gray-400 text-sm">Agent nieruchomości</p>
+          <p className="text-2xl">509 123 619</p>
+        </div>
+
+        <div>
+          <p className="text-gray-400 text-sm">E-mail</p>
+          <p className="text-2xl">kontakt@jpjconcept.pl</p>
+        </div>
+      </div>
+
+      <form className="space-y-4">
+        <input
+          type="text"
+          placeholder="Imię i nazwisko"
+          className="w-full p-4 bg-zinc-900 border border-zinc-700"
+        />
+
+        <input
+          type="email"
+          placeholder="Adres e-mail"
+          className="w-full p-4 bg-zinc-900 border border-zinc-700"
+        />
+
+        <input
+          type="tel"
+          placeholder="Telefon"
+          className="w-full p-4 bg-zinc-900 border border-zinc-700"
+        />
+
+        <textarea
+          placeholder="Wiadomość"
+          rows={5}
+          className="w-full p-4 bg-zinc-900 border border-zinc-700"
+        />
+
+        <button
+          className="bg-white text-black px-8 py-4 hover:bg-gray-200 transition"
+        >
+          Wyślij wiadomość
+        </button>
+      </form>
+
+    </div>
+  </div>
+</section>
