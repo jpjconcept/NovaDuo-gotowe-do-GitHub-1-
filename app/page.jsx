@@ -94,7 +94,7 @@ export default function Page() {
   />
 </div>
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">{homes.map((home)=><Card key={home.id} className="rounded-3xl border-black/5 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl"><CardContent className="p-7"><div className="mb-5 flex items-center justify-between"><div className="text-3xl font-semibold">Lokal {home.id}</div><span className={`rounded-full px-3 py-1 text-xs font-medium ${home.status === "Rezerwacja" ? "bg-orange-200 text-orange-900" : "bg-[#dfead8] text-[#1f3d2b]"}`}>{home.status}</span></div><div className="space-y-3 text-sm text-black/60"><div className="flex items-center gap-2"><Ruler className="h-4 w-4" /> {home.usableArea} użytkowej</div><div className="flex items-center gap-2"><Building2 className="h-4 w-4" /> {home.netArea} netto</div><div className="flex items-center gap-2"><Trees className="h-4 w-4" /> Działka: {home.gardenArea}</div><div className="flex items-center gap-2"><MapPin className="h-4 w-4" /> {home.plot}</div><div className="pt-2 text-lg font-semibold text-[#1f3d2b]">{home.price}</div></div><a
-  href={`/karty-lokali/lokal-${home.id.replace("/", "-")}.pdf`}
+  href={`/karty-lokali/lokal-${home.id.replace("/", "-")}.png`}
   target="_blank"
   rel="noopener noreferrer"
   className="mt-7 inline-flex w-full items-center justify-center rounded-full border border-black/15 px-4 py-3 font-medium transition hover:bg-[#1f3d2b] hover:text-white"
