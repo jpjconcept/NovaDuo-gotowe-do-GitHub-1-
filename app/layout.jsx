@@ -1,3 +1,5 @@
+import "./globals.css";
+
 export const metadata = {
   title:
     "NovaDuo – Domy i bliźniaki Pogroszew | Ożarów Mazowiecki | JPJ Concept",
