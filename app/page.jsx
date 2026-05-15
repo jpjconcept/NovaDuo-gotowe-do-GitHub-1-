@@ -84,7 +84,7 @@ useEffect(() => {
   <img
   src="/images/logo-novaduo.png"
   alt="NovaDuo"
-  className="h-40 w-auto -my-4"
+  className="h-40 w-auto"
 />
 
   
@@ -169,14 +169,18 @@ useEffect(() => {
 
   <div className="grid gap-4 md:grid-cols-3">
   {heroImages.map((image, index) => (
-    <img
+   <motion.img
       key={index}
       src={image}
+initial={{ opacity: 0, y: 20 }}
+whileInView={{ opacity: 1, y: 0 }}
+transition={{ duration: 0.5 }}
+viewport={{ once: true }}
       onClick={() => {
   setSelectedImage(image);
   setSelectedImageIndex(index);
 }}
-      className="h-80 w-full rounded-[2rem] object-cover shadow-xl cursor-pointer hover:scale-[1.02] transition"
+      className="h-80 w-full rounded-[2rem] object-cover shadow-xl cursor-pointer transition duration-500 hover:scale-[1.03] hover:shadow-2xl"
     />
   ))}
 </div>
@@ -387,10 +391,14 @@ useEffect(() => {
       ‹
     </button>
 
-    <img
-      src={selectedImage}
-      className="max-h-[90vh] max-w-[90vw] rounded-3xl object-contain"
-    />
+    <motion.img
+  key={selectedImage}
+  src={selectedImage}
+  initial={{ opacity: 0, scale: 0.96 }}
+  animate={{ opacity: 1, scale: 1 }}
+  transition={{ duration: 0.3 }}
+  className="max-h-[90vh] max-w-[90vw] rounded-3xl object-contain"
+/>
 
     <button
       onClick={() => {
