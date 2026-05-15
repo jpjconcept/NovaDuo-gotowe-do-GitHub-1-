@@ -52,7 +52,7 @@ useEffect(() => {
       <nav className="sticky top-0 z-50 border-b border-black/10 bg-[#f6f3ec]/85 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <div><div className="text-xl font-semibold tracking-tight">NovaDuo</div><div className="text-xs uppercase tracking-[0.28em] text-black/50">JPJ Concept Sp. z o.o.</div></div>
-          <div className="hidden gap-8 text-sm text-black/70 md:flex"><a href="#inwestycja">Inwestycja</a><a href="#lokalizacja">Lokalizacja</a><a href="#lokale">Lokale</a><a href="#dokumenty">Dokumenty</a><a href="#kontakt">Kontakt</a></div>
+          <div className="hidden gap-8 text-sm text-black/70 md:flex"><a href="#inwestycja">Inwestycja</a><a href="#lokalizacja">Lokalizacja</a><a href="#lokale">Lokale</a><a href="#dokumenty">Dokumenty</a><a href="#galeria">Galeria</a><a href="#kontakt">Kontakt</a></div>
           <a href="#kontakt" className="rounded-full bg-[#1f3d2b] px-6 py-3 text-white hover:bg-[#152b1e]">Zapytaj o lokal</a>
         </div>
       </nav>
@@ -111,7 +111,7 @@ useEffect(() => {
         <div className="mb-14 text-center"><div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">Lokalizacja</div><h2 className="text-4xl font-semibold tracking-tight md:text-5xl">Zamieszkaj w spokojnej części Pogroszewa</h2><p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-black/60">Inwestycja NovaDuo położona jest przy ul. Nowowiejskiej 58 w Pogroszewie.</p></div>
         <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]"><Card className="rounded-[2rem] border-black/5 bg-[#1f3d2b] text-white shadow-xl"><CardContent className="space-y-6 p-10"><div><div className="text-sm uppercase tracking-[0.25em] text-white/50">Najważniejsze atuty</div><h3 className="mt-3 text-3xl font-semibold">Świetna lokalizacja pod Warszawą</h3></div><div className="space-y-5 text-white/80"><div><div className="font-semibold text-white">Dogodny dojazd do Warszawy</div><div className="text-sm">szybki dostęp do głównych tras komunikacyjnych</div></div><div><div className="font-semibold text-white">Blisko Ożarowa Mazowieckiego</div><div className="text-sm">szkoły, sklepy i infrastruktura miejska</div></div><div><div className="font-semibold text-white">Kameralne otoczenie</div><div className="text-sm">zabudowa jednorodzinna i tereny zielone</div></div></div></CardContent></Card><div className="overflow-hidden rounded-[2rem] bg-white shadow-2xl"><iframe src="https://www.google.com/maps?q=Nowowiejska+58,+Pogroszew&output=embed" width="100%" height="520" style={{ border: 0 }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" /></div></div>
       </section>
-<section className="mx-auto max-w-7xl px-6 py-20">
+<section id="galeria" className="mx-auto max-w-7xl px-6 py-20">
   <div className="mb-14 text-center">
     <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
       Inspiracje wnętrz
@@ -133,55 +133,60 @@ useEffect(() => {
   className="h-80 w-full rounded-[2rem] object-cover shadow-xl cursor-pointer hover:scale-[1.02] transition"
 />
 
-    <img
-      src="/images/02.jpg"
-      className="h-80 w-full rounded-[2rem] object-cover shadow-xl"
-    />
+   <img
+  src="/images/02.jpg"
+  onClick={() => setSelectedImage("/images/02.jpg")}
+  className="h-80 w-full rounded-[2rem] object-cover shadow-xl cursor-pointer hover:scale-[1.02] transition"
+/>
 
     <img
-      src="/images/03.jpg"
-      className="h-80 w-full rounded-[2rem] object-cover shadow-xl"
-    />
+  src="/images/03.jpg"
+  onClick={() => setSelectedImage("/images/03.jpg")}
+  className="h-80 w-full rounded-[2rem] object-cover shadow-xl cursor-pointer hover:scale-[1.02] transition"
+/>
 
     <img
-      src="/images/04.jpg"
-      className="h-80 w-full rounded-[2rem] object-cover shadow-xl"
-    />
+  src="/images/04.jpg"
+  onClick={() => setSelectedImage("/images/04.jpg")}
+  className="h-80 w-full rounded-[2rem] object-cover shadow-xl cursor-pointer hover:scale-[1.02] transition"
+/>
 
     <img
-      src="/images/05.jpg"
-      className="h-80 w-full rounded-[2rem] object-cover shadow-xl"
-    />
+  src="/images/05.jpg"
+  onClick={() => setSelectedImage("/images/05.jpg")}
+  className="h-80 w-full rounded-[2rem] object-cover shadow-xl cursor-pointer hover:scale-[1.02] transition"
+/>
 
-    <img
-      src="/images/06.jpg"
-      className="h-80 w-full rounded-[2rem] object-cover shadow-xl"
-    />
+   <img
+  src="/images/06.jpg"
+  onClick={() => setSelectedImage("/images/06.jpg")}
+  className="h-80 w-full rounded-[2rem] object-cover shadow-xl cursor-pointer hover:scale-[1.02] transition"
+/>
 <img
   src="/images/07.jpg"
-  className="h-80 w-full rounded-[2rem] object-cover shadow-xl"
+  onClick={() => setSelectedImage("/images/07.jpg")}
+  className="h-80 w-full rounded-[2rem] object-cover shadow-xl cursor-pointer hover:scale-[1.02] transition"
 />
-
 <img
   src="/images/08.jpg"
-  className="h-80 w-full rounded-[2rem] object-cover shadow-xl"
+  onClick={() => setSelectedImage("/images/08.jpg")}
+  className="h-80 w-full rounded-[2rem] object-cover shadow-xl cursor-pointer hover:scale-[1.02] transition"
 />
-
 <img
   src="/images/09.jpg"
-  className="h-80 w-full rounded-[2rem] object-cover shadow-xl"
+  onClick={() => setSelectedImage("/images/09.jpg")}
+  className="h-80 w-full rounded-[2rem] object-cover shadow-xl cursor-pointer hover:scale-[1.02] transition"
 />
-
 <img
   src="/images/10.jpg"
-  className="h-80 w-full rounded-[2rem] object-cover shadow-xl"
+  onClick={() => setSelectedImage("/images/10.jpg")}
+  className="h-80 w-full rounded-[2rem] object-cover shadow-xl cursor-pointer hover:scale-[1.02] transition"
 />
-
 <img
   src="/images/11.jpg"
-  className="h-80 w-full rounded-[2rem] object-cover shadow-xl"
-/>
-  </div>
+  onClick={() => setSelectedImage("/images/11.jpg")}
+  className="h-80 w-full rounded-[2rem] object-cover shadow-xl cursor-pointer hover:scale-[1.02] transition"
+/>  </div>
 </section>
       <section id="lokale" className="mx-auto max-w-7xl px-6 py-20">
         <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end"><div><div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">Oferta</div><h2 className="text-4xl font-semibold tracking-tight">Dostępne lokale</h2></div><p className="max-w-xl text-black/60">Aktualne ceny, statusy sprzedaży, powierzchnie lokali oraz ogrody do wyłącznego użytkowania.</p></div>
