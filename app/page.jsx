@@ -78,7 +78,23 @@ useEffect(() => {
     <main className="min-h-screen bg-[#f6f3ec] text-[#1f241f]">
       <nav className="sticky top-0 z-50 border-b border-black/10 bg-[#f6f3ec]/85 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <div><div className="text-xl font-semibold tracking-tight">NovaDuo</div><div className="text-xs uppercase tracking-[0.28em] text-black/50">JPJ Concept Sp. z o.o.</div></div>
+          <div className="flex items-center gap-4">
+  <img
+    src="/images/logo-novaduo.png"
+    alt="NovaDuo"
+    className="h-14 w-auto"
+  />
+
+  <div>
+    <div className="text-xl font-semibold tracking-tight">
+      NovaDuo
+    </div>
+
+    <div className="text-xs uppercase tracking-[0.28em] text-black/50">
+      Domy Pogroszew
+    </div>
+  </div>
+</div>
           <div className="hidden gap-8 text-sm text-black/70 md:flex"><a href="#inwestycja">Inwestycja</a><a href="#lokalizacja">Lokalizacja</a><a href="#lokale">Lokale</a><a href="#dokumenty">Dokumenty</a>
 <a href="#standard">Standard</a>
 <a href="#galeria">Galeria</a>
