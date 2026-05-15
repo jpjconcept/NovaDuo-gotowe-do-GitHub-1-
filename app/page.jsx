@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Home, MapPin, FileText, ShieldCheck, Phone, ArrowRight, Trees, Car, Ruler, Building2 } from "lucide-react";
+import { Home, MapPin, FileText, ShieldCheck, Phone, ArrowRight, Trees, Car, Ruler, Building2, X } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -27,6 +27,7 @@ const heroImages = [
   "/images/11.jpg"
 ];
 const [heroIndex, setHeroIndex] = useState(0);
+const [selectedImage, setSelectedImage] = useState(null);
 
 useEffect(() => {
   const interval = setInterval(() => {
@@ -127,9 +128,10 @@ useEffect(() => {
 
   <div className="grid gap-4 md:grid-cols-3">
     <img
-      src="/images/01.jpg"
-      className="h-80 w-full rounded-[2rem] object-cover shadow-xl"
-    />
+  src="/images/01.jpg"
+  onClick={() => setSelectedImage("/images/01.jpg")}
+  className="h-80 w-full rounded-[2rem] object-cover shadow-xl cursor-pointer hover:scale-[1.02] transition"
+/>
 
     <img
       src="/images/02.jpg"
@@ -282,6 +284,22 @@ useEffect(() => {
     </CardContent>
   </form>
 </Card></div></section>
+{selectedImage && (
+  <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-6">
+    
+    <button
+      onClick={() => setSelectedImage(null)}
+      className="absolute right-6 top-6 text-white"
+    >
+      <X className="h-10 w-10" />
+    </button>
+
+    <img
+      src={selectedImage}
+      className="max-h-[90vh] max-w-[90vw] rounded-3xl object-contain"
+    />
+  </div>
+)}
     </main>
   );
 }
