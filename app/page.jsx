@@ -128,6 +128,30 @@ export default function Page() {
       src="/images/06.jpg"
       className="h-80 w-full rounded-[2rem] object-cover shadow-xl"
     />
+<img
+  src="/images/07.jpg"
+  className="h-80 w-full rounded-[2rem] object-cover shadow-xl"
+/>
+
+<img
+  src="/images/08.jpg"
+  className="h-80 w-full rounded-[2rem] object-cover shadow-xl"
+/>
+
+<img
+  src="/images/09.jpg"
+  className="h-80 w-full rounded-[2rem] object-cover shadow-xl"
+/>
+
+<img
+  src="/images/10.jpg"
+  className="h-80 w-full rounded-[2rem] object-cover shadow-xl"
+/>
+
+<img
+  src="/images/11.jpg"
+  className="h-80 w-full rounded-[2rem] object-cover shadow-xl"
+/>
   </div>
 </section>
       <section id="lokale" className="mx-auto max-w-7xl px-6 py-20">
