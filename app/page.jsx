@@ -79,7 +79,9 @@ useEffect(() => {
       <nav className="sticky top-0 z-50 border-b border-black/10 bg-[#f6f3ec]/85 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <div className="flex items-center gap-4">
-  <img
+  
+
+   <img
     src="/images/logo-novaduo.png"
     alt="NovaDuo"
     className="h-14 w-auto"
@@ -95,6 +97,7 @@ useEffect(() => {
     </div>
   </div>
 </div>
+
           <div className="hidden gap-8 text-sm text-black/70 md:flex"><a href="#inwestycja">Inwestycja</a><a href="#lokalizacja">Lokalizacja</a><a href="#lokale">Lokale</a><a href="#dokumenty">Dokumenty</a>
 <a href="#standard">Standard</a>
 <a href="#galeria">Galeria</a>
