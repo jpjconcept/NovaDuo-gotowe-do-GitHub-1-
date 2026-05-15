@@ -83,7 +83,53 @@ export default function Page() {
         <div className="mb-14 text-center"><div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">Lokalizacja</div><h2 className="text-4xl font-semibold tracking-tight md:text-5xl">Zamieszkaj w spokojnej części Pogroszewa</h2><p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-black/60">Inwestycja NovaDuo położona jest przy ul. Nowowiejskiej 58 w Pogroszewie.</p></div>
         <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]"><Card className="rounded-[2rem] border-black/5 bg-[#1f3d2b] text-white shadow-xl"><CardContent className="space-y-6 p-10"><div><div className="text-sm uppercase tracking-[0.25em] text-white/50">Najważniejsze atuty</div><h3 className="mt-3 text-3xl font-semibold">Świetna lokalizacja pod Warszawą</h3></div><div className="space-y-5 text-white/80"><div><div className="font-semibold text-white">Dogodny dojazd do Warszawy</div><div className="text-sm">szybki dostęp do głównych tras komunikacyjnych</div></div><div><div className="font-semibold text-white">Blisko Ożarowa Mazowieckiego</div><div className="text-sm">szkoły, sklepy i infrastruktura miejska</div></div><div><div className="font-semibold text-white">Kameralne otoczenie</div><div className="text-sm">zabudowa jednorodzinna i tereny zielone</div></div></div></CardContent></Card><div className="overflow-hidden rounded-[2rem] bg-white shadow-2xl"><iframe src="https://www.google.com/maps?q=Nowowiejska+58,+Pogroszew&output=embed" width="100%" height="520" style={{ border: 0 }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" /></div></div>
       </section>
+<section className="mx-auto max-w-7xl px-6 py-20">
+  <div className="mb-14 text-center">
+    <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
+      Inspiracje wnętrz
+    </div>
 
+    <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">
+      Przykładowe wizualizacje wykończenia
+    </h2>
+
+    <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-black/60">
+      Nowoczesne i eleganckie wnętrza przygotowane jako inspiracja dla przyszłych mieszkańców NovaDuo.
+    </p>
+  </div>
+
+  <div className="grid gap-4 md:grid-cols-3">
+    <img
+      src="/images/01.jpg"
+      className="h-80 w-full rounded-[2rem] object-cover shadow-xl"
+    />
+
+    <img
+      src="/images/02.jpg"
+      className="h-80 w-full rounded-[2rem] object-cover shadow-xl"
+    />
+
+    <img
+      src="/images/03.jpg"
+      className="h-80 w-full rounded-[2rem] object-cover shadow-xl"
+    />
+
+    <img
+      src="/images/04.jpg"
+      className="h-80 w-full rounded-[2rem] object-cover shadow-xl"
+    />
+
+    <img
+      src="/images/05.jpg"
+      className="h-80 w-full rounded-[2rem] object-cover shadow-xl"
+    />
+
+    <img
+      src="/images/06.jpg"
+      className="h-80 w-full rounded-[2rem] object-cover shadow-xl"
+    />
+  </div>
+</section>
       <section id="lokale" className="mx-auto max-w-7xl px-6 py-20">
         <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end"><div><div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">Oferta</div><h2 className="text-4xl font-semibold tracking-tight">Dostępne lokale</h2></div><p className="max-w-xl text-black/60">Aktualne ceny, statusy sprzedaży, powierzchnie lokali oraz ogrody do wyłącznego użytkowania.</p></div>
 <div className="mb-12 overflow-hidden rounded-[2rem] bg-white shadow-2xl">
