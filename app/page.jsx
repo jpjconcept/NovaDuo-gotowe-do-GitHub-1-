@@ -81,21 +81,13 @@ useEffect(() => {
           <div className="flex items-center gap-4">
   
 
-   <img
-    src="/images/logo-novaduo.png"
-    alt="NovaDuo"
-    className="h-14 w-auto"
-  />
+  <img
+  src="/images/logo-novaduo.png"
+  alt="NovaDuo"
+  className="h-24 w-auto -my-4"
+/>
 
-  <div>
-    <div className="text-xl font-semibold tracking-tight">
-      NovaDuo
-    </div>
-
-    <div className="text-xs uppercase tracking-[0.28em] text-black/50">
-      Domy Pogroszew
-    </div>
-  </div>
+  
 </div>
 
           <div className="hidden gap-8 text-sm text-black/70 md:flex"><a href="#inwestycja">Inwestycja</a><a href="#lokalizacja">Lokalizacja</a><a href="#lokale">Lokale</a><a href="#dokumenty">Dokumenty</a>
