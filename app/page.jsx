@@ -78,7 +78,10 @@ useEffect(() => {
       <nav className="sticky top-0 z-50 border-b border-black/10 bg-[#f6f3ec]/85 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <div><div className="text-xl font-semibold tracking-tight">NovaDuo</div><div className="text-xs uppercase tracking-[0.28em] text-black/50">JPJ Concept Sp. z o.o.</div></div>
-          <div className="hidden gap-8 text-sm text-black/70 md:flex"><a href="#inwestycja">Inwestycja</a><a href="#lokalizacja">Lokalizacja</a><a href="#lokale">Lokale</a><a href="#dokumenty">Dokumenty</a><a href="#galeria">Galeria</a><a href="#kontakt">Kontakt</a></div>
+          <div className="hidden gap-8 text-sm text-black/70 md:flex"><a href="#inwestycja">Inwestycja</a><a href="#lokalizacja">Lokalizacja</a><a href="#lokale">Lokale</a><a href="#dokumenty">Dokumenty</a>
+<a href="#standard">Standard</a>
+<a href="#galeria">Galeria</a>
+<a href="#kontakt">Kontakt</a></div>
           <a href="#kontakt" className="rounded-full bg-[#1f3d2b] px-6 py-3 text-white hover:bg-[#152b1e]">Zapytaj o lokal</a>
         </div>
       </nav>
@@ -162,6 +165,83 @@ useEffect(() => {
     />
   ))}
 </div>
+</section>
+<section id="standard" className="mx-auto max-w-7xl px-6 py-20">
+
+  <div className="mb-14 text-center">
+
+    <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
+      Standard wykończenia
+    </div>
+
+    <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">
+      Standard deweloperski NovaDuo
+    </h2>
+
+    <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-black/60">
+      Lokale realizowane są w standardzie deweloperskim.
+    </p>
+
+  </div>
+
+  <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+
+    <Card className="rounded-3xl border-black/5 bg-white shadow-sm">
+      <CardContent className="p-7">
+
+        <div className="text-2xl font-semibold">
+          Wykończenie wewnętrzne
+        </div>
+
+        <ul className="mt-4 space-y-2 text-black/60">
+          <li>• Posadzki — szlichta cementowa</li>
+          <li>• Garaż — szlichta cementowa</li>
+          <li>• Ściany — tynk gipsowy</li>
+          <li>• Sufity — tynk gipsowy</li>
+          <li>• Schody betonowe</li>
+        </ul>
+
+      </CardContent>
+    </Card>
+
+    <Card className="rounded-3xl border-black/5 bg-white shadow-sm">
+      <CardContent className="p-7">
+
+        <div className="text-2xl font-semibold">
+          Wykończenie zewnętrzne
+        </div>
+
+        <ul className="mt-4 space-y-2 text-black/60">
+          <li>• Okna 3 szybowe</li>
+          <li>• Stolarka antracyt</li>
+          <li>• Tynk silikonowy</li>
+          <li>• Drzwi Wiśniowski</li>
+          <li>• Brama garażowa z napędem</li>
+        </ul>
+
+      </CardContent>
+    </Card>
+
+    <Card className="rounded-3xl border-black/5 bg-white shadow-sm">
+      <CardContent className="p-7">
+
+        <div className="text-2xl font-semibold">
+          Instalacje
+        </div>
+
+        <ul className="mt-4 space-y-2 text-black/60">
+          <li>• Pompa ciepła</li>
+          <li>• Rekuperacja</li>
+          <li>• Instalacja elektryczna</li>
+          <li>• Instalacja LAN</li>
+          <li>• Instalacja wodna i kanalizacyjna</li>
+        </ul>
+
+      </CardContent>
+    </Card>
+
+  </div>
+
 </section>
       <section id="lokale" className="mx-auto max-w-7xl px-6 py-20">
         <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end"><div><div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">Oferta</div><h2 className="text-4xl font-semibold tracking-tight">Dostępne lokale</h2></div><p className="max-w-xl text-black/60">Aktualne ceny, statusy sprzedaży, powierzchnie lokali oraz ogrody do wyłącznego użytkowania.</p></div>
