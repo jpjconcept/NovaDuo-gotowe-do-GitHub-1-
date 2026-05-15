@@ -12,9 +12,20 @@ const heroImages = [
   "/images/postprodukcja_0003_Scene-27_upscale01.webp",
   "/images/postprodukcja_0004_Scene-26_upscale01.webp",
   "/images/postprodukcja_0005_Scene-25_upscale01.webp",
-  "/images/postprodukcja_0006_Scene-24_upscale01.webp"
-];
+  "/images/postprodukcja_0006_Scene-24_upscale01.webp",
 
+  "/images/01.jpg",
+  "/images/02.jpg",
+  "/images/03.jpg",
+  "/images/04.jpg",
+  "/images/05.jpg",
+  "/images/06.jpg",
+  "/images/07.jpg",
+  "/images/08.jpg",
+  "/images/09.jpg",
+  "/images/10.jpg",
+  "/images/11.jpg"
+];
 const [heroIndex, setHeroIndex] = useState(0);
 
 useEffect(() => {
