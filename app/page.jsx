@@ -184,57 +184,62 @@ useEffect(() => {
 
   </div>
 
-  <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+  <div className="grid gap-6 lg:grid-cols-3">
 
     <Card className="rounded-3xl border-black/5 bg-white shadow-sm">
-      <CardContent className="p-7">
+      <CardContent className="p-8">
 
-        <div className="text-2xl font-semibold">
+        <h3 className="text-2xl font-semibold">
           Wykończenie wewnętrzne
-        </div>
+        </h3>
 
-        <ul className="mt-4 space-y-2 text-black/60">
-          <li>• Posadzki — szlichta cementowa</li>
-          <li>• Garaż — szlichta cementowa</li>
-          <li>• Ściany — tynk gipsowy</li>
-          <li>• Sufity — tynk gipsowy</li>
-          <li>• Schody betonowe</li>
+        <ul className="mt-6 space-y-3 text-sm leading-7 text-black/65">
+          <li>• Posadzki Parter – szlichta cementowa</li>
+          <li>• Garaż – szlichta cementowa</li>
+          <li>• Piętro – szlichta cementowa</li>
+          <li>• Wykończenie ścian – tynk gipsowy</li>
+          <li>• Wykończenie sufitów – tynk gipsowy</li>
+          <li>• Schody wew. betonowe</li>
         </ul>
 
       </CardContent>
     </Card>
 
     <Card className="rounded-3xl border-black/5 bg-white shadow-sm">
-      <CardContent className="p-7">
+      <CardContent className="p-8">
 
-        <div className="text-2xl font-semibold">
+        <h3 className="text-2xl font-semibold">
           Wykończenie zewnętrzne
-        </div>
+        </h3>
 
-        <ul className="mt-4 space-y-2 text-black/60">
-          <li>• Okna 3 szybowe</li>
-          <li>• Stolarka antracyt</li>
-          <li>• Tynk silikonowy</li>
-          <li>• Drzwi Wiśniowski</li>
-          <li>• Brama garażowa z napędem</li>
+        <ul className="mt-6 space-y-3 text-sm leading-7 text-black/65">
+          <li>• Stolarka zewnętrzna – PCV lub aluminiowe – kolor grafit (antracyt) 3 szybowe</li>
+          <li>• Parapety zew blaszane</li>
+          <li>• Okładziny ścian – tynk cienkowarstwowy silikonowy kolor biały, szary i grafitowy</li>
+          <li>• Cokół – tynk mozaikowy – kolor jasny szary</li>
+          <li>• Pokrycie dachu – papa</li>
+          <li>• Drzwi wejściowe klasa C kolor antracyt</li>
+          <li>• Brama garażowa panelowa z napędem kolor antracyt</li>
         </ul>
 
       </CardContent>
     </Card>
 
     <Card className="rounded-3xl border-black/5 bg-white shadow-sm">
-      <CardContent className="p-7">
+      <CardContent className="p-8">
 
-        <div className="text-2xl font-semibold">
+        <h3 className="text-2xl font-semibold">
           Instalacje
-        </div>
+        </h3>
 
-        <ul className="mt-4 space-y-2 text-black/60">
-          <li>• Pompa ciepła</li>
-          <li>• Rekuperacja</li>
-          <li>• Instalacja elektryczna</li>
-          <li>• Instalacja LAN</li>
-          <li>• Instalacja wodna i kanalizacyjna</li>
+        <ul className="mt-6 space-y-3 text-sm leading-7 text-black/65">
+          <li>• Instalacje wodociągową, przyłączoną do sieci wodociągowej</li>
+          <li>• Instalację wody ciepłej i zimnej</li>
+          <li>• Instalację kanalizacji sanitarnej, odprowadzenie ścieków do szczelnego zbiornika na nieczystości ciekłe</li>
+          <li>• Ogrzewanie budynku i przygotowanie CWU – przewidziano wyposażenie budynku w pompę ciepła powietrznej</li>
+          <li>• Instalację elektryczna – oświetlenia ogólnego, zewnętrznego, gniazd wtykowych, rozdzielnic</li>
+          <li>• Instalację niskoprądową – sieć LAN</li>
+          <li>• Instalacje wentylacji (rekuperacja) – stosownie do przeznaczenia poszczególnych pomieszczeń</li>
         </ul>
 
       </CardContent>
@@ -242,8 +247,8 @@ useEffect(() => {
 
   </div>
 
-</section>
-      <section id="lokale" className="mx-auto max-w-7xl px-6 py-20">
+</section>    
+  <section id="lokale" className="mx-auto max-w-7xl px-6 py-20">
         <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end"><div><div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">Oferta</div><h2 className="text-4xl font-semibold tracking-tight">Dostępne lokale</h2></div><p className="max-w-xl text-black/60">Aktualne ceny, statusy sprzedaży, powierzchnie lokali oraz ogrody do wyłącznego użytkowania.</p></div>
 <div className="mb-12 overflow-hidden rounded-[2rem] bg-white shadow-2xl">
   <img
