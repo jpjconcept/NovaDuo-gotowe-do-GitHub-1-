@@ -277,7 +277,7 @@ useEffect(() => {
       <div>
         <FileText className="mb-5 h-9 w-9 text-[#1f3d2b]" />
         <h2 className="text-3xl font-semibold">
-          Dokumenty i informacje wymagane prawem
+          Dokumenty i informacje 
         </h2>
       </div>
 
