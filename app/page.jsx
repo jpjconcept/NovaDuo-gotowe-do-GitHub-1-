@@ -395,6 +395,22 @@ useEffect(() => {
     </button>
   </div>
 )}
+<footer className="border-t border-black/10 bg-[#f6f3ec] py-10">
+  <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 text-sm text-black/55 md:flex-row md:items-center md:justify-between">
+
+    <div>
+      © 2026 NovaDuo | JPJ Concept Sp. z o.o.
+    </div>
+
+    <div className="flex flex-col gap-1 md:items-end">
+      <div>NIP: 1182300374</div>
+      <div>KRS: 0001156346</div>
+      <div>REGON: 540927078</div>
+      <div>ul. Nowowiejska 58A, Pogroszew, 05-850 Ożarów Mazowiecki</div>
+    </div>
+
+  </div>
+</footer>
 
     </main>
   );
