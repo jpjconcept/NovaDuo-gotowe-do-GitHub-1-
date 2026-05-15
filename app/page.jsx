@@ -9,10 +9,37 @@ import { Button } from "@/components/ui/button";
 
 export default function Page() {
 const heroImages = [
+
+  "/images/postprodukcja_0000_Scene-1_upscale01.png",
+  "/images/postprodukcja_0001_Scene-7_upscale01.png",
+  "/images/postprodukcja_0002_Scene-2_upscale01.png",
+  "/images/postprodukcja_0003_Scene-3_upscale01.png",
+  "/images/postprodukcja_0004_Scene-4_upscale01.png",
+  "/images/postprodukcja_0005_Scene-5_upscale01.png",
+  "/images/postprodukcja_0006_Scene-6_upscale01.png",
+  "/images/postprodukcja_0007_Scene-8_upscale01.png",
+  "/images/postprodukcja_0008_Scene-9_upscale01.png",
+  "/images/postprodukcja_0009_Scene-10_upscale01.png",
+  "/images/postprodukcja_0010_Scene-11_upscale01.png",
+
   "/images/postprodukcja_0003_Scene-27_upscale01.webp",
   "/images/postprodukcja_0004_Scene-26_upscale01.webp",
   "/images/postprodukcja_0005_Scene-25_upscale01.webp",
   "/images/postprodukcja_0006_Scene-24_upscale01.webp",
+  "/images/postprodukcja_0007_Scene-23_upscale01.webp",
+  "/images/postprodukcja_0008_Scene-22_upscale01.webp",
+  "/images/postprodukcja_0009_Scene-21_upscale01.webp",
+  "/images/postprodukcja_0010_Scene-20_upscale01.webp",
+  "/images/postprodukcja_0011_Scene-19_upscale01.webp",
+  "/images/postprodukcja_0012_Scene-18_upscale01.webp",
+  "/images/postprodukcja_0013_Scene-17_upscale01.webp",
+"/images/postprodukcja_0014_Scene-16_upscale01.webp",
+"/images/postprodukcja_0015_Scene-15_upscale01.webp",
+"/images/postprodukcja_0016_Scene-14_upscale01.webp",
+"/images/postprodukcja_0017_Scene-13_upscale01.webp",
+"/images/postprodukcja_0018_Scene-12_upscale01.webp",
+"/images/postprodukcja_0019_Scene-11_upscale01.webp",
+"/images/postprodukcja_0020_Scene-10_upscale01.webp",
 
   "/images/01.jpg",
   "/images/02.jpg",
@@ -25,8 +52,7 @@ const heroImages = [
   "/images/09.jpg",
   "/images/10.jpg",
   "/images/11.jpg"
-];
-const [heroIndex, setHeroIndex] = useState(0);
+];const [heroIndex, setHeroIndex] = useState(0);
 const [selectedImage, setSelectedImage] = useState(null);
 
 useEffect(() => {
@@ -127,66 +153,15 @@ useEffect(() => {
   </div>
 
   <div className="grid gap-4 md:grid-cols-3">
+  {heroImages.map((image, index) => (
     <img
-  src="/images/01.jpg"
-  onClick={() => setSelectedImage("/images/01.jpg")}
-  className="h-80 w-full rounded-[2rem] object-cover shadow-xl cursor-pointer hover:scale-[1.02] transition"
-/>
-
-   <img
-  src="/images/02.jpg"
-  onClick={() => setSelectedImage("/images/02.jpg")}
-  className="h-80 w-full rounded-[2rem] object-cover shadow-xl cursor-pointer hover:scale-[1.02] transition"
-/>
-
-    <img
-  src="/images/03.jpg"
-  onClick={() => setSelectedImage("/images/03.jpg")}
-  className="h-80 w-full rounded-[2rem] object-cover shadow-xl cursor-pointer hover:scale-[1.02] transition"
-/>
-
-    <img
-  src="/images/04.jpg"
-  onClick={() => setSelectedImage("/images/04.jpg")}
-  className="h-80 w-full rounded-[2rem] object-cover shadow-xl cursor-pointer hover:scale-[1.02] transition"
-/>
-
-    <img
-  src="/images/05.jpg"
-  onClick={() => setSelectedImage("/images/05.jpg")}
-  className="h-80 w-full rounded-[2rem] object-cover shadow-xl cursor-pointer hover:scale-[1.02] transition"
-/>
-
-   <img
-  src="/images/06.jpg"
-  onClick={() => setSelectedImage("/images/06.jpg")}
-  className="h-80 w-full rounded-[2rem] object-cover shadow-xl cursor-pointer hover:scale-[1.02] transition"
-/>
-<img
-  src="/images/07.jpg"
-  onClick={() => setSelectedImage("/images/07.jpg")}
-  className="h-80 w-full rounded-[2rem] object-cover shadow-xl cursor-pointer hover:scale-[1.02] transition"
-/>
-<img
-  src="/images/08.jpg"
-  onClick={() => setSelectedImage("/images/08.jpg")}
-  className="h-80 w-full rounded-[2rem] object-cover shadow-xl cursor-pointer hover:scale-[1.02] transition"
-/>
-<img
-  src="/images/09.jpg"
-  onClick={() => setSelectedImage("/images/09.jpg")}
-  className="h-80 w-full rounded-[2rem] object-cover shadow-xl cursor-pointer hover:scale-[1.02] transition"
-/>
-<img
-  src="/images/10.jpg"
-  onClick={() => setSelectedImage("/images/10.jpg")}
-  className="h-80 w-full rounded-[2rem] object-cover shadow-xl cursor-pointer hover:scale-[1.02] transition"
-/>
-<img
-  src="/images/11.jpg"
-  onClick={() => setSelectedImage("/images/11.jpg")}
-  className="h-80 w-full rounded-[2rem] object-cover shadow-xl cursor-pointer hover:scale-[1.02] transition"
-/>  </div>
+      key={index}
+      src={image}
+      onClick={() => setSelectedImage(image)}
+      className="h-80 w-full rounded-[2rem] object-cover shadow-xl cursor-pointer hover:scale-[1.02] transition"
+    />
+  ))}
+</div>
 </section>
       <section id="lokale" className="mx-auto max-w-7xl px-6 py-20">
         <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end"><div><div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">Oferta</div><h2 className="text-4xl font-semibold tracking-tight">Dostępne lokale</h2></div><p className="max-w-xl text-black/60">Aktualne ceny, statusy sprzedaży, powierzchnie lokali oraz ogrody do wyłącznego użytkowania.</p></div>
