@@ -203,27 +203,58 @@ export default function Page() {
       <section id="kontakt" className="bg-[#e4e6d7] py-20"><div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-2"><div><div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">Kontakt</div><h2 className="text-4xl font-semibold tracking-tight">Zapytaj o lokal w inwestycji NovaDuo.</h2><div className="mt-8 space-y-3 text-black/65"><p>JPJ Concept Sp. z o.o.</p><p>ul. Nowowiejska 58A, Pogroszew</p><p className="flex items-center gap-2"><Phone className="h-4 w-4" /> JPJConcept: 600 397 399</p>
 <p>E-mail inwestora: kontakt@jpjconcept.pl</p>
 <p>Agent nieruchomości Anna Bieńka: 509 123 619</p>
-<p>E-mail biura sprzedaży: info@bienka-nieruchomosci.pl</p></div></div><Card className="rounded-[2rem] border-white/70 bg-white/80 shadow-sm"><CardContent className="space-y-4 p-8"><input className="w-full rounded-2xl border border-black/10 bg-white px-5 py-4 outline-none" placeholder="Imię i nazwisko" /><input className="w-full rounded-2xl border border-black/10 bg-white px-5 py-4 outline-none" placeholder="Telefon / e-mail" /><textarea className="min-h-32 w-full rounded-2xl border border-black/10 bg-white px-5 py-4 outline-none" placeholder="Wiadomość" /><div className="space-y-4 text-xs leading-5 text-black/55">
+<p>E-mail biura sprzedaży: info@bienka-nieruchomosci.pl</p></div></div><Card className="rounded-[2rem] border-white/70 bg-white/80 shadow-sm">
+  <form action="https://formspree.io/f/mdabrvqe" method="POST">
+    <CardContent className="space-y-4 p-8">
+      <input
+        name="name"
+        className="w-full rounded-2xl border border-black/10 bg-white px-5 py-4 outline-none"
+        placeholder="Imię i nazwisko"
+      />
 
-  <label className="flex items-start gap-3">
-    <input
-      type="checkbox"
-      className="mt-1 h-4 w-4"
-    />
+      <input
+        name="contact"
+        className="w-full rounded-2xl border border-black/10 bg-white px-5 py-4 outline-none"
+        placeholder="Telefon / e-mail"
+      />
 
-    <span>
-      Wyrażam zgodę na kontakt telefoniczny oraz mailowy w celu
-      przedstawienia informacji dotyczących inwestycji NovaDuo.
-    </span>
-  </label>
+      <textarea
+        name="message"
+        className="min-h-32 w-full rounded-2xl border border-black/10 bg-white px-5 py-4 outline-none"
+        placeholder="Wiadomość"
+      />
 
-  <p>
-    Administratorem danych osobowych jest JPJ Concept Sp. z o.o.
-    Dane będą przetwarzane wyłącznie w celu kontaktu dotyczącym
-    inwestycji NovaDuo. Podanie danych jest dobrowolne.
-  </p>
+      <div className="space-y-4 text-xs leading-5 text-black/55">
+        <label className="flex items-start gap-3">
+          <input
+            type="checkbox"
+            name="rodo"
+            required
+            className="mt-1 h-4 w-4"
+          />
 
-</div><Button className="h-12 w-full rounded-full bg-[#1f3d2b] px-5 text-white hover:bg-[#152b1e]">Wyślij zapytanie</Button></CardContent></Card></div></section>
+          <span>
+            Wyrażam zgodę na kontakt telefoniczny oraz mailowy w celu
+            przedstawienia informacji dotyczących inwestycji NovaDuo.
+          </span>
+        </label>
+
+        <p>
+          Administratorem danych osobowych jest JPJ Concept Sp. z o.o.
+          Dane będą przetwarzane wyłącznie w celu kontaktu dotyczącym
+          inwestycji NovaDuo. Podanie danych jest dobrowolne.
+        </p>
+      </div>
+
+      <Button
+        type="submit"
+        className="h-12 w-full rounded-full bg-[#1f3d2b] px-5 text-white hover:bg-[#152b1e]"
+      >
+        Wyślij zapytanie
+      </Button>
+    </CardContent>
+  </form>
+</Card></div></section>
     </main>
   );
 }
