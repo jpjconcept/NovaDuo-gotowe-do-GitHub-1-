@@ -1,13 +1,29 @@
 
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Home, MapPin, FileText, ShieldCheck, Phone, ArrowRight, Trees, Car, Ruler, Building2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 export default function Page() {
+const heroImages = [
+  "/images/postprodukcja_0003_Scene-27_upscale01.webp",
+  "/images/postprodukcja_0004_Scene-26_upscale01.webp",
+  "/images/postprodukcja_0005_Scene-25_upscale01.webp",
+  "/images/postprodukcja_0006_Scene-24_upscale01.webp"
+];
+
+const [heroIndex, setHeroIndex] = useState(0);
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    setHeroIndex((current) => (current + 1) % heroImages.length);
+  }, 5000);
+
+  return () => clearInterval(interval);
+}, []);
   const homes = [
     { id: "58/1", price: "1 279 000 PLN", netArea: "154,57 m²", usableArea: "118,48 m²", gardenArea: "424 m²", plot: "dz. 24/11", status: "Dostępny" },
     { id: "58/3", price: "1 179 000 PLN", netArea: "154,57 m²", usableArea: "118,48 m²", gardenArea: "272 m²", plot: "dz. 24/11", status: "Rezerwacja" },
@@ -45,7 +61,7 @@ export default function Page() {
   <div className="grid gap-4">
     <div className="overflow-hidden rounded-[2rem] shadow-2xl">
       <img
-        src="/images/postprodukcja_0003_Scene-27_upscale01.webp"
+        src={heroImages[heroIndex]}
         alt="NovaDuo"
         className="h-[420px] w-full object-cover"
       />
