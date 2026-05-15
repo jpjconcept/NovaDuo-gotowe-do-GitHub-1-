@@ -84,7 +84,7 @@ useEffect(() => {
   <img
   src="/images/logo-novaduo.png"
   alt="NovaDuo"
-  className="h-32 w-auto -my-4"
+  className="h-40 w-auto -my-4"
 />
 
   
