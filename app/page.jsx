@@ -103,7 +103,32 @@ export default function Page() {
 </a></CardContent></Card>)}</div>
       </section>
 
-      <section id="dokumenty" className="mx-auto max-w-7xl px-6 pb-20"><Card className="rounded-[2rem] border-black/5 bg-white shadow-sm"><CardContent className="grid gap-8 p-8 md:grid-cols-[0.8fr_1.2fr] md:p-12"><div><FileText className="mb-5 h-9 w-9 text-[#1f3d2b]" /><h2 className="text-3xl font-semibold">Dokumenty i informacje wymagane prawem</h2></div><div className="grid gap-4 sm:grid-cols-2">{["Prospekt informacyjny","Rzuty lokali","Standard wykończenia","Ceny i historia zmian"].map((item)=><div key={item} className="rounded-2xl border border-black/10 p-5"><ShieldCheck className="mb-3 h-5 w-5 text-[#1f3d2b]" /><div className="font-medium">{item}</div><p className="mt-2 text-sm text-black/55">Miejsce na plik PDF lub tabelę do publikacji na stronie.</p></div>)}</div></CardContent></Card></section>
+      <section id="dokumenty" className="mx-auto max-w-7xl px-6 pb-20">
+  <Card className="rounded-[2rem] border-black/5 bg-white shadow-sm">
+    <CardContent className="grid gap-8 p-8 md:grid-cols-[0.8fr_1.2fr] md:p-12">
+      <div>
+        <FileText className="mb-5 h-9 w-9 text-[#1f3d2b]" />
+        <h2 className="text-3xl font-semibold">
+          Dokumenty i informacje wymagane prawem
+        </h2>
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        {homes.map((home) => (
+          <a
+            key={home.id}
+            href={`/karty-lokali/lokal-${home.id.replace("/", "-")}.png`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-2xl border border-black/10 p-5 transition hover:bg-black hover:text-white"
+          >
+            Lokal {home.id} — karta lokalu
+          </a>
+        ))}
+      </div>
+    </CardContent>
+  </Card>
+</section>
 
       <section id="kontakt" className="bg-[#e4e6d7] py-20"><div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-2"><div><div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">Kontakt</div><h2 className="text-4xl font-semibold tracking-tight">Zapytaj o lokal w inwestycji NovaDuo.</h2><div className="mt-8 space-y-3 text-black/65"><p>JPJ Concept Sp. z o.o.</p><p>ul. Nowowiejska 58A, Pogroszew</p><p className="flex items-center gap-2"><Phone className="h-4 w-4" /> JPJConcept: 600 397 399</p>
 <p>E-mail inwestora: kontakt@jpjconcept.pl</p>
