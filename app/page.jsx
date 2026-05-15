@@ -54,6 +54,7 @@ const heroImages = [
   "/images/11.jpg"
 ];const [heroIndex, setHeroIndex] = useState(0);
 const [selectedImage, setSelectedImage] = useState(null);
+const [selectedImageIndex, setSelectedImageIndex] = useState(null);
 
 useEffect(() => {
   const interval = setInterval(() => {
@@ -160,7 +161,10 @@ useEffect(() => {
     <img
       key={index}
       src={image}
-      onClick={() => setSelectedImage(image)}
+      onClick={() => {
+  setSelectedImage(image);
+  setSelectedImageIndex(index);
+}}
       className="h-80 w-full rounded-[2rem] object-cover shadow-xl cursor-pointer hover:scale-[1.02] transition"
     />
   ))}
@@ -359,12 +363,39 @@ useEffect(() => {
       <X className="h-10 w-10" />
     </button>
 
+    <button
+      onClick={() => {
+        const newIndex =
+          selectedImageIndex === 0 ? heroImages.length - 1 : selectedImageIndex - 1;
+
+        setSelectedImageIndex(newIndex);
+        setSelectedImage(heroImages[newIndex]);
+      }}
+      className="absolute left-6 top-1/2 -translate-y-1/2 rounded-full bg-white/20 px-5 py-3 text-4xl text-white"
+    >
+      ‹
+    </button>
+
     <img
       src={selectedImage}
       className="max-h-[90vh] max-w-[90vw] rounded-3xl object-contain"
     />
+
+    <button
+      onClick={() => {
+        const newIndex =
+          selectedImageIndex === heroImages.length - 1 ? 0 : selectedImageIndex + 1;
+
+        setSelectedImageIndex(newIndex);
+        setSelectedImage(heroImages[newIndex]);
+      }}
+      className="absolute right-6 top-1/2 -translate-y-1/2 rounded-full bg-white/20 px-5 py-3 text-4xl text-white"
+    >
+      ›
+    </button>
   </div>
 )}
+
     </main>
   );
 }
