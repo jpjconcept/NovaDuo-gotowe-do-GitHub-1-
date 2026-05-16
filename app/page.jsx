@@ -185,7 +185,14 @@ viewport={{ once: true }}
   ))}
 </div>
 </section>
-<section id="standard" className="mx-auto max-w-7xl px-6 py-20">
+<motion.section 
+id="standard" 
+className="mx-auto max-w-7xl px-6 py-20">
+ initial={{ opacity: 0, y: 40 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.7 }}
+  viewport={{ once: true }}
+>
 
   <div className="mb-14 text-center">
 
@@ -266,7 +273,7 @@ viewport={{ once: true }}
 
   </div>
 
-</section>    
+</motion.section>    
   <section id="lokale" className="mx-auto max-w-7xl px-6 py-20">
         <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end"><div><div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">Oferta</div><h2 className="text-4xl font-semibold tracking-tight">Dostępne lokale</h2></div><p className="max-w-xl text-black/60">Aktualne ceny, statusy sprzedaży, powierzchnie lokali oraz ogrody do wyłącznego użytkowania.</p></div>
 <div className="mb-12 overflow-hidden rounded-[2rem] bg-white shadow-2xl">
