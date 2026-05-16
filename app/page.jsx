@@ -180,7 +180,7 @@ viewport={{ once: true }}
   setSelectedImage(image);
   setSelectedImageIndex(index);
 }}
-      className="h-48 w-full rounded-2xl object-cover shadow-md cursor-pointer transition duration-500 hover:scale-[1.03] hover:shadow-xl"
+      className="h-32 w-full rounded-2xl object-cover shadow-md cursor-pointer transition duration-500 hover:scale-[1.03] hover:shadow-xl"
     />
   ))}
 </div>
