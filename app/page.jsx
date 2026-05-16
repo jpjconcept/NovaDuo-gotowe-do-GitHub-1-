@@ -84,7 +84,7 @@ useEffect(() => {
   <img
   src="/images/logo-novaduo.png"
   alt="NovaDuo"
-  className="h-40 w-auto"
+  className="h-32 w-auto"
 />
 
   
@@ -180,7 +180,7 @@ viewport={{ once: true }}
   setSelectedImage(image);
   setSelectedImageIndex(index);
 }}
-      className="h-80 w-full rounded-[2rem] object-cover shadow-xl cursor-pointer transition duration-500 hover:scale-[1.03] hover:shadow-2xl"
+      className="h-48 w-full rounded-2xl object-cover shadow-md cursor-pointer transition duration-500 hover:scale-[1.03] hover:shadow-xl"
     />
   ))}
 </div>
