@@ -322,7 +322,7 @@ className="mx-auto max-w-7xl px-6 py-20">
 
       <section id="kontakt" className="bg-[#e4e6d7] py-20"><div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-2"><div><div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">Kontakt</div><h2 className="text-4xl font-semibold tracking-tight">Zapytaj o lokal w inwestycji NovaDuo.</h2><div className="mt-8 space-y-3 text-black/65"><p>JPJ Concept Sp. z o.o.</p><p>ul. Nowowiejska 58A, Pogroszew</p><p className="flex items-center gap-2"><Phone className="h-4 w-4" /> JPJConcept: 600 397 399</p>
 <p>E-mail inwestora: kontakt@jpjconcept.pl</p>
-<p>Agent nieruchomości Anna Bieńka: 509 123 619</p>
+<p>Agent nieruchomości Anna Bieńka: 886 200 190</p>
 <p>E-mail biura sprzedaży: info@bienka-nieruchomosci.pl</p></div></div><Card className="rounded-[2rem] border-white/70 bg-white/80 shadow-sm">
   <form action="https://formspree.io/f/mdabrvqe" method="POST">
     <CardContent className="space-y-4 p-8">
