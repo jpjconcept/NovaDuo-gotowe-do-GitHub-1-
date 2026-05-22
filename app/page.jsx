@@ -185,15 +185,14 @@ viewport={{ once: true }}
   ))}
 </div>
 </section>
-<motion.section 
-id="standard" 
-className="mx-auto max-w-7xl px-6 py-20">
- initial={{ opacity: 0, y: 40 }}
+<motion.section
+  id="standard"
+  className="mx-auto max-w-7xl px-6 py-20"
+  initial={{ opacity: 0, y: 40 }}
   whileInView={{ opacity: 1, y: 0 }}
   transition={{ duration: 0.7 }}
   viewport={{ once: true }}
 >
-
   <div className="mb-14 text-center">
 
     <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
