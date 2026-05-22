@@ -1,3 +1,8 @@
+export const metadata = {
+  title: "NovaDuo – Domy Dwulokalowe w Pogroszewie",
+  description:
+    "Nowoczesne domy dwulokalowe pod Warszawą. Kameralne osiedle, garaż, ogród i wysoki standard wykończenia, Dom Stare Babice, Dom Babice Nowe, Dom Warszawa Zachód, Segment Warszawa Zachód, Segmenty Warszawa Zachód, Segmenty Ożarów Mazowiecki, Nowoczesne segmenty pod Warszawą.",
+};
 import "./globals.css";
 
 export const metadata = {
