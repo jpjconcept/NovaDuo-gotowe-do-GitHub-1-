@@ -64,14 +64,14 @@ useEffect(() => {
   return () => clearInterval(interval);
 }, []);
   const homes = [
-    { id: "58/1", price: "1 279 000 PLN", netArea: "154,57 m²", usableArea: "118,48 m²", gardenArea: "424 m²", plot: "dz. 24/11", status: "Dostępny" },
-    { id: "58/3", price: "1 179 000 PLN", netArea: "154,57 m²", usableArea: "118,48 m²", gardenArea: "272 m²", plot: "dz. 24/11", status: "Rezerwacja" },
-    { id: "58/5", price: "1 179 000 PLN", netArea: "154,57 m²", usableArea: "118,48 m²", gardenArea: "272 m²", plot: "dz. 24/12", status: "Dostępny" },
-    { id: "58/7", price: "1 279 000 PLN", netArea: "154,57 m²", usableArea: "118,48 m²", gardenArea: "405 m²", plot: "dz. 24/12", status: "Rezerwacja" },
-    { id: "58/2", price: "1 279 000 PLN", netArea: "154,57 m²", usableArea: "118,48 m²", gardenArea: "408 m²", plot: "dz. 24/8", status: "Dostępny" },
-    { id: "58/4", price: "1 179 000 PLN", netArea: "154,57 m²", usableArea: "118,48 m²", gardenArea: "255 m²", plot: "dz. 24/8", status: "Dostępny" },
-    { id: "58/6", price: "1 179 000 PLN", netArea: "154,57 m²", usableArea: "118,48 m²", gardenArea: "255 m²", plot: "dz. 24/9", status: "Dostępny" },
-    { id: "58/8", price: "1 279 000 PLN", netArea: "154,57 m²", usableArea: "118,48 m²", gardenArea: "345 m²", plot: "dz. 24/9", status: "Dostępny" }
+    { id: "58/1", price: "1 279 000 PLN", netArea: "154,57 m²", usableArea: "115,84 m²", gardenArea: "424 m²", plot: "dz. 24/11", status: "Dostępny" },
+    { id: "58/3", price: "1 179 000 PLN", netArea: "154,57 m²", usableArea: "115,84 m²", gardenArea: "272 m²", plot: "dz. 24/11", status: "Rezerwacja" },
+    { id: "58/5", price: "1 179 000 PLN", netArea: "154,57 m²", usableArea: "115,84 m²", gardenArea: "272 m²", plot: "dz. 24/12", status: "Dostępny" },
+    { id: "58/7", price: "1 279 000 PLN", netArea: "154,02 m²", usableArea: "123,62 m²", gardenArea: "405 m²", plot: "dz. 24/12", status: "Rezerwacja" },
+    { id: "58/2", price: "1 279 000 PLN", netArea: "154,57 m²", usableArea: "115,84 m²", gardenArea: "408 m²", plot: "dz. 24/8", status: "Dostępny" },
+    { id: "58/4", price: "1 179 000 PLN", netArea: "154,57 m²", usableArea: "115,48 m²", gardenArea: "255 m²", plot: "dz. 24/8", status: "Dostępny" },
+    { id: "58/6", price: "1 179 000 PLN", netArea: "154,57 m²", usableArea: "115,84 m²", gardenArea: "255 m²", plot: "dz. 24/9", status: "Dostępny" },
+    { id: "58/8", price: "1 279 000 PLN", netArea: "154,57 m²", usableArea: "115,84 m²", gardenArea: "345 m²", plot: "dz. 24/9", status: "Dostępny" }
   ];
 
   return (
