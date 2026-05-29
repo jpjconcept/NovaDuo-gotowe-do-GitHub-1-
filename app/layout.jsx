@@ -25,15 +25,19 @@ export const metadata = {
   ],
 
   openGraph: {
-    title:
-      "NovaDuo – Domy dwulokalowe w Pogroszewie",
-    description:
-      "Kameralna inwestycja nowoczesnych domów pod Warszawą.",
-    url: "https://jpjconcept.pl",
-    siteName: "NovaDuo",
-    locale: "pl_PL",
-    type: "website",
-  },
+
+    title: "NovaDuo – Domy dwulokalowe w Pogroszewie",
+ description:
+"Nowoczesne domy i bliźniaki w Pogroszewie pod Warszawą. Kameralna inwestycja NovaDuo przy ul. Nowowiejskiej 58. 8 lokali z garażem, działkami od 255 do 424 m² oraz pompą ciepła.",
+  url: "https://novaduo.pl",
+  siteName: "NovaDuo",
+  locale: "pl_PL",
+  type: "website",
+},
+
+alternates: {
+  canonical: "https://novaduo.pl",
+},
 
   icons: {
   icon: "/icon.png",
