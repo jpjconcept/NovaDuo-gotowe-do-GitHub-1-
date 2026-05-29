@@ -151,7 +151,39 @@ useEffect(() => {
       <section id="lokalizacja" className="mx-auto max-w-7xl px-6 py-20">
         <div className="mb-14 text-center"><div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">Lokalizacja</div><h2 className="text-4xl font-semibold tracking-tight md:text-5xl">Zamieszkaj w spokojnej części Pogroszewa</h2><p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-black/60">Inwestycja NovaDuo położona jest przy ul. Nowowiejskiej 58 w Pogroszewie.</p></div>
         <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]"><Card className="rounded-[2rem] border-black/5 bg-[#1f3d2b] text-white shadow-xl"><CardContent className="space-y-6 p-10"><div><div className="text-sm uppercase tracking-[0.25em] text-white/50">Najważniejsze atuty</div><h3 className="mt-3 text-3xl font-semibold">Świetna lokalizacja pod Warszawą</h3></div><div className="space-y-5 text-white/80"><div><div className="font-semibold text-white">Dogodny dojazd do Warszawy</div><div className="text-sm">szybki dostęp do głównych tras komunikacyjnych</div></div><div><div className="font-semibold text-white">Blisko Ożarowa Mazowieckiego</div><div className="text-sm">szkoły, sklepy i infrastruktura miejska</div></div><div><div className="font-semibold text-white">Kameralne otoczenie</div><div className="text-sm">zabudowa jednorodzinna i tereny zielone</div></div></div></CardContent></Card><div className="overflow-hidden rounded-[2rem] bg-white shadow-2xl"><iframe src="https://www.google.com/maps?q=Nowowiejska+58,+Pogroszew&output=embed" width="100%" height="520" style={{ border: 0 }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" /></div></div>
-      </section>
+
+<div className="mx-auto mt-16 max-w-5xl">
+  <h3 className="mb-6 text-3xl font-semibold text-[#1f241f]">
+    Lokalizacja inwestycji NovaDuo
+  </h3>
+
+  <div className="space-y-5 text-lg leading-8 text-black/70">
+
+    <p>
+      Inwestycja NovaDuo zlokalizowana jest przy ul. Nowowiejskiej 58
+      w Pogroszewie, w gminie Ożarów Mazowiecki. To idealne miejsce dla osób
+      poszukujących nowoczesnego domu pod Warszawą, łączącego komfort
+      codziennego życia z dostępem do terenów zielonych.
+    </p>
+
+    <p>
+      Pogroszew położony jest w dogodnej lokalizacji, zapewniającej szybki
+      dojazd do Warszawy, Ożarowa Mazowieckiego oraz głównych tras
+      komunikacyjnych regionu. W pobliżu znajdują się szkoły, przedszkola,
+      sklepy oraz pełna infrastruktura niezbędna do wygodnego funkcjonowania.
+    </p>
+
+    <p>
+      Kameralne otoczenie, sąsiedztwo zabudowy jednorodzinnej oraz bliskość
+      terenów rekreacyjnych sprawiają, że NovaDuo jest atrakcyjną propozycją
+      dla rodzin szukających spokojnego miejsca do życia w pobliżu stolicy.
+    </p>
+
+  </div>
+</div>
+
+</section>
+
 <section id="galeria" className="mx-auto max-w-7xl px-6 py-20">
   <div className="mb-14 text-center">
     <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
