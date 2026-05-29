@@ -103,7 +103,9 @@ useEffect(() => {
         <div className="relative mx-auto grid max-w-7xl gap-12 px-6 py-24 lg:grid-cols-[1.05fr_0.95fr] lg:py-32">
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <div className="mb-6 inline-flex rounded-full border border-[#1f3d2b]/20 bg-white/60 px-4 py-2 text-sm text-[#1f3d2b] shadow-sm">Kameralna inwestycja przy ul. Nowowiejskiej 58 w Pogroszewie</div>
-            <h1 className="max-w-3xl text-5xl font-semibold leading-[1.02] tracking-tight md:text-7xl">Domy dwulokalowe w spokojnej, zielonej okolicy.</h1>
+            <h1 className="max-w-3xl text-5xl font-semibold leading-[1.02] tracking-tight md:text-7xl">
+  Nowoczesne domy i bliźniaki w Pogroszewie pod Warszawą
+</h1>
             <p className="mt-7 max-w-2xl text-lg leading-8 text-black/65">NovaDuo to nowoczesna, kameralna inwestycja obejmująca funkcjonalne lokale mieszkalne z garażem, ogrodem i wygodnym układem pomieszczeń.</p>
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
               <a href="#lokale" className="inline-flex h-12 items-center justify-center rounded-full bg-[#1f3d2b] px-7 text-base text-white hover:bg-[#152b1e]">Sprawdź dostępne lokale <ArrowRight className="ml-2 h-4 w-4" /></a>
@@ -143,7 +145,10 @@ useEffect(() => {
       </section>
 
       <section id="inwestycja" className="mx-auto max-w-7xl px-6 py-20">
-        <div className="grid gap-6 md:grid-cols-4">{[[Home,"4 budynki","zabudowa jednorodzinna dwulokalowa"],[Ruler,"115,84 m²","powierzchnia użytkowa lokalu"],[Car,"Garaż","w bryle każdego lokalu"],[Trees,"Działka","prywatna przestrzeń przy lokalu"]].map(([Icon,title,text])=><Card key={title} className="rounded-3xl border-black/5 bg-white/70 shadow-sm"><CardContent className="p-7"><Icon className="mb-5 h-7 w-7 text-[#1f3d2b]" /><div className="text-2xl font-semibold">{title}</div><p className="mt-2 text-sm leading-6 text-black/55">{text}</p></CardContent></Card>)}</div>
+        <div className="grid gap-6 md:grid-cols-4">{[[Home,"8 lokali","kameralna inwestycja"],
+[Ruler,"154 m²","powierzchnia netto lokalu"],
+[Car,"Garaż","w bryle każdego lokalu"],
+[Trees,"255–424 m²","powierzchnie działek"]].map(([Icon,title,text])=><Card key={title} className="rounded-3xl border-black/5 bg-white/70 shadow-sm"><CardContent className="p-7"><Icon className="mb-5 h-7 w-7 text-[#1f3d2b]" /><div className="text-2xl font-semibold">{title}</div><p className="mt-2 text-sm leading-6 text-black/55">{text}</p></CardContent></Card>)}</div>
       </section>
 
       <section className="bg-[#1f3d2b] py-20 text-white"><div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-2"><div><div className="mb-4 text-sm uppercase tracking-[0.28em] text-white/50">O inwestycji</div><h2 className="text-4xl font-semibold tracking-tight md:text-5xl">Przestrzeń dla rodzin, blisko natury i miasta.</h2></div><div className="text-lg leading-8 text-white/75">Inwestycja położona jest przy ul. Nowowiejskiej 58 w Pogroszewie, na działkach ewidencyjnych 24/8, 24/9, 24/11 i 24/12. Projekt zakłada kameralną zabudowę z wygodnym układem lokali, garażami oraz indywidualnymi przestrzeniami zielonymi.</div></div></section>
@@ -304,6 +309,19 @@ viewport={{ once: true }}
 
   </div>
 
+<div className="mx-auto mt-16 max-w-5xl space-y-5 text-lg leading-8 text-black/70">
+
+  <p>
+    Inwestycja NovaDuo realizowana jest w podwyższonym standardzie
+    deweloperskim z wykorzystaniem nowoczesnych technologii budowlanych.
+  </p>
+
+  <p>
+    Każdy lokal wyposażony jest w pompę ciepła, instalację rekuperacji,
+    garaż oraz funkcjonalny układ pomieszczeń dostosowany do potrzeb rodzin.
+  </p>
+
+</div>
 </motion.section>    
   <section id="lokale" className="mx-auto max-w-7xl px-6 py-20">
         <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end"><div><div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">Oferta</div><h2 className="text-4xl font-semibold tracking-tight">Dostępne lokale</h2></div><p className="max-w-xl text-black/60">Aktualne ceny, statusy sprzedaży, powierzchnie lokali oraz ogrody do wyłącznego użytkowania.</p></div>
@@ -323,6 +341,18 @@ viewport={{ once: true }}
   Pobierz kartę lokalu
 </a></CardContent></Card>)}</div>
       </section>
+<div className="mx-auto mt-16 max-w-5xl space-y-5 text-lg leading-8 text-black/70">
+  <p>
+    Lokale NovaDuo w Pogroszewie oferują funkcjonalny układ pomieszczeń,
+    garaż w bryle budynku oraz prywatne ogródki.
+  </p>
+
+  <p>
+    Każdy lokal posiada około 154 m² powierzchni netto
+    i stanowi atrakcyjną alternatywę dla domu jednorodzinnego
+    pod Warszawą.
+  </p>
+</div>
 
       <section id="dokumenty" className="mx-auto max-w-7xl px-6 pb-20">
   <Card className="rounded-[2rem] border-black/5 bg-white shadow-sm">
