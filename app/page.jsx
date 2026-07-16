@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Home, MapPin, FileText, ShieldCheck, Phone, ArrowRight, Trees, Car, Ruler, Building2, X } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/lib/supabase";
 
 export default function Page() {
 const heroImages = [
@@ -63,7 +64,7 @@ useEffect(() => {
 
   return () => clearInterval(interval);
 }, []);
-  const homes = [
+  const fallbackHomes = [
     { id: "58/1", price: "1 279 000 PLN", netArea: "154,57 m²", usableArea: "118,48 m²", gardenArea: "424 m²", plot: "dz. 24/11", status: "Dostępny" },
     { id: "58/3", price: "1 090 000 PLN", netArea: "154,57 m²", usableArea: "118,48 m²", gardenArea: "272 m²", plot: "dz. 24/11", status: "Rezerwacja" },
     { id: "58/5", price: "1 179 000 PLN", netArea: "154,57 m²", usableArea: "118,48 m²", gardenArea: "272 m²", plot: "dz. 24/12", status: "Dostępny" },
@@ -73,6 +74,75 @@ useEffect(() => {
     { id: "58/6", price: "1 179 000 PLN", netArea: "154,57 m²", usableArea: "118,48 m²", gardenArea: "255 m²", plot: "dz. 24/9", status: "Dostępny" },
     { id: "58/8", price: "1 279 000 PLN", netArea: "154,57 m²", usableArea: "118,48 m²", gardenArea: "345 m²", plot: "dz. 24/9", status: "Dostępny" }
   ];
+    const [homes, setHomes] = useState(fallbackHomes);
+
+  useEffect(() => {
+    let active = true;
+
+    async function loadHomes() {
+      const { data, error } = await supabase
+        .from("units")
+        .select(
+          "id, usable_area, net_area, garden_area, plot_no, total_price, status"
+        );
+
+      if (error) {
+        console.error(
+          "Nie udało się pobrać lokali z Supabase:",
+          error.message
+        );
+        return;
+      }
+
+      if (!active || !data) {
+        return;
+      }
+
+      const displayOrder = [
+        "58/1",
+        "58/3",
+        "58/5",
+        "58/7",
+        "58/2",
+        "58/4",
+        "58/6",
+        "58/8"
+      ];
+
+      const formatArea = (value) => {
+        const number = Number(value);
+
+        return number.toLocaleString("pl-PL", {
+          minimumFractionDigits: Number.isInteger(number) ? 0 : 2,
+          maximumFractionDigits: 2
+        });
+      };
+
+      const homesFromDatabase = data
+        .map((unit) => ({
+          id: unit.id,
+          price: `${Number(unit.total_price).toLocaleString("pl-PL")} PLN`,
+          netArea: `${formatArea(unit.net_area)} m²`,
+          usableArea: `${formatArea(unit.usable_area)} m²`,
+          gardenArea: `${formatArea(unit.garden_area)} m²`,
+          plot: `dz. ${unit.plot_no}`,
+          status: unit.status
+        }))
+        .sort(
+          (first, second) =>
+            displayOrder.indexOf(first.id) -
+            displayOrder.indexOf(second.id)
+        );
+
+      setHomes(homesFromDatabase);
+    }
+
+    loadHomes();
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   return (
     <main className="min-h-screen bg-[#f6f3ec] text-[#1f241f]">
