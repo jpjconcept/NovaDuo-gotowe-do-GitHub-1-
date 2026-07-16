@@ -65,7 +65,7 @@ useEffect(() => {
 }, []);
   const homes = [
     { id: "58/1", price: "1 279 000 PLN", netArea: "154,57 m²", usableArea: "118,48 m²", gardenArea: "424 m²", plot: "dz. 24/11", status: "Dostępny" },
-    { id: "58/3", price: "1 179 000 PLN", netArea: "154,57 m²", usableArea: "118,48 m²", gardenArea: "272 m²", plot: "dz. 24/11", status: "Rezerwacja" },
+    { id: "58/3", price: "1 090 000 PLN", netArea: "154,57 m²", usableArea: "118,48 m²", gardenArea: "272 m²", plot: "dz. 24/11", status: "Rezerwacja" },
     { id: "58/5", price: "1 179 000 PLN", netArea: "154,57 m²", usableArea: "118,48 m²", gardenArea: "272 m²", plot: "dz. 24/12", status: "Dostępny" },
     { id: "58/7", price: "1 279 000 PLN", netArea: "154,02 m²", usableArea: "123,62 m²", gardenArea: "405 m²", plot: "dz. 24/12", status: "Rezerwacja" },
     { id: "58/2", price: "1 279 000 PLN", netArea: "154,57 m²", usableArea: "118,48 m²", gardenArea: "408 m²", plot: "dz. 24/8", status: "Dostępny" },
@@ -356,12 +356,46 @@ viewport={{ once: true }}
 
       <section id="dokumenty" className="mx-auto max-w-7xl px-6 pb-20">
   <Card className="rounded-[2rem] border-black/5 bg-white shadow-sm">
-    <CardContent className="grid gap-8 p-8 md:grid-cols-[0.8fr_1.2fr] md:p-12">
-      <div>
+    <CardContent className="p-8 md:p-12">
+      <div className="mb-8">
         <FileText className="mb-5 h-9 w-9 text-[#1f3d2b]" />
         <h2 className="text-3xl font-semibold">
-          Dokumenty i informacje 
+          Dokumenty i informacje
         </h2>
+        <p className="mt-3 max-w-3xl text-black/60">
+          Pobierz prospekt informacyjny odpowiedni dla wybranego lokalu
+          oraz kartę lokalu.
+        </p>
+      </div>
+
+      <div className="mb-10 grid gap-4 sm:grid-cols-2">
+        <a
+          href="/prospekt-novaduo-zadanie-1-do-publikacji.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="rounded-2xl border border-[#1f3d2b]/20 bg-[#f6f3ec] p-6 transition hover:bg-[#1f3d2b] hover:text-white"
+        >
+          <div className="text-lg font-semibold">
+            Prospekt informacyjny — Zadanie nr 1
+          </div>
+          <div className="mt-2 text-sm opacity-70">
+            Lokale 58/1, 58/3, 58/5 i 58/7
+          </div>
+        </a>
+
+        <a
+          href="/prospekt-novaduo-zadanie-2-do-publikacji.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="rounded-2xl border border-[#1f3d2b]/20 bg-[#f6f3ec] p-6 transition hover:bg-[#1f3d2b] hover:text-white"
+        >
+          <div className="text-lg font-semibold">
+            Prospekt informacyjny — Zadanie nr 2
+          </div>
+          <div className="mt-2 text-sm opacity-70">
+            Lokale 58/2, 58/4, 58/6 i 58/8
+          </div>
+        </a>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
