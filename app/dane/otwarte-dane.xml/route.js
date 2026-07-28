@@ -24,8 +24,7 @@ function getWarsawDate() {
 export async function GET() {
   const today = getWarsawDate();
 
-  // Stała wartość przez cały dzień.
-  // Dzięki temu XML i jego suma MD5 zawsze będą identyczne.
+  // Stała wartość przez cały dzień, aby XML i MD5 były zgodne.
   const now = `${today.iso}T00:00:00Z`;
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -54,6 +53,7 @@ export async function GET() {
     </categories>
 
     <conditions>
+      <dbOrCopyrighted>true</dbOrCopyrighted>
       <dbOrCopyrightedLicenseChosen>CC BY 4.0</dbOrCopyrightedLicenseChosen>
     </conditions>
 
