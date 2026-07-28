@@ -23,7 +23,10 @@ function getWarsawDate() {
 
 export async function GET() {
   const today = getWarsawDate();
-  const now = new Date().toISOString();
+
+  // Stała wartość przez cały dzień.
+  // Dzięki temu XML i jego suma MD5 zawsze będą identyczne.
+  const now = `${today.iso}T00:00:00Z`;
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <p:datasets
