@@ -1,33 +1,98 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/lib/supabase";
 
-const displayOrder = [
-  "58/1", "58/3", "58/5", "58/7",
-  "58/2", "58/4", "58/6", "58/8",
+const DISPLAY_ORDER = [
+  "58/1",
+  "58/3",
+  "58/5",
+  "58/7",
+  "58/2",
+  "58/4",
+  "58/6",
+  "58/8",
 ];
 
-const taskOneUnits = new Set(["58/1", "58/3", "58/5", "58/7"]);
+const ROAD_TOTAL_PRICE = 2;
 
-const company = {
-  developerName: "JPJ Concept Sp. z o.o.",
-  registeredAddress:
-    "ul. Nowowiejska 58A, Pogroszew, 05-850 Ożarów Mazowiecki",
-  salesAddress:
-    "ul. Nowowiejska 58A, Pogroszew, 05-850 Ożarów Mazowiecki",
-  contact: "tel. 600 397 399, e-mail: kontakt@jpjconcept.pl",
-  investmentLocation:
-    "ul. Nowowiejska 58, Pogroszew, 05-850 Ożarów Mazowiecki",
-  offerUrl: "https://novaduo.pl/",
-  prospectusUrlTask1:
-    "https://novaduo.pl/prospekt-novaduo-zadanie-1-do-publikacji.pdf",
-  prospectusUrlTask2:
-    "https://novaduo.pl/prospekt-novaduo-zadanie-2-do-publikacji.pdf",
-  currency: "PLN",
-};
+function getWarsawDate() {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Europe/Warsaw",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(new Date());
 
-const today = () => new Date().toISOString().slice(0, 10);
+  const values = Object.fromEntries(
+    parts
+      .filter((part) => part.type !== "literal")
+      .map((part) => [part.type, part.value])
+  );
+
+  return `${values.year}-${values.month}-${values.day}`;
+}
+
+function formatMoney(value) {
+  if (value === null || value === undefined || value === "") {
+    return "—";
+  }
+
+  return `${Number(value).toLocaleString("pl-PL", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })} zł`;
+}
+
+function formatArea(value) {
+  const number = Number(value);
+
+  if (!Number.isFinite(number)) {
+    return "—";
+  }
+
+  return `${number.toLocaleString("pl-PL", {
+    minimumFractionDigits: Number.isInteger(number) ? 0 : 2,
+    maximumFractionDigits: 2,
+  })} m²`;
+}
+
+function formatPricePerSquareMeter(totalPrice, usableArea) {
+  const price = Number(totalPrice);
+  const area = Number(usableArea);
+
+  if (!Number.isFinite(price) || !Number.isFinite(area) || area <= 0) {
+    return "—";
+  }
+
+  return `${(price / area).toLocaleString("pl-PL", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })} zł/m²`;
+}
+
+function formatDate(value) {
+  const isoDate = String(value ?? "").slice(0, 10);
+  const [year, month, day] = isoDate.split("-");
+
+  if (!year || !month || !day) {
+    return "—";
+  }
+
+  return `${day}.${month}.${year}`;
+}
+
+function formatDateTime(value) {
+  if (!value) {
+    return "—";
+  }
+
+  return new Intl.DateTimeFormat("pl-PL", {
+    dateStyle: "short",
+    timeStyle: "short",
+    timeZone: "Europe/Warsaw",
+  }).format(new Date(value));
+}
 
 function csvEscape(value) {
   const text = String(value ?? "");
@@ -35,9 +100,12 @@ function csvEscape(value) {
 }
 
 function downloadCsv(filename, rows) {
-  if (!rows.length) return;
+  if (!rows.length) {
+    return;
+  }
 
   const headers = Object.keys(rows[0]);
+
   const csv =
     "\ufeff" +
     [
@@ -56,36 +124,12 @@ function downloadCsv(filename, rows) {
 
   link.href = url;
   link.download = filename;
+
   document.body.appendChild(link);
   link.click();
   link.remove();
 
   URL.revokeObjectURL(url);
-}
-
-function taskFor(unitId) {
-  return taskOneUnits.has(unitId) ? 1 : 2;
-}
-
-function prospectusFor(unitId) {
-  return taskFor(unitId) === 1
-    ? company.prospectusUrlTask1
-    : company.prospectusUrlTask2;
-}
-
-function formatMoney(value) {
-  if (value === null || value === undefined || value === "") {
-    return "—";
-  }
-
-  return `${Number(value).toLocaleString("pl-PL")} PLN`;
-}
-
-function formatDateTime(value) {
-  return new Intl.DateTimeFormat("pl-PL", {
-    dateStyle: "short",
-    timeStyle: "short",
-  }).format(new Date(value));
 }
 
 export default function AdminPage() {
@@ -98,7 +142,9 @@ export default function AdminPage() {
   const [checkingSession, setCheckingSession] = useState(true);
   const [loadingData, setLoadingData] = useState(false);
   const [savingId, setSavingId] = useState(null);
+  const [downloadingReport, setDownloadingReport] = useState(false);
   const [units, setUnits] = useState([]);
+  const [savedUnits, setSavedUnits] = useState({});
   const [history, setHistory] = useState([]);
 
   useEffect(() => {
@@ -114,6 +160,7 @@ export default function AdminPage() {
 
       if (!session) {
         setUnits([]);
+        setSavedUnits({});
         setHistory([]);
       }
     });
@@ -121,8 +168,25 @@ export default function AdminPage() {
     return () => subscription.unsubscribe();
   }, []);
 
+  async function fetchHistory() {
+    const { data, error } = await supabase
+      .from("unit_price_history")
+      .select(
+        "id, unit_id, old_total_price, new_total_price, old_status, new_status, changed_at"
+      )
+      .order("changed_at", { ascending: false });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    setHistory(data ?? []);
+  }
+
   useEffect(() => {
-    if (!user) return;
+    if (!user) {
+      return;
+    }
 
     async function loadData() {
       setLoadingData(true);
@@ -132,8 +196,9 @@ export default function AdminPage() {
         supabase
           .from("units")
           .select(
-            "id, usable_area, net_area, garden_area, plot_no, total_price, status"
+            "id, usable_area, net_area, garden_area, plot_no, total_price, status, price_valid_from"
           ),
+
         supabase
           .from("unit_price_history")
           .select(
@@ -150,8 +215,8 @@ export default function AdminPage() {
         const sortedUnits = [...(unitsResult.data ?? [])]
           .sort(
             (first, second) =>
-              displayOrder.indexOf(first.id) -
-              displayOrder.indexOf(second.id)
+              DISPLAY_ORDER.indexOf(first.id) -
+              DISPLAY_ORDER.indexOf(second.id)
           )
           .map((unit) => ({
             ...unit,
@@ -159,11 +224,26 @@ export default function AdminPage() {
           }));
 
         setUnits(sortedUnits);
+
+        setSavedUnits(
+          Object.fromEntries(
+            sortedUnits.map((unit) => [
+              unit.id,
+              {
+                total_price: Number(unit.total_price),
+                status: unit.status,
+                price_valid_from: unit.price_valid_from,
+              },
+            ])
+          )
+        );
       }
 
       if (historyResult.error) {
-        setPanelMessage(
-          `Nie udało się pobrać historii: ${historyResult.error.message}`
+        setPanelMessage((current) =>
+          current
+            ? `${current} Nie udało się pobrać historii: ${historyResult.error.message}`
+            : `Nie udało się pobrać historii: ${historyResult.error.message}`
         );
       } else {
         setHistory(historyResult.data ?? []);
@@ -175,21 +255,19 @@ export default function AdminPage() {
     loadData();
   }, [user]);
 
-  async function refreshHistory() {
-    const { data, error } = await supabase
-      .from("unit_price_history")
-      .select(
-        "id, unit_id, old_total_price, new_total_price, old_status, new_status, changed_at"
-      )
-      .order("changed_at", { ascending: false });
-
-    if (!error) {
-      setHistory(data ?? []);
-    }
-  }
+  const priceHistory = useMemo(
+    () =>
+      history.filter(
+        (entry) =>
+          entry.old_total_price === null ||
+          Number(entry.old_total_price) !== Number(entry.new_total_price)
+      ),
+    [history]
+  );
 
   async function handleLogin(event) {
     event.preventDefault();
+
     setLoading(true);
     setLoginMessage("");
 
@@ -222,177 +300,207 @@ export default function AdminPage() {
     setSavingId(unit.id);
     setPanelMessage("");
 
+    const savedUnit = savedUnits[unit.id];
     const price = Number(unit.total_price);
 
-    if (!Number.isFinite(price) || price <= 0) {
-      setPanelMessage(`Wpisz prawidłową cenę lokalu ${unit.id}.`);
+    if (!savedUnit) {
+      setPanelMessage(
+        `Nie znaleziono zapisanych danych lokalu ${unit.id}. Odśwież panel.`
+      );
+
       setSavingId(null);
       return;
     }
 
+    if (!Number.isFinite(price) || price <= 0) {
+      setPanelMessage(`Wpisz prawidłową cenę lokalu ${unit.id}.`);
+
+      setSavingId(null);
+      return;
+    }
+
+    const priceChanged = price !== Number(savedUnit.total_price);
+    const statusChanged = unit.status !== savedUnit.status;
+
+    if (!priceChanged && !statusChanged) {
+      setPanelMessage(`W lokalu ${unit.id} nie wprowadzono żadnych zmian.`);
+
+      setSavingId(null);
+      return;
+    }
+
+    const updatePayload = {};
+
+    if (priceChanged) {
+      updatePayload.total_price = price;
+      updatePayload.price_valid_from = getWarsawDate();
+    }
+
+    if (statusChanged) {
+      updatePayload.status = unit.status;
+    }
+
     const { data, error } = await supabase
       .from("units")
-      .update({
-        total_price: price,
-        status: unit.status,
-      })
+      .update(updatePayload)
       .eq("id", unit.id)
-      .select("id");
+      .select(
+        "id, usable_area, net_area, garden_area, plot_no, total_price, status, price_valid_from"
+      );
 
     if (error) {
       setPanelMessage(
         `Nie udało się zapisać lokalu ${unit.id}: ${error.message}`
       );
+
       setSavingId(null);
       return;
     }
 
-    if (!data || data.length === 0) {
+    const savedRow = data?.[0];
+
+    if (!savedRow) {
       setPanelMessage(
         `Nie zapisano lokalu ${unit.id}. Sprawdź uprawnienia administratora.`
       );
+
       setSavingId(null);
       return;
     }
 
-    await refreshHistory();
-    setPanelMessage(`Lokal ${unit.id} został zapisany.`);
+    setUnits((currentUnits) =>
+      currentUnits.map((currentUnit) =>
+        currentUnit.id === unit.id
+          ? {
+              ...savedRow,
+              total_price: String(savedRow.total_price ?? ""),
+            }
+          : currentUnit
+      )
+    );
+
+    setSavedUnits((current) => ({
+      ...current,
+
+      [unit.id]: {
+        total_price: Number(savedRow.total_price),
+        status: savedRow.status,
+        price_valid_from: savedRow.price_valid_from,
+      },
+    }));
+
+    try {
+      await fetchHistory();
+    } catch (historyError) {
+      console.error("Nie udało się odświeżyć historii:", historyError);
+    }
+
+    if (priceChanged && statusChanged) {
+      setPanelMessage(
+        `Cena i status lokalu ${unit.id} zostały zapisane. Nowa cena obowiązuje od ${formatDate(
+          savedRow.price_valid_from
+        )}.`
+      );
+    } else if (priceChanged) {
+      setPanelMessage(
+        `Cena lokalu ${unit.id} została zapisana i obowiązuje od ${formatDate(
+          savedRow.price_valid_from
+        )}.`
+      );
+    } else {
+      setPanelMessage(
+        `Status lokalu ${unit.id} został zapisany. Data obowiązywania ceny nie została zmieniona.`
+      );
+    }
+
     setSavingId(null);
   }
 
-  function latestPriceDate(unitId) {
-    const latestEntry = history.find(
-      (entry) => entry.unit_id === unitId
-    );
+  async function downloadOfficialReport() {
+    setDownloadingReport(true);
+    setPanelMessage("");
 
-    return latestEntry?.changed_at?.slice(0, 10) ?? today();
-  }
-
-  function buildCurrentRows() {
-    return units.map((unit) => ({
-      nazwa_dewelopera: company.developerName,
-      adres_siedziby: company.registeredAddress,
-      adres_biura_sprzedazy: company.salesAddress,
-      kontakt_z_deweloperem: company.contact,
-      lokalizacja_inwestycji: company.investmentLocation,
-      rodzaj_nieruchomosci:
-        "lokal mieszkalny w budynku jednorodzinnym dwulokalowym",
-      zadanie_inwestycyjne: `Zadanie nr ${taskFor(unit.id)}`,
-      numer_lokalu: unit.id,
-      powierzchnia_uzytkowa_m2:
-        Number(unit.usable_area).toFixed(2),
-      powierzchnia_netto_m2:
-        Number(unit.net_area).toFixed(2),
-      powierzchnia_ogrodu_m2:
-        Number(unit.garden_area).toFixed(2),
-      numer_dzialki: unit.plot_no,
-      cena_m2_brutto_pln: (
-        Number(unit.total_price) / Number(unit.usable_area)
-      ).toFixed(2),
-      cena_calkowita_brutto_pln:
-        Number(unit.total_price).toFixed(2),
-      pomieszczenia_przynalezne_lub_prawa:
-        "Garaż w bryle — wliczony w cenę",
-      cena_pomieszczen_lub_praw_brutto_pln: "0.00",
-      inne_swiadczenia_pieniezne: "Brak",
-      data_obowiazywania_ceny:
-        latestPriceDate(unit.id),
-      status_oferty: unit.status,
-      prospekt_url: prospectusFor(unit.id),
-      strona_oferty_url: company.offerUrl,
-      waluta: company.currency,
-      data_wygenerowania: today(),
-    }));
-  }
-
-  function buildHistoryRows() {
-    return history.map((entry, index) => {
-      const unit = units.find(
-        (item) => item.id === entry.unit_id
+    try {
+      const response = await fetch(
+        `/dane/novaduo-ceny.csv?time=${Date.now()}`,
+        {
+          cache: "no-store",
+        }
       );
 
-      const usableArea = Number(
-        unit?.usable_area ?? 0
-      );
-
-      const olderEntry = history
-        .slice(index + 1)
-        .find(
-          (item) => item.unit_id === entry.unit_id
-        );
-
-      const priceChanged =
-        entry.old_total_price !== null &&
-        Number(entry.old_total_price) !==
-          Number(entry.new_total_price);
-
-      const statusChanged =
-        entry.old_status !== null &&
-        entry.old_status !== entry.new_status;
-
-      let changeType = "stan początkowy";
-
-      if (priceChanged && statusChanged) {
-        changeType = "cena i status";
-      } else if (priceChanged) {
-        changeType = "cena";
-      } else if (statusChanged) {
-        changeType = "status";
+      if (!response.ok) {
+        throw new Error(`Serwer zwrócił status ${response.status}.`);
       }
+
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+
+      link.href = url;
+      link.download = `novaduo-ceny-${getWarsawDate()}.csv`;
+
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      URL.revokeObjectURL(url);
+
+      setPanelMessage(
+        "Pobrano oficjalny raport CSV w układzie 58 kolumn."
+      );
+    } catch (error) {
+      setPanelMessage(`Nie udało się pobrać raportu: ${error.message}`);
+    }
+
+    setDownloadingReport(false);
+  }
+
+  function downloadPriceHistory() {
+    const rows = priceHistory.map((entry) => {
+      const unit = units.find((item) => item.id === entry.unit_id);
+      const usableArea = Number(unit?.usable_area ?? 0);
+
+      const oldPrice =
+        entry.old_total_price === null
+          ? null
+          : Number(entry.old_total_price);
+
+      const newPrice = Number(entry.new_total_price);
 
       return {
         data_i_czas_zmiany: entry.changed_at,
         numer_lokalu: entry.unit_id,
-        rodzaj_zmiany: changeType,
-        stara_cena_calkowita_brutto_pln:
-          entry.old_total_price === null
-            ? ""
-            : Number(entry.old_total_price).toFixed(2),
-        nowa_cena_calkowita_brutto_pln:
-          Number(entry.new_total_price).toFixed(2),
+
+        stara_cena_lokalu_brutto_pln:
+          oldPrice === null ? "" : oldPrice.toFixed(2),
+
+        nowa_cena_lokalu_brutto_pln: newPrice.toFixed(2),
+
         stara_cena_m2_brutto_pln:
-          entry.old_total_price === null || !usableArea
+          oldPrice === null || !usableArea
             ? ""
-            : (
-                Number(entry.old_total_price) /
-                usableArea
-              ).toFixed(2),
-        nowa_cena_m2_brutto_pln:
-          usableArea
-            ? (
-                Number(entry.new_total_price) /
-                usableArea
-              ).toFixed(2)
-            : "",
-        stary_status: entry.old_status ?? "",
-        nowy_status: entry.new_status,
-        poprzednia_data_obowiazywania:
-          olderEntry?.changed_at?.slice(0, 10) ?? "",
-        nowa_data_obowiazywania:
-          entry.changed_at.slice(0, 10),
-        data_wygenerowania: today(),
+            : (oldPrice / usableArea).toFixed(6),
+
+        nowa_cena_m2_brutto_pln: usableArea
+          ? (newPrice / usableArea).toFixed(6)
+          : "",
+
+        prawa_drogowe_brutto_pln: ROAD_TOTAL_PRICE.toFixed(2),
+
+        stara_cena_laczna_brutto_pln:
+          oldPrice === null
+            ? ""
+            : (oldPrice + ROAD_TOTAL_PRICE).toFixed(2),
+
+        nowa_cena_laczna_brutto_pln: (
+          newPrice + ROAD_TOTAL_PRICE
+        ).toFixed(2),
       };
     });
-  }
 
-  function downloadCurrent() {
     downloadCsv(
-      `novaduo-ceny-${today()}.csv`,
-      buildCurrentRows()
-    );
-  }
-
-  function downloadHistory() {
-    downloadCsv(
-      `novaduo-ceny-historia-${today()}.csv`,
-      buildHistoryRows()
-    );
-  }
-
-  function prepareReport() {
-    downloadCsv(
-      `novaduo-raport-dzienny-${today()}.csv`,
-      buildCurrentRows()
+      `novaduo-historia-cen-${getWarsawDate()}.csv`,
+      rows
     );
   }
 
@@ -430,9 +538,7 @@ export default function AdminPage() {
           <input
             type="email"
             value={email}
-            onChange={(event) =>
-              setEmail(event.target.value)
-            }
+            onChange={(event) => setEmail(event.target.value)}
             required
             className="mt-2 w-full rounded-xl border border-black/20 px-4 py-3 outline-none focus:border-black"
           />
@@ -444,9 +550,7 @@ export default function AdminPage() {
           <input
             type="password"
             value={password}
-            onChange={(event) =>
-              setPassword(event.target.value)
-            }
+            onChange={(event) => setPassword(event.target.value)}
             required
             className="mt-2 w-full rounded-xl border border-black/20 px-4 py-3 outline-none focus:border-black"
           />
@@ -471,7 +575,7 @@ export default function AdminPage() {
 
   return (
     <main className="min-h-screen bg-[#f4f1e8] px-4 py-8 md:px-6 md:py-12">
-      <div className="mx-auto max-w-6xl rounded-3xl bg-white p-6 shadow-xl md:p-8">
+      <div className="mx-auto max-w-7xl rounded-3xl bg-white p-6 shadow-xl md:p-8">
         <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
           <div>
             <p className="text-sm uppercase tracking-[0.25em] text-black/50">
@@ -488,11 +592,18 @@ export default function AdminPage() {
           </div>
 
           <button
+            type="button"
             onClick={handleLogout}
             className="self-start rounded-full bg-black px-5 py-3 text-white"
           >
             Wyloguj
           </button>
+        </div>
+
+        <div className="mt-8 rounded-2xl border border-[#1f3d2b]/15 bg-[#eef5ef] p-5 text-sm leading-6 text-[#1f3d2b]">
+          Zmiana samego statusu nie zmienia daty obowiązywania ceny. Nowa
+          data jest zapisywana wyłącznie wtedy, gdy rzeczywiście zmienisz
+          cenę lokalu.
         </div>
 
         <div className="mt-8 border-t border-black/10 pt-8">
@@ -509,25 +620,33 @@ export default function AdminPage() {
 
             <div className="flex flex-wrap gap-3">
               <button
-                onClick={downloadCurrent}
-                className="rounded-full border border-[#1f3d2b] px-5 py-2 text-[#1f3d2b]"
+                type="button"
+                onClick={downloadOfficialReport}
+                disabled={downloadingReport}
+                className="rounded-full bg-[#1f3d2b] px-5 py-2 text-white disabled:opacity-60"
               >
-                Aktualne ceny CSV
+                {downloadingReport
+                  ? "Pobieranie..."
+                  : "Oficjalny raport CSV – 58 kolumn"}
               </button>
 
               <button
-                onClick={downloadHistory}
-                className="rounded-full border border-[#1f3d2b] px-5 py-2 text-[#1f3d2b]"
+                type="button"
+                onClick={downloadPriceHistory}
+                disabled={priceHistory.length === 0}
+                className="rounded-full border border-[#1f3d2b] px-5 py-2 text-[#1f3d2b] disabled:opacity-40"
               >
-                Historia CSV
+                Historia cen CSV
               </button>
 
-              <button
-                onClick={prepareReport}
-                className="rounded-full bg-[#1f3d2b] px-5 py-2 text-white"
+              <a
+                href="/historia-cen"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full border border-black/20 px-5 py-2"
               >
-                Raport dzienny CSV
-              </button>
+                Publiczna historia cen
+              </a>
             </div>
           </div>
 
@@ -538,12 +657,10 @@ export default function AdminPage() {
           )}
 
           {loadingData ? (
-            <p className="mt-8">
-              Pobieranie danych...
-            </p>
+            <p className="mt-8">Pobieranie danych...</p>
           ) : (
             <div className="mt-8 overflow-x-auto">
-              <table className="w-full min-w-[900px] border-collapse">
+              <table className="w-full min-w-[1250px] border-collapse">
                 <thead>
                   <tr className="border-b border-black/10 text-left text-sm text-black/60">
                     <th className="px-3 py-4">Lokal</th>
@@ -551,7 +668,10 @@ export default function AdminPage() {
                     <th className="px-3 py-4">Pow. netto</th>
                     <th className="px-3 py-4">Ogród</th>
                     <th className="px-3 py-4">Działka</th>
-                    <th className="px-3 py-4">Cena brutto</th>
+                    <th className="px-3 py-4">Cena za 1 m²</th>
+                    <th className="px-3 py-4">Cena lokalu</th>
+                    <th className="px-3 py-4">Cena łączna</th>
+                    <th className="px-3 py-4">Cena obowiązuje od</th>
                     <th className="px-3 py-4">Status</th>
                     <th className="px-3 py-4"></th>
                   </tr>
@@ -561,26 +681,33 @@ export default function AdminPage() {
                   {units.map((unit) => (
                     <tr
                       key={unit.id}
-                      className="border-b border-black/10"
+                      className="border-b border-black/10 align-top"
                     >
                       <td className="px-3 py-4 font-semibold">
                         {unit.id}
                       </td>
 
                       <td className="px-3 py-4">
-                        {unit.usable_area} m²
+                        {formatArea(unit.usable_area)}
                       </td>
 
                       <td className="px-3 py-4">
-                        {unit.net_area} m²
+                        {formatArea(unit.net_area)}
                       </td>
 
                       <td className="px-3 py-4">
-                        {unit.garden_area} m²
+                        {formatArea(unit.garden_area)}
                       </td>
 
                       <td className="px-3 py-4">
                         {unit.plot_no}
+                      </td>
+
+                      <td className="px-3 py-4 font-medium text-[#1f3d2b]">
+                        {formatPricePerSquareMeter(
+                          unit.total_price,
+                          unit.usable_area
+                        )}
                       </td>
 
                       <td className="px-3 py-4">
@@ -600,6 +727,16 @@ export default function AdminPage() {
                         />
                       </td>
 
+                      <td className="px-3 py-4 font-semibold">
+                        {formatMoney(
+                          Number(unit.total_price) + ROAD_TOTAL_PRICE
+                        )}
+                      </td>
+
+                      <td className="px-3 py-4">
+                        {formatDate(unit.price_valid_from)}
+                      </td>
+
                       <td className="px-3 py-4">
                         <select
                           value={unit.status}
@@ -615,9 +752,11 @@ export default function AdminPage() {
                           <option value="Dostępny">
                             Dostępny
                           </option>
+
                           <option value="Rezerwacja">
                             Rezerwacja
                           </option>
+
                           <option value="Sprzedany">
                             Sprzedany
                           </option>
@@ -626,6 +765,7 @@ export default function AdminPage() {
 
                       <td className="px-3 py-4 text-right">
                         <button
+                          type="button"
                           onClick={() => saveUnit(unit)}
                           disabled={savingId === unit.id}
                           className="rounded-full bg-[#1f3d2b] px-5 py-2 text-white disabled:opacity-60"
@@ -645,24 +785,25 @@ export default function AdminPage() {
 
         <div className="mt-12 border-t border-black/10 pt-8">
           <h2 className="text-2xl font-semibold">
-            Historia zmian
+            Historia zmian cen
           </h2>
 
           <p className="mt-2 text-black/60">
-            Ostatnie zapisane ceny i statusy lokali.
+            Poniżej wyświetlane są wyłącznie rzeczywiste zmiany cen.
+            Zmiany samego statusu nie są pokazywane jako historia ceny.
           </p>
 
           <div className="mt-6 space-y-3">
-            {history.length === 0 && (
+            {priceHistory.length === 0 && (
               <p className="rounded-xl bg-black/5 p-4">
-                Brak zapisanej historii.
+                Brak zapisanej historii zmian cen.
               </p>
             )}
 
-            {history.slice(0, 20).map((entry) => (
+            {priceHistory.slice(0, 30).map((entry) => (
               <div
                 key={entry.id}
-                className="grid gap-2 rounded-2xl border border-black/10 p-4 md:grid-cols-[100px_160px_1fr] md:items-center"
+                className="grid gap-3 rounded-2xl border border-black/10 p-4 md:grid-cols-[100px_170px_1fr] md:items-center"
               >
                 <strong>{entry.unit_id}</strong>
 
@@ -671,15 +812,25 @@ export default function AdminPage() {
                 </span>
 
                 <span>
-                  {entry.old_total_price === null
-                    ? `Stan początkowy: ${formatMoney(
-                        entry.new_total_price
-                      )}, ${entry.new_status}`
-                    : `${formatMoney(
-                        entry.old_total_price
-                      )} → ${formatMoney(
-                        entry.new_total_price
-                      )}; ${entry.old_status} → ${entry.new_status}`}
+                  {entry.old_total_price === null ? (
+                    <>
+                      Cena początkowa:{" "}
+                      {formatMoney(entry.new_total_price)}; cena łączna:{" "}
+                      {formatMoney(
+                        Number(entry.new_total_price) +
+                          ROAD_TOTAL_PRICE
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      {formatMoney(entry.old_total_price)} →{" "}
+                      {formatMoney(entry.new_total_price)}; cena łączna:{" "}
+                      {formatMoney(
+                        Number(entry.new_total_price) +
+                          ROAD_TOTAL_PRICE
+                      )}
+                    </>
+                  )}
                 </span>
               </div>
             ))}
