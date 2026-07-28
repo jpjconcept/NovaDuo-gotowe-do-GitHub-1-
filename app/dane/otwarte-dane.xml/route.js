@@ -23,7 +23,7 @@ function getWarsawDate() {
 
 export async function GET() {
   const today = getWarsawDate();
-  const now = `${today.iso}T00:00:00Z`;
+  const now = new Date().toISOString();
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <p:datasets
@@ -40,7 +40,7 @@ export async function GET() {
     </title>
 
     <description>
-      <polish>Zbiór zawiera informacje o aktualnych cenach ofertowych lokali mieszkalnych w inwestycji NovaDuo realizowanej przez JPJ Concept Sp. z o.o. przy ul. Nowowiejskiej 58 w Pogroszewie, gmina Ożarów Mazowiecki. Dane obejmują numery lokali, powierzchnie, ceny za m² i ceny całkowite, status oferty oraz datę obowiązywania ceny.</polish>
+      <polish>Zbiór zawiera informacje o aktualnych cenach ofertowych lokali mieszkalnych w inwestycji NovaDuo realizowanej przez JPJ Concept Sp. z o.o. przy ul. Nowowiejskiej 58 w Pogroszewie, gmina Ożarów Mazowiecki. Dane obejmują numery lokali, powierzchnie użytkowe, ceny za m², ceny lokali, ceny łączne wraz z prawami niezbędnymi do korzystania z lokali oraz daty obowiązywania cen.</polish>
     </description>
 
     <url>https://novaduo.pl/</url>
@@ -109,7 +109,9 @@ export async function GET() {
     headers: {
       "Content-Type": "application/xml; charset=utf-8",
       "Content-Disposition": 'inline; filename="otwarte-dane.xml"',
-      "Cache-Control": "no-store, no-cache, must-revalidate",
+      "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+      Pragma: "no-cache",
+      Expires: "0",
       "Access-Control-Allow-Origin": "*",
     },
   });
