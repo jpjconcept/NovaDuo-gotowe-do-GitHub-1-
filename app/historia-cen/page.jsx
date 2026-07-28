@@ -50,8 +50,8 @@ function pricePerM2(value, unitId) {
   return `${(
     Number(value) / Number(USABLE_AREAS[unitId])
   ).toLocaleString("pl-PL", {
-    minimumFractionDigits: 6,
-    maximumFractionDigits: 6,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   })} PLN/m²`;
 }
 
@@ -148,17 +148,16 @@ export default function PriceHistoryPage() {
         </h1>
 
         <p className="mt-4 max-w-3xl leading-7 text-black/65">
-          Zestawienie zachowuje ceny publikowane od rozpoczęcia
-          raportowania 23 lipca 2026 r. Garaż w bryle budynku oraz ogród
-          do wyłącznego korzystania są wliczone w cenę lokalu. Do ceny
-          każdego lokalu doliczane są dwa udziały drogowe po 1,00 PLN
-          brutto.
+          Zestawienie zachowuje ceny publikowane od rozpoczęcia raportowania
+          23 lipca 2026 r. Garaż w bryle budynku oraz ogród do wyłącznego
+          korzystania są wliczone w cenę lokalu. Do ceny każdego lokalu
+          doliczane są dwa udziały drogowe po 1,00 PLN brutto.
         </p>
 
         <div className="mt-6 rounded-2xl border border-[#1f3d2b]/15 bg-white p-5 text-sm leading-6 text-black/65">
-          Udział w działce ewid. 24/10 – droga wewnętrzna:
-          1,00 PLN brutto. Udział w działce ewid. 24/3 – droga
-          dojazdowa do drogi publicznej: 1,00 PLN brutto.
+          Udział w działce ewid. 24/10 – droga wewnętrzna: 1,00 PLN brutto.
+          Udział w działce ewid. 24/3 – droga dojazdowa do drogi publicznej:
+          1,00 PLN brutto.
         </div>
 
         {message && (
@@ -200,9 +199,7 @@ export default function PriceHistoryPage() {
                   <td className="px-5 py-4">{row.kind}</td>
 
                   <td className="px-5 py-4">
-                    {row.oldPrice === null
-                      ? "—"
-                      : money(row.oldPrice)}
+                    {row.oldPrice === null ? "—" : money(row.oldPrice)}
                   </td>
 
                   <td className="px-5 py-4 font-medium">
@@ -227,10 +224,9 @@ export default function PriceHistoryPage() {
         </div>
 
         <p className="mt-5 text-sm leading-6 text-black/55">
-          Cena za 1 m² jest wyliczana na podstawie ceny lokalu i
-          powierzchni użytkowej. Cena łączna obejmuje cenę lokalu oraz
-          wartość dwóch udziałów drogowych w łącznej wysokości 2,00 PLN
-          brutto.
+          Cena za 1 m² jest wyliczana na podstawie ceny lokalu i powierzchni
+          użytkowej. Cena łączna obejmuje cenę lokalu oraz wartość dwóch
+          udziałów drogowych w łącznej wysokości 2,00 PLN brutto.
         </p>
 
         <div className="mt-8 flex flex-wrap gap-3">
