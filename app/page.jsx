@@ -452,6 +452,36 @@ export default function Page() {
         </div>
       </section>
 
+      <section className="mx-auto max-w-7xl px-6 py-16">
+        <div className="overflow-hidden rounded-[2rem] border border-[#1f3d2b]/10 bg-white/75 p-8 shadow-sm md:p-12">
+          <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+            <div>
+              <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
+                Segmenty pod Warszawą
+              </div>
+
+              <h2 className="max-w-4xl text-3xl font-semibold tracking-tight md:text-5xl">
+                Szukasz przestronnego segmentu pod Warszawą?
+              </h2>
+
+              <p className="mt-5 max-w-3xl text-lg leading-8 text-black/65">
+                Poznaj inwestycję NovaDuo w Pogroszewie: kameralne segmenty z
+                garażem w bryle budynku, prywatnymi ogrodami, pompą ciepła i
+                rekuperacją.
+              </p>
+            </div>
+
+            <a
+              href="/segmenty-pod-warszawa"
+              className="inline-flex h-12 items-center justify-center rounded-full bg-[#1f3d2b] px-7 text-base text-white transition hover:bg-[#152b1e]"
+            >
+              Zobacz segmenty pod Warszawą
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </a>
+          </div>
+        </div>
+      </section>
+
       <section id="lokalizacja" className="mx-auto max-w-7xl px-6 py-20">
         <div className="mb-14 text-center">
           <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
@@ -1104,6 +1134,13 @@ export default function Page() {
             <div>© 2026 NovaDuo | JPJ Concept Sp. z o.o.</div>
 
             <div className="flex flex-wrap gap-4">
+              <a
+                href="/segmenty-pod-warszawa"
+                className="hover:text-[#1f3d2b]"
+              >
+                Segmenty pod Warszawą
+              </a>
+
               <a href="/historia-cen" className="hover:text-[#1f3d2b]">
                 Historia cen
               </a>
