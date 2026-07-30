@@ -463,10 +463,10 @@ export default function Page() {
           </h2>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="flex flex-wrap justify-center gap-4">
           <a
             href="/segmenty-pod-warszawa"
-            className="group flex min-h-[235px] flex-col rounded-3xl border border-[#1f3d2b]/10 bg-white/75 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+            className="group flex min-h-[225px] w-full flex-col rounded-3xl border border-[#1f3d2b]/10 bg-white/75 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.75rem)] xl:w-[calc(25%-0.75rem)]"
           >
             <div className="text-xs uppercase tracking-[0.2em] text-[#1f3d2b]/60">
               Segmenty pod Warszawą
@@ -488,7 +488,7 @@ export default function Page() {
 
           <a
             href="/segmenty-pogroszew"
-            className="group flex min-h-[235px] flex-col rounded-3xl border border-[#1f3d2b]/10 bg-[#e4e6d7] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+            className="group flex min-h-[225px] w-full flex-col rounded-3xl border border-[#1f3d2b]/10 bg-[#e4e6d7] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.75rem)] xl:w-[calc(25%-0.75rem)]"
           >
             <div className="text-xs uppercase tracking-[0.2em] text-[#1f3d2b]/60">
               Segmenty Pogroszew
@@ -510,7 +510,7 @@ export default function Page() {
 
           <a
             href="/blizniaki-pod-warszawa"
-            className="group flex min-h-[235px] flex-col rounded-3xl border border-[#1f3d2b]/10 bg-white/75 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+            className="group flex min-h-[225px] w-full flex-col rounded-3xl border border-[#1f3d2b]/10 bg-white/75 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.75rem)] xl:w-[calc(25%-0.75rem)]"
           >
             <div className="text-xs uppercase tracking-[0.2em] text-[#1f3d2b]/60">
               Bliźniaki pod Warszawą
@@ -532,7 +532,7 @@ export default function Page() {
 
           <a
             href="/domy-ozarow-mazowiecki"
-            className="group flex min-h-[235px] flex-col rounded-3xl border border-[#1f3d2b]/10 bg-[#e4e6d7] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+            className="group flex min-h-[225px] w-full flex-col rounded-3xl border border-[#1f3d2b]/10 bg-[#e4e6d7] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.75rem)] xl:w-[calc(25%-0.75rem)]"
           >
             <div className="text-xs uppercase tracking-[0.2em] text-[#1f3d2b]/60">
               Domy Ożarów Mazowiecki
@@ -554,14 +554,14 @@ export default function Page() {
 
           <a
             href="/domy-pod-warszawa"
-            className="group flex min-h-[235px] flex-col rounded-3xl border border-[#1f3d2b]/10 bg-white/75 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+            className="group flex min-h-[225px] w-full flex-col rounded-3xl border border-[#1f3d2b]/10 bg-white/75 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.75rem)] xl:w-[calc(25%-0.75rem)]"
           >
             <div className="text-xs uppercase tracking-[0.2em] text-[#1f3d2b]/60">
               Domy pod Warszawą
             </div>
 
             <h3 className="mt-3 text-xl font-semibold leading-7 tracking-tight">
-              Nowe domy z ogrodem pod Warszawą
+              Nowe domy pod Warszawą
             </h3>
 
             <p className="mt-3 flex-1 text-sm leading-6 text-black/60">
@@ -576,7 +576,7 @@ export default function Page() {
 
           <a
             href="/domy-z-ogrodem-pod-warszawa"
-            className="group flex min-h-[235px] flex-col rounded-3xl border border-[#1f3d2b]/10 bg-[#e4e6d7] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+            className="group flex min-h-[225px] w-full flex-col rounded-3xl border border-[#1f3d2b]/10 bg-[#e4e6d7] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.75rem)] xl:w-[calc(25%-0.75rem)]"
           >
             <div className="text-xs uppercase tracking-[0.2em] text-[#1f3d2b]/60">
               Domy z ogrodem
@@ -588,6 +588,28 @@ export default function Page() {
 
             <p className="mt-3 flex-1 text-sm leading-6 text-black/60">
               Własna zielona przestrzeń, garaż, pompa ciepła i rekuperacja.
+            </p>
+
+            <span className="mt-5 inline-flex items-center text-sm font-medium text-[#1f3d2b]">
+              Zobacz podstronę
+              <ArrowRight className="ml-2 h-4 w-4 transition group-hover:translate-x-1" />
+            </span>
+          </a>
+
+          <a
+            href="/domy-z-garazem-pod-warszawa"
+            className="group flex min-h-[225px] w-full flex-col rounded-3xl border border-[#1f3d2b]/10 bg-white/75 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.75rem)] xl:w-[calc(25%-0.75rem)]"
+          >
+            <div className="text-xs uppercase tracking-[0.2em] text-[#1f3d2b]/60">
+              Domy z garażem
+            </div>
+
+            <h3 className="mt-3 text-xl font-semibold leading-7 tracking-tight">
+              Własny garaż w bryle budynku
+            </h3>
+
+            <p className="mt-3 flex-1 text-sm leading-6 text-black/60">
+              Panelowa brama z napędem, ogród i około 154 m² netto.
             </p>
 
             <span className="mt-5 inline-flex items-center text-sm font-medium text-[#1f3d2b]">
@@ -1290,6 +1312,13 @@ export default function Page() {
                 className="hover:text-[#1f3d2b]"
               >
                 Domy z ogrodem
+              </a>
+
+              <a
+                href="/domy-z-garazem-pod-warszawa"
+                className="hover:text-[#1f3d2b]"
+              >
+                Domy z garażem
               </a>
 
               <a href="/historia-cen" className="hover:text-[#1f3d2b]">
