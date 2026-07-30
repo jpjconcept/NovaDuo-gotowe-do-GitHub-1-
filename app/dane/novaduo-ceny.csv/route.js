@@ -20,6 +20,17 @@ const displayOrder = [
 
 const taskOneUnits = new Set(["58/1", "58/3", "58/5", "58/7"]);
 
+const INITIAL_PRICES = {
+  "58/1": 1279000,
+  "58/3": 1090000,
+  "58/5": 1179000,
+  "58/7": 1279000,
+  "58/2": 1279000,
+  "58/4": 1179000,
+  "58/6": 1179000,
+  "58/8": 1279000,
+};
+
 const HEADERS = [
   "Nazwa dewelopera",
   "Forma prawna dewelopera",
@@ -90,6 +101,36 @@ function csvLine(values) {
   return values.map(csvEscape).join(";");
 }
 
+function getWarsawDate(value = new Date()) {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Europe/Warsaw",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(value);
+
+  const values = Object.fromEntries(
+    parts
+      .filter((part) => part.type !== "literal")
+      .map((part) => [part.type, part.value])
+  );
+
+  return `${values.year}-${values.month}-${values.day}`;
+}
+
+function isValidIsoDate(value) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(String(value ?? ""))) {
+    return false;
+  }
+
+  const date = new Date(`${value}T12:00:00Z`);
+
+  return (
+    !Number.isNaN(date.getTime()) &&
+    date.toISOString().slice(0, 10) === value
+  );
+}
+
 function dateTime(value, fallback = REPORTING_START) {
   const date = String(value || fallback).slice(0, 10);
   return `${date} 00:00`;
@@ -113,12 +154,73 @@ function pricePerSquareMeter(totalPrice, usableArea) {
     throw new Error("Nieprawidłowa cena albo powierzchnia użytkowa.");
   }
 
-  return (price / area).toFixed(6);
+  return (price / area).toFixed(2);
 }
 
-function buildRow(unit) {
-  const basePrice = Number(unit.total_price);
-  const validFrom = dateTime(unit.price_valid_from);
+function buildSnapshots(history, reportDate) {
+  const snapshots = Object.fromEntries(
+    displayOrder.map((unitId) => [
+      unitId,
+      {
+        totalPrice: INITIAL_PRICES[unitId],
+        validFrom: REPORTING_START,
+      },
+    ])
+  );
+
+  for (const entry of history) {
+    const unitId = String(entry.unit_id ?? "");
+
+    if (!snapshots[unitId]) {
+      continue;
+    }
+
+    const newPrice = Number(entry.new_total_price);
+
+    if (!Number.isFinite(newPrice) || newPrice <= 0) {
+      continue;
+    }
+
+    const oldPrice =
+      entry.old_total_price === null
+        ? null
+        : Number(entry.old_total_price);
+
+    if (
+      oldPrice !== null &&
+      Number.isFinite(oldPrice) &&
+      oldPrice === newPrice
+    ) {
+      continue;
+    }
+
+    const changedAt = new Date(entry.changed_at);
+
+    if (Number.isNaN(changedAt.getTime())) {
+      continue;
+    }
+
+    const changeDate = getWarsawDate(changedAt);
+
+    if (
+      changeDate < REPORTING_START ||
+      changeDate > reportDate
+    ) {
+      continue;
+    }
+
+    snapshots[unitId] = {
+      totalPrice: newPrice,
+      validFrom: changeDate,
+    };
+  }
+
+  return snapshots;
+}
+
+function buildRow(unit, snapshot) {
+  const basePrice = Number(snapshot.totalPrice);
+  const validFrom = dateTime(snapshot.validFrom);
   const totalWithRoads = basePrice + ROAD_TOTAL_PRICE;
 
   return [
@@ -183,19 +285,78 @@ function buildRow(unit) {
   ];
 }
 
-export async function GET() {
+export async function GET(request) {
   try {
-    const { data, error } = await supabase
-      .from("units")
-      .select("id, usable_area, total_price, price_valid_from");
+    const today = getWarsawDate();
+    const requestUrl = new URL(request.url);
 
-    if (error) {
-      throw new Error(error.message);
+    const reportDate =
+      requestUrl.searchParams.get("date") || today;
+
+    if (!isValidIsoDate(reportDate)) {
+      return new Response(
+        "Nieprawidłowy format daty. Użyj formatu RRRR-MM-DD.",
+        {
+          status: 400,
+          headers: {
+            "Content-Type": "text/plain; charset=utf-8",
+            "Cache-Control": "no-store",
+          },
+        }
+      );
     }
 
-    const units = [...(data ?? [])].sort(
+    if (reportDate < REPORTING_START) {
+      return new Response(
+        `Historia raportów rozpoczyna się ${REPORTING_START}.`,
+        {
+          status: 400,
+          headers: {
+            "Content-Type": "text/plain; charset=utf-8",
+            "Cache-Control": "no-store",
+          },
+        }
+      );
+    }
+
+    if (reportDate > today) {
+      return new Response(
+        "Nie można wygenerować raportu dla przyszłej daty.",
+        {
+          status: 400,
+          headers: {
+            "Content-Type": "text/plain; charset=utf-8",
+            "Cache-Control": "no-store",
+          },
+        }
+      );
+    }
+
+    const [unitsResult, historyResult] = await Promise.all([
+      supabase
+        .from("units")
+        .select("id, usable_area"),
+
+      supabase
+        .from("unit_price_history")
+        .select(
+          "id, unit_id, old_total_price, new_total_price, changed_at"
+        )
+        .order("changed_at", { ascending: true }),
+    ]);
+
+    if (unitsResult.error) {
+      throw new Error(unitsResult.error.message);
+    }
+
+    if (historyResult.error) {
+      throw new Error(historyResult.error.message);
+    }
+
+    const units = [...(unitsResult.data ?? [])].sort(
       (first, second) =>
-        displayOrder.indexOf(first.id) - displayOrder.indexOf(second.id)
+        displayOrder.indexOf(first.id) -
+        displayOrder.indexOf(second.id)
     );
 
     if (units.length !== displayOrder.length) {
@@ -204,23 +365,42 @@ export async function GET() {
       );
     }
 
-    const rows = units.map(buildRow);
+    const snapshots = buildSnapshots(
+      historyResult.data ?? [],
+      reportDate
+    );
+
+    const rows = units.map((unit) => {
+      const snapshot = snapshots[unit.id];
+
+      if (!snapshot) {
+        throw new Error(
+          `Nie udało się odtworzyć ceny lokalu ${unit.id}.`
+        );
+      }
+
+      return buildRow(unit, snapshot);
+    });
 
     if (rows.some((row) => row.length !== HEADERS.length)) {
       throw new Error("Nieprawidłowa liczba kolumn raportu.");
     }
 
     const csv =
-      "\ufeff" + [csvLine(HEADERS), ...rows.map(csvLine)].join("\r\n");
+      "\ufeff" +
+      [csvLine(HEADERS), ...rows.map(csvLine)].join("\r\n");
 
     return new Response(csv, {
       status: 200,
       headers: {
         "Content-Type": "text/csv; charset=utf-8",
-        "Content-Disposition": 'inline; filename="novaduo-ceny.csv"',
-        "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+        "Content-Disposition": `inline; filename="novaduo-ceny-${reportDate}.csv"`,
+        "Cache-Control":
+          "no-store, no-cache, must-revalidate, max-age=0",
         Pragma: "no-cache",
         Expires: "0",
+        "Access-Control-Allow-Origin": "*",
+        "X-NovaDuo-Data-Date": reportDate,
       },
     });
   } catch (error) {
