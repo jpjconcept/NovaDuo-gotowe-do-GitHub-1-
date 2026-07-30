@@ -46,6 +46,12 @@ export default function sitemap() {
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/domy-z-garazem-pod-warszawa`,
+      lastModified,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
       url: `${baseUrl}/historia-cen`,
       lastModified,
       changeFrequency: "daily",
