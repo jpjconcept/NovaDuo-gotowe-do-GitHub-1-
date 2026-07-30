@@ -452,133 +452,127 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-16">
-        <div className="mb-10 text-center">
-          <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
+      <section className="mx-auto max-w-7xl px-6 py-12">
+        <div className="mb-8 text-center">
+          <div className="mb-2 text-xs uppercase tracking-[0.25em] text-[#1f3d2b]/60">
             Poznaj NovaDuo
           </div>
 
-          <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">
+          <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
             Segmenty, bliźniaki i domy w Pogroszewie pod Warszawą
           </h2>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <div className="flex h-full flex-col rounded-[2rem] border border-[#1f3d2b]/10 bg-white/75 p-8 shadow-sm md:p-10">
-            <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          <a
+            href="/segmenty-pod-warszawa"
+            className="group flex min-h-[250px] flex-col rounded-3xl border border-[#1f3d2b]/10 bg-white/75 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+          >
+            <div className="text-xs uppercase tracking-[0.2em] text-[#1f3d2b]/60">
               Segmenty pod Warszawą
             </div>
 
-            <h3 className="text-3xl font-semibold tracking-tight">
-              Szukasz przestronnego segmentu pod Warszawą?
+            <h3 className="mt-3 text-xl font-semibold leading-7 tracking-tight">
+              Przestronny segment pod Warszawą
             </h3>
 
-            <p className="mt-5 flex-1 text-lg leading-8 text-black/65">
-              Poznaj kameralną inwestycję z garażami w bryle budynków,
-              prywatnymi ogrodami, pompami ciepła i rekuperacją.
+            <p className="mt-3 flex-1 text-sm leading-6 text-black/60">
+              Garaż, prywatny ogród, pompa ciepła i rekuperacja.
             </p>
 
-            <a
-              href="/segmenty-pod-warszawa"
-              className="mt-7 inline-flex h-12 w-fit items-center justify-center rounded-full bg-[#1f3d2b] px-7 text-base text-white transition hover:bg-[#152b1e]"
-            >
-              Zobacz segmenty pod Warszawą
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </a>
-          </div>
+            <span className="mt-5 inline-flex items-center text-sm font-medium text-[#1f3d2b]">
+              Zobacz podstronę
+              <ArrowRight className="ml-2 h-4 w-4 transition group-hover:translate-x-1" />
+            </span>
+          </a>
 
-          <div className="flex h-full flex-col rounded-[2rem] border border-[#1f3d2b]/10 bg-[#e4e6d7] p-8 shadow-sm md:p-10">
-            <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
+          <a
+            href="/segmenty-pogroszew"
+            className="group flex min-h-[250px] flex-col rounded-3xl border border-[#1f3d2b]/10 bg-[#e4e6d7] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+          >
+            <div className="text-xs uppercase tracking-[0.2em] text-[#1f3d2b]/60">
               Segmenty Pogroszew
             </div>
 
-            <h3 className="text-3xl font-semibold tracking-tight">
-              Nowe segmenty w Pogroszewie na sprzedaż
+            <h3 className="mt-3 text-xl font-semibold leading-7 tracking-tight">
+              Nowe segmenty w Pogroszewie
             </h3>
 
-            <p className="mt-5 flex-1 text-lg leading-8 text-black/65">
-              Sprawdź szczegóły lokalizacji NovaDuo, parametry lokali,
-              standard deweloperski, galerię oraz najczęściej zadawane pytania.
+            <p className="mt-3 flex-1 text-sm leading-6 text-black/60">
+              Lokalizacja, parametry lokali, standard i galeria.
             </p>
 
-            <a
-              href="/segmenty-pogroszew"
-              className="mt-7 inline-flex h-12 w-fit items-center justify-center rounded-full bg-[#1f3d2b] px-7 text-base text-white transition hover:bg-[#152b1e]"
-            >
-              Zobacz segmenty w Pogroszewie
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </a>
-          </div>
+            <span className="mt-5 inline-flex items-center text-sm font-medium text-[#1f3d2b]">
+              Zobacz podstronę
+              <ArrowRight className="ml-2 h-4 w-4 transition group-hover:translate-x-1" />
+            </span>
+          </a>
 
-          <div className="flex h-full flex-col rounded-[2rem] border border-[#1f3d2b]/10 bg-white/75 p-8 shadow-sm md:p-10">
-            <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
+          <a
+            href="/blizniaki-pod-warszawa"
+            className="group flex min-h-[250px] flex-col rounded-3xl border border-[#1f3d2b]/10 bg-white/75 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+          >
+            <div className="text-xs uppercase tracking-[0.2em] text-[#1f3d2b]/60">
               Bliźniaki pod Warszawą
             </div>
 
-            <h3 className="text-3xl font-semibold tracking-tight">
-              Nowe bliźniaki z ogrodem i garażem
+            <h3 className="mt-3 text-xl font-semibold leading-7 tracking-tight">
+              Bliźniaki z ogrodem i garażem
             </h3>
 
-            <p className="mt-5 flex-1 text-lg leading-8 text-black/65">
-              Poznaj budynki dwulokalowe NovaDuo, ich funkcjonalny układ,
-              powierzchnie, nowoczesne instalacje oraz lokalizację pod Warszawą.
+            <p className="mt-3 flex-1 text-sm leading-6 text-black/60">
+              Budynki dwulokalowe z nowoczesnymi instalacjami.
             </p>
 
-            <a
-              href="/blizniaki-pod-warszawa"
-              className="mt-7 inline-flex h-12 w-fit items-center justify-center rounded-full bg-[#1f3d2b] px-7 text-base text-white transition hover:bg-[#152b1e]"
-            >
-              Zobacz bliźniaki pod Warszawą
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </a>
-          </div>
+            <span className="mt-5 inline-flex items-center text-sm font-medium text-[#1f3d2b]">
+              Zobacz podstronę
+              <ArrowRight className="ml-2 h-4 w-4 transition group-hover:translate-x-1" />
+            </span>
+          </a>
 
-          <div className="flex h-full flex-col rounded-[2rem] border border-[#1f3d2b]/10 bg-[#e4e6d7] p-8 shadow-sm md:p-10">
-            <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
+          <a
+            href="/domy-ozarow-mazowiecki"
+            className="group flex min-h-[250px] flex-col rounded-3xl border border-[#1f3d2b]/10 bg-[#e4e6d7] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+          >
+            <div className="text-xs uppercase tracking-[0.2em] text-[#1f3d2b]/60">
               Domy Ożarów Mazowiecki
             </div>
 
-            <h3 className="text-3xl font-semibold tracking-tight">
-              Nowe domy w gminie Ożarów Mazowiecki
+            <h3 className="mt-3 text-xl font-semibold leading-7 tracking-tight">
+              Domy w gminie Ożarów Mazowiecki
             </h3>
 
-            <p className="mt-5 flex-1 text-lg leading-8 text-black/65">
-              Zobacz inwestycję NovaDuo w Pogroszewie: przestronne lokale,
-              garaże, prywatne ogrody, pompy ciepła i rekuperację.
+            <p className="mt-3 flex-1 text-sm leading-6 text-black/60">
+              NovaDuo w Pogroszewie, blisko miejskiej infrastruktury.
             </p>
 
-            <a
-              href="/domy-ozarow-mazowiecki"
-              className="mt-7 inline-flex h-12 w-fit items-center justify-center rounded-full bg-[#1f3d2b] px-7 text-base text-white transition hover:bg-[#152b1e]"
-            >
-              Zobacz domy w gminie Ożarów
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </a>
-          </div>
+            <span className="mt-5 inline-flex items-center text-sm font-medium text-[#1f3d2b]">
+              Zobacz podstronę
+              <ArrowRight className="ml-2 h-4 w-4 transition group-hover:translate-x-1" />
+            </span>
+          </a>
 
-          <div className="flex h-full flex-col rounded-[2rem] border border-[#1f3d2b]/10 bg-white/75 p-8 shadow-sm md:p-10">
-            <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
+          <a
+            href="/domy-pod-warszawa"
+            className="group flex min-h-[250px] flex-col rounded-3xl border border-[#1f3d2b]/10 bg-white/75 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:col-span-2 lg:col-span-1"
+          >
+            <div className="text-xs uppercase tracking-[0.2em] text-[#1f3d2b]/60">
               Domy pod Warszawą
             </div>
 
-            <h3 className="text-3xl font-semibold tracking-tight">
+            <h3 className="mt-3 text-xl font-semibold leading-7 tracking-tight">
               Nowe domy z ogrodem pod Warszawą
             </h3>
 
-            <p className="mt-5 flex-1 text-lg leading-8 text-black/65">
-              Poznaj przestronne lokale NovaDuo jako alternatywę dla
-              mieszkania w mieście: z garażem, ogrodem i nowoczesnymi
-              instalacjami.
+            <p className="mt-3 flex-1 text-sm leading-6 text-black/60">
+              Przestrzeń domu jako alternatywa dla mieszkania w mieście.
             </p>
 
-            <a
-              href="/domy-pod-warszawa"
-              className="mt-7 inline-flex h-12 w-fit items-center justify-center rounded-full bg-[#1f3d2b] px-7 text-base text-white transition hover:bg-[#152b1e]"
-            >
-              Zobacz domy pod Warszawą
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </a>
-          </div>
+            <span className="mt-5 inline-flex items-center text-sm font-medium text-[#1f3d2b]">
+              Zobacz podstronę
+              <ArrowRight className="ml-2 h-4 w-4 transition group-hover:translate-x-1" />
+            </span>
+          </a>
         </div>
       </section>
 
