@@ -459,12 +459,12 @@ export default function Page() {
           </div>
 
           <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">
-            Segmenty w Pogroszewie pod Warszawą
+            Segmenty i bliźniaki w Pogroszewie pod Warszawą
           </h2>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-2">
-          <div className="rounded-[2rem] border border-[#1f3d2b]/10 bg-white/75 p-8 shadow-sm md:p-10">
+        <div className="grid gap-6 lg:grid-cols-3">
+          <div className="flex h-full flex-col rounded-[2rem] border border-[#1f3d2b]/10 bg-white/75 p-8 shadow-sm md:p-10">
             <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
               Segmenty pod Warszawą
             </div>
@@ -473,21 +473,21 @@ export default function Page() {
               Szukasz przestronnego segmentu pod Warszawą?
             </h3>
 
-            <p className="mt-5 text-lg leading-8 text-black/65">
+            <p className="mt-5 flex-1 text-lg leading-8 text-black/65">
               Poznaj kameralną inwestycję z garażami w bryle budynków,
               prywatnymi ogrodami, pompami ciepła i rekuperacją.
             </p>
 
             <a
               href="/segmenty-pod-warszawa"
-              className="mt-7 inline-flex h-12 items-center justify-center rounded-full bg-[#1f3d2b] px-7 text-base text-white transition hover:bg-[#152b1e]"
+              className="mt-7 inline-flex h-12 w-fit items-center justify-center rounded-full bg-[#1f3d2b] px-7 text-base text-white transition hover:bg-[#152b1e]"
             >
               Zobacz segmenty pod Warszawą
               <ArrowRight className="ml-2 h-4 w-4" />
             </a>
           </div>
 
-          <div className="rounded-[2rem] border border-[#1f3d2b]/10 bg-[#e4e6d7] p-8 shadow-sm md:p-10">
+          <div className="flex h-full flex-col rounded-[2rem] border border-[#1f3d2b]/10 bg-[#e4e6d7] p-8 shadow-sm md:p-10">
             <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
               Segmenty Pogroszew
             </div>
@@ -496,16 +496,39 @@ export default function Page() {
               Nowe segmenty w Pogroszewie na sprzedaż
             </h3>
 
-            <p className="mt-5 text-lg leading-8 text-black/65">
+            <p className="mt-5 flex-1 text-lg leading-8 text-black/65">
               Sprawdź szczegóły lokalizacji NovaDuo, parametry lokali,
               standard deweloperski, galerię oraz najczęściej zadawane pytania.
             </p>
 
             <a
               href="/segmenty-pogroszew"
-              className="mt-7 inline-flex h-12 items-center justify-center rounded-full bg-[#1f3d2b] px-7 text-base text-white transition hover:bg-[#152b1e]"
+              className="mt-7 inline-flex h-12 w-fit items-center justify-center rounded-full bg-[#1f3d2b] px-7 text-base text-white transition hover:bg-[#152b1e]"
             >
               Zobacz segmenty w Pogroszewie
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </a>
+          </div>
+
+          <div className="flex h-full flex-col rounded-[2rem] border border-[#1f3d2b]/10 bg-white/75 p-8 shadow-sm md:p-10">
+            <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
+              Bliźniaki pod Warszawą
+            </div>
+
+            <h3 className="text-3xl font-semibold tracking-tight">
+              Nowe bliźniaki z ogrodem i garażem
+            </h3>
+
+            <p className="mt-5 flex-1 text-lg leading-8 text-black/65">
+              Poznaj budynki dwulokalowe NovaDuo, ich funkcjonalny układ,
+              powierzchnie, nowoczesne instalacje oraz lokalizację pod Warszawą.
+            </p>
+
+            <a
+              href="/blizniaki-pod-warszawa"
+              className="mt-7 inline-flex h-12 w-fit items-center justify-center rounded-full bg-[#1f3d2b] px-7 text-base text-white transition hover:bg-[#152b1e]"
+            >
+              Zobacz bliźniaki pod Warszawą
               <ArrowRight className="ml-2 h-4 w-4" />
             </a>
           </div>
@@ -1176,6 +1199,13 @@ export default function Page() {
                 className="hover:text-[#1f3d2b]"
               >
                 Segmenty Pogroszew
+              </a>
+
+              <a
+                href="/blizniaki-pod-warszawa"
+                className="hover:text-[#1f3d2b]"
+              >
+                Bliźniaki pod Warszawą
               </a>
 
               <a href="/historia-cen" className="hover:text-[#1f3d2b]">
