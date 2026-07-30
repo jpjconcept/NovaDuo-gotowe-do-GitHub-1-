@@ -57,7 +57,7 @@ const advantages = [
   {
     icon: Car,
     title: "Garaż w bryle",
-    description: "Wygodne miejsce garażowe będące częścią każdego lokalu.",
+    description: "Wygodny garaż będący częścią każdego lokalu.",
   },
   {
     icon: Trees,
@@ -82,6 +82,57 @@ const standard = [
   "Tynki gipsowe i szlichty cementowe",
 ];
 
+const galleryImages = [
+  {
+    src: "/images/postprodukcja_0000_Scene-1_upscale01.png",
+    alt: "Wizualizacja zewnętrzna segmentów NovaDuo pod Warszawą",
+  },
+  {
+    src: "/images/postprodukcja_0001_Scene-7_upscale01.png",
+    alt: "Elewacja inwestycji NovaDuo w Pogroszewie",
+  },
+  {
+    src: "/images/postprodukcja_0002_Scene-2_upscale01.png",
+    alt: "Nowoczesne segmenty NovaDuo z ogrodami",
+  },
+  {
+    src: "/images/postprodukcja_0003_Scene-3_upscale01.png",
+    alt: "Widok inwestycji NovaDuo w Pogroszewie",
+  },
+  {
+    src: "/images/postprodukcja_0004_Scene-4_upscale01.png",
+    alt: "Segmenty z garażami w inwestycji NovaDuo",
+  },
+  {
+    src: "/images/postprodukcja_0005_Scene-5_upscale01.png",
+    alt: "Kameralna zabudowa NovaDuo pod Warszawą",
+  },
+  {
+    src: "/images/postprodukcja_0004_Scene-26_upscale01.webp",
+    alt: "Przykładowa aranżacja salonu w segmencie NovaDuo",
+  },
+  {
+    src: "/images/postprodukcja_0005_Scene-25_upscale01.webp",
+    alt: "Nowoczesne wnętrze lokalu NovaDuo",
+  },
+  {
+    src: "/images/postprodukcja_0006_Scene-24_upscale01.webp",
+    alt: "Przykładowe wykończenie wnętrza NovaDuo",
+  },
+  {
+    src: "/images/postprodukcja_0007_Scene-23_upscale01.webp",
+    alt: "Wizualizacja pomieszczenia w lokalu NovaDuo",
+  },
+  {
+    src: "/images/postprodukcja_0008_Scene-22_upscale01.webp",
+    alt: "Inspiracja wnętrza segmentu NovaDuo",
+  },
+  {
+    src: "/images/postprodukcja_0009_Scene-21_upscale01.webp",
+    alt: "Przykładowa aranżacja domu NovaDuo",
+  },
+];
+
 const faq = [
   {
     question: "Gdzie położona jest inwestycja NovaDuo?",
@@ -91,7 +142,7 @@ const faq = [
   {
     question: "Jaką powierzchnię mają segmenty?",
     answer:
-      "Lokale mają około 154 m² powierzchni netto. Standardowa powierzchnia użytkowa wynosi 118,48 m², natomiast lokal 58/7 ma powierzchnię użytkową 123,62 m².",
+      "Lokale mają około 154 m² powierzchni netto oraz 118,48 m² powierzchni użytkowej. Wyjątkiem jest lokal 58/7, który ma 154,02 m² powierzchni netto oraz 123,62 m² powierzchni użytkowej.",
   },
   {
     question: "Czy każdy lokal posiada ogród?",
@@ -111,7 +162,7 @@ const faq = [
   {
     question: "Gdzie można sprawdzić aktualne ceny?",
     answer:
-      "Aktualne ceny, statusy lokali, daty obowiązywania cen oraz ich historię publikujemy na głównej stronie inwestycji NovaDuo.",
+      "Aktualne ceny, statusy lokali, daty obowiązywania cen oraz historię cen publikujemy w głównej ofercie inwestycji NovaDuo.",
   },
 ];
 
@@ -185,6 +236,8 @@ export default function SegmentyPodWarszawaPage() {
             <a href="#inwestycja">Inwestycja</a>
             <a href="#standard">Standard</a>
             <a href="#lokalizacja">Lokalizacja</a>
+            <a href="#oferta">Lokale i ceny</a>
+            <a href="#galeria">Galeria</a>
             <a href="#pytania">Pytania</a>
           </div>
 
@@ -219,19 +272,19 @@ export default function SegmentyPodWarszawaPage() {
             </p>
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-              <Link
-                href="/#lokale"
+              <a
+                href="#oferta"
                 className="inline-flex h-12 items-center justify-center rounded-full bg-[#1f3d2b] px-7 text-white transition hover:bg-[#152b1e]"
               >
                 Sprawdź dostępne segmenty
                 <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
+              </a>
 
               <a
-                href="#kontakt"
+                href="#galeria"
                 className="inline-flex h-12 items-center justify-center rounded-full border border-black/20 bg-white/50 px-7"
               >
-                Umów rozmowę
+                Zobacz galerię
               </a>
             </div>
           </div>
@@ -262,7 +315,10 @@ export default function SegmentyPodWarszawaPage() {
         </div>
       </section>
 
-      <section id="inwestycja" className="mx-auto max-w-7xl px-6 py-20">
+      <section
+        id="inwestycja"
+        className="scroll-mt-36 mx-auto max-w-7xl px-6 py-20"
+      >
         <div className="mb-14 max-w-4xl">
           <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
             Segmenty pod Warszawą
@@ -334,7 +390,10 @@ export default function SegmentyPodWarszawaPage() {
         </div>
       </section>
 
-      <section id="standard" className="mx-auto max-w-7xl px-6 py-20">
+      <section
+        id="standard"
+        className="scroll-mt-36 mx-auto max-w-7xl px-6 py-20"
+      >
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div>
             <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
@@ -398,7 +457,10 @@ export default function SegmentyPodWarszawaPage() {
         </div>
       </section>
 
-      <section id="lokalizacja" className="bg-white/60 py-20">
+      <section
+        id="lokalizacja"
+        className="scroll-mt-36 bg-white/60 py-20"
+      >
         <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-[0.85fr_1.15fr]">
           <div className="flex flex-col justify-center">
             <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
@@ -439,9 +501,12 @@ export default function SegmentyPodWarszawaPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-20">
+      <section
+        id="oferta"
+        className="scroll-mt-36 mx-auto max-w-7xl px-6 py-20"
+      >
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
-          <div className="overflow-hidden rounded-[2rem] shadow-2xl">
+          <div className="overflow-hidden rounded-[2rem] bg-white shadow-2xl">
             <img
               src="/images/usytuowanie-lokali-novaduo.webp"
               alt="Plan usytuowania segmentów NovaDuo w Pogroszewie"
@@ -451,7 +516,7 @@ export default function SegmentyPodWarszawaPage() {
 
           <div>
             <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
-              Dostępne lokale
+              Dostępne lokale i ceny
             </div>
 
             <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">
@@ -460,23 +525,65 @@ export default function SegmentyPodWarszawaPage() {
 
             <p className="mt-6 text-lg leading-8 text-black/65">
               Poszczególne lokale różnią się położeniem oraz wielkością
-              przypisanych ogrodów. Aktualne ceny, statusy sprzedaży,
-              powierzchnie i karty lokali dostępne są w głównej ofercie
-              inwestycji.
+              przypisanych ogrodów. Szczegółowe i aktualne ceny, statusy
+              sprzedaży, powierzchnie oraz karty lokali znajdują się w głównej
+              ofercie inwestycji NovaDuo.
             </p>
 
             <Link
               href="/#lokale"
               className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-[#1f3d2b] px-7 text-white transition hover:bg-[#152b1e]"
             >
-              Zobacz ceny i dostępność
+              Przejdź do aktualnych cen lokali
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
+
+            <p className="mt-3 text-sm leading-6 text-black/50">
+              Ten przycisk prowadzi do tabeli cen na głównej stronie NovaDuo.
+            </p>
           </div>
         </div>
       </section>
 
-      <section id="pytania" className="bg-[#e4e6d7] py-20">
+      <section id="galeria" className="scroll-mt-36 bg-white/60 py-20">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="mb-14 text-center">
+            <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
+              Galeria NovaDuo
+            </div>
+
+            <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">
+              Zobacz inwestycję i przykładowe wnętrza
+            </h2>
+
+            <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-black/60">
+              Wizualizacje budynków oraz przykładowe aranżacje wnętrz pokazują
+              charakter inwestycji NovaDuo i możliwości urządzenia lokali.
+            </p>
+          </div>
+
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {galleryImages.map((image) => (
+              <div
+                key={image.src}
+                className="overflow-hidden rounded-3xl bg-white shadow-md"
+              >
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  loading="lazy"
+                  className="h-72 w-full object-cover transition duration-500 hover:scale-[1.03]"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="pytania"
+        className="scroll-mt-36 bg-[#e4e6d7] py-20"
+      >
         <div className="mx-auto max-w-5xl px-6">
           <div className="mb-12 text-center">
             <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
@@ -502,7 +609,10 @@ export default function SegmentyPodWarszawaPage() {
         </div>
       </section>
 
-      <section id="kontakt" className="bg-[#1f3d2b] py-20 text-white">
+      <section
+        id="kontakt"
+        className="scroll-mt-36 bg-[#1f3d2b] py-20 text-white"
+      >
         <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-2">
           <div>
             <div className="mb-3 text-sm uppercase tracking-[0.28em] text-white/50">
@@ -607,7 +717,7 @@ export default function SegmentyPodWarszawaPage() {
 
             <div className="mt-3 flex flex-wrap gap-4">
               <Link href="/" className="hover:text-[#1f3d2b]">
-                Strona główna
+                Strona główna NovaDuo
               </Link>
 
               <Link href="/#lokale" className="hover:text-[#1f3d2b]">
