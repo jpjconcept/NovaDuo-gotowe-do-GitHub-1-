@@ -459,11 +459,11 @@ export default function Page() {
           </div>
 
           <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">
-            Segmenty i bliźniaki w Pogroszewie pod Warszawą
+            Segmenty, bliźniaki i domy w Pogroszewie pod Warszawą
           </h2>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2">
           <div className="flex h-full flex-col rounded-[2rem] border border-[#1f3d2b]/10 bg-white/75 p-8 shadow-sm md:p-10">
             <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
               Segmenty pod Warszawą
@@ -510,7 +510,7 @@ export default function Page() {
             </a>
           </div>
 
-          <div className="flex h-full flex-col rounded-[2rem] border border-[#1f3d2b]/10 bg-white/75 p-8 shadow-sm md:p-10">
+          <div className="flex h-full flex-col rounded-[2rem] border border-[#1f3d2b]/10 bg-[#e4e6d7] p-8 shadow-sm md:p-10">
             <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
               Bliźniaki pod Warszawą
             </div>
@@ -529,6 +529,29 @@ export default function Page() {
               className="mt-7 inline-flex h-12 w-fit items-center justify-center rounded-full bg-[#1f3d2b] px-7 text-base text-white transition hover:bg-[#152b1e]"
             >
               Zobacz bliźniaki pod Warszawą
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </a>
+          </div>
+
+          <div className="flex h-full flex-col rounded-[2rem] border border-[#1f3d2b]/10 bg-white/75 p-8 shadow-sm md:p-10">
+            <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
+              Domy Ożarów Mazowiecki
+            </div>
+
+            <h3 className="text-3xl font-semibold tracking-tight">
+              Nowe domy w gminie Ożarów Mazowiecki
+            </h3>
+
+            <p className="mt-5 flex-1 text-lg leading-8 text-black/65">
+              Zobacz inwestycję NovaDuo w Pogroszewie: przestronne lokale,
+              garaże, prywatne ogrody, pompy ciepła i rekuperację.
+            </p>
+
+            <a
+              href="/domy-ozarow-mazowiecki"
+              className="mt-7 inline-flex h-12 w-fit items-center justify-center rounded-full bg-[#1f3d2b] px-7 text-base text-white transition hover:bg-[#152b1e]"
+            >
+              Zobacz domy w gminie Ożarów
               <ArrowRight className="ml-2 h-4 w-4" />
             </a>
           </div>
@@ -1206,6 +1229,13 @@ export default function Page() {
                 className="hover:text-[#1f3d2b]"
               >
                 Bliźniaki pod Warszawą
+              </a>
+
+              <a
+                href="/domy-ozarow-mazowiecki"
+                className="hover:text-[#1f3d2b]"
+              >
+                Domy Ożarów Mazowiecki
               </a>
 
               <a href="/historia-cen" className="hover:text-[#1f3d2b]">
