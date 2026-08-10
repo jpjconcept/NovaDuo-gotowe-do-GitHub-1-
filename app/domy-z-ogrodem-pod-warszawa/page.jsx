@@ -416,9 +416,10 @@ export default function DomyZOgrodemPodWarszawaPage() {
             </p>
 
             <p>
-              Przestronny lokal i prywatny ogród tworzą funkcjonalną
-              alternatywę dla mieszkania w mieście, szczególnie dla osób
-              potrzebujących większej swobody i kontaktu z zielenią.
+              Dom z ogrodem pod Warszawą może być wygodną alternatywą dla
+              mieszkania w Warszawie. W NovaDuo mieszkańcy zyskują nie tylko
+              przestronny lokal, ale także prywatny ogród, garaż w bryle budynku
+              oraz kameralne otoczenie Pogroszewa w gminie Ożarów Mazowiecki.
             </p>
           </div>
         </div>
@@ -436,6 +437,116 @@ export default function DomyZOgrodemPodWarszawaPage() {
               </p>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section className="bg-white/60 py-20">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+            <div>
+              <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
+                Więcej przestrzeni na co dzień
+              </div>
+
+              <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">
+                Dom z ogrodem zamiast mieszkania w Warszawie
+              </h2>
+
+              <p className="mt-6 text-lg leading-8 text-black/65">
+                Dla osób, które rozważają zakup większego mieszkania w Warszawie,
+                dom z własnym ogrodem pod Warszawą może oznaczać zupełnie inny
+                sposób korzystania z przestrzeni. W NovaDuo do każdego lokalu
+                przypisana jest prywatna przestrzeń ogrodowa o powierzchni od 255
+                do 424 m², a garaż znajduje się bezpośrednio w bryle budynku.
+              </p>
+
+              <p className="mt-5 text-lg leading-8 text-black/65">
+                Pogroszew leży w gminie Ożarów Mazowiecki, dzięki czemu inwestycja
+                łączy spokojniejsze otoczenie zabudowy jednorodzinnej z dostępem
+                do infrastruktury zachodniej części aglomeracji warszawskiej.
+                Kameralna skala — tylko osiem lokali — pozwala zachować bardziej
+                prywatny charakter niż w dużych osiedlach mieszkaniowych.
+              </p>
+
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <Link
+                  href="/#lokale"
+                  className="inline-flex h-12 items-center justify-center rounded-full bg-[#1f3d2b] px-7 text-white transition hover:bg-[#152b1e]"
+                >
+                  Zobacz dostępne lokale
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+
+                <Link
+                  href="/domy-pod-warszawa"
+                  className="inline-flex h-12 items-center justify-center rounded-full border border-black/15 bg-white px-7 text-[#1f241f] transition hover:border-[#1f3d2b]/40"
+                >
+                  Domy pod Warszawą
+                </Link>
+              </div>
+            </div>
+
+            <div className="grid gap-5 sm:grid-cols-2">
+              <article className="rounded-3xl border border-black/5 bg-[#f6f3ec] p-7 shadow-sm">
+                <Trees className="mb-5 h-8 w-8 text-[#1f3d2b]" />
+                <h3 className="text-2xl font-semibold">Prywatny ogród 255–424 m²</h3>
+                <p className="mt-3 leading-7 text-black/60">
+                  Miejsce na taras, wypoczynek, zabawę dzieci, nasadzenia i własną
+                  aranżację zieleni — bez wychodzenia poza teren domu.
+                </p>
+              </article>
+
+              <article className="rounded-3xl border border-black/5 bg-[#e4e6d7] p-7 shadow-sm">
+                <Car className="mb-5 h-8 w-8 text-[#1f3d2b]" />
+                <h3 className="text-2xl font-semibold">Garaż w bryle domu</h3>
+                <p className="mt-3 leading-7 text-black/60">
+                  Każdy lokal ma własny garaż, co zwiększa wygodę codziennego
+                  użytkowania i daje dodatkową przestrzeń funkcjonalną.
+                </p>
+              </article>
+
+              <article className="rounded-3xl border border-black/5 bg-[#e4e6d7] p-7 shadow-sm">
+                <Home className="mb-5 h-8 w-8 text-[#1f3d2b]" />
+                <h3 className="text-2xl font-semibold">Kameralna inwestycja</h3>
+                <p className="mt-3 leading-7 text-black/60">
+                  Cztery budynki dwulokalowe i tylko osiem lokali zamiast dużego,
+                  gęsto zabudowanego osiedla.
+                </p>
+              </article>
+
+              <article className="rounded-3xl border border-black/5 bg-[#f6f3ec] p-7 shadow-sm">
+                <MapPin className="mb-5 h-8 w-8 text-[#1f3d2b]" />
+                <h3 className="text-2xl font-semibold">Pogroszew, Ożarów Mazowiecki</h3>
+                <p className="mt-3 leading-7 text-black/60">
+                  Lokalizacja pod Warszawą, w otoczeniu zabudowy jednorodzinnej i
+                  terenów zielonych, z dostępem do infrastruktury Ożarowa
+                  Mazowieckiego.
+                </p>
+              </article>
+            </div>
+          </div>
+
+          <div className="mt-10 rounded-3xl border border-[#1f3d2b]/10 bg-white p-7 md:p-8">
+            <p className="text-base leading-7 text-black/60">
+              Szukasz domu w konkretnym rejonie? Zobacz również ofertę
+              {" "}
+              <Link
+                href="/domy-ozarow-mazowiecki"
+                className="font-semibold text-[#1f3d2b] underline decoration-[#1f3d2b]/30 underline-offset-4"
+              >
+                domów w gminie Ożarów Mazowiecki
+              </Link>{" "}
+              oraz stronę poświęconą
+              {" "}
+              <Link
+                href="/segmenty-pogroszew"
+                className="font-semibold text-[#1f3d2b] underline decoration-[#1f3d2b]/30 underline-offset-4"
+              >
+                segmentom w Pogroszewie
+              </Link>
+              .
+            </p>
+          </div>
         </div>
       </section>
 
