@@ -535,8 +535,15 @@ export default function DomyZOgrodemPodWarszawaPage() {
                 className="font-semibold text-[#1f3d2b] underline decoration-[#1f3d2b]/30 underline-offset-4"
               >
                 domów w gminie Ożarów Mazowiecki
+              </Link>, stronę poświęconą
+              {" "}
+              <Link
+                href="/segmenty-pod-warszawa"
+                className="font-semibold text-[#1f3d2b] underline decoration-[#1f3d2b]/30 underline-offset-4"
+              >
+                segmentom pod Warszawą
               </Link>{" "}
-              oraz stronę poświęconą
+              oraz
               {" "}
               <Link
                 href="/segmenty-pogroszew"
