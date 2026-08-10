@@ -483,6 +483,13 @@ export default function DomyZOgrodemPodWarszawaPage() {
                 >
                   Domy pod Warszawą
                 </Link>
+
+                <Link
+                  href="/segmenty-pod-warszawa"
+                  className="inline-flex h-12 items-center justify-center rounded-full border border-black/15 bg-white px-7 text-[#1f241f] transition hover:border-[#1f3d2b]/40"
+                >
+                  Segmenty pod Warszawą
+                </Link>
               </div>
             </div>
 
