@@ -617,6 +617,28 @@ export default function Page() {
               <ArrowRight className="ml-2 h-4 w-4 transition group-hover:translate-x-1" />
             </span>
           </a>
+
+          <a
+            href="/o-firmie"
+            className="group flex min-h-[225px] w-full flex-col rounded-3xl border border-[#1f3d2b]/10 bg-[#e4e6d7] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.75rem)] xl:w-[calc(25%-0.75rem)]"
+          >
+            <div className="text-xs uppercase tracking-[0.2em] text-[#1f3d2b]/60">
+              JPJ Concept
+            </div>
+
+            <h3 className="mt-3 text-xl font-semibold leading-7 tracking-tight">
+              O firmie i inwestycji NovaDuo
+            </h3>
+
+            <p className="mt-3 flex-1 text-sm leading-6 text-black/60">
+              Poznaj dewelopera, dane firmy, lokalizację i informacje o NovaDuo.
+            </p>
+
+            <span className="mt-5 inline-flex items-center text-sm font-medium text-[#1f3d2b]">
+              Poznaj JPJ Concept
+              <ArrowRight className="ml-2 h-4 w-4 transition group-hover:translate-x-1" />
+            </span>
+          </a>
         </div>
       </section>
 
@@ -1319,6 +1341,10 @@ export default function Page() {
                 className="hover:text-[#1f3d2b]"
               >
                 Domy z garażem
+              </a>
+
+              <a href="/o-firmie" className="hover:text-[#1f3d2b]">
+                O firmie JPJ Concept
               </a>
 
               <a href="/historia-cen" className="hover:text-[#1f3d2b]">
