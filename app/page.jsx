@@ -1125,18 +1125,54 @@ export default function Page() {
               </a>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
-              {homes.map((home) => (
-                <a
-                  key={home.id}
-                  href={`/karty-lokali/lokal-${home.id.replace("/", "-")}.png`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-2xl border border-black/10 p-5 transition hover:bg-black hover:text-white"
-                >
-                  Lokal {home.id} — karta lokalu
-                </a>
-              ))}
+            <div className="grid gap-6 sm:grid-cols-2">
+              <div>
+                <h3 className="mb-4 text-lg font-semibold text-[#1f3d2b]">
+                  Karty lokali — Zadanie nr 1
+                </h3>
+
+                <div className="grid gap-4">
+                  {homes
+                    .filter((home) =>
+                      ["58/1", "58/3", "58/5", "58/7"].includes(home.id)
+                    )
+                    .map((home) => (
+                      <a
+                        key={home.id}
+                        href={`/karty-lokali/lokal-${home.id.replace("/", "-")}.png`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rounded-2xl border border-black/10 p-5 transition hover:bg-black hover:text-white"
+                      >
+                        Lokal {home.id} — karta lokalu
+                      </a>
+                    ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="mb-4 text-lg font-semibold text-[#1f3d2b]">
+                  Karty lokali — Zadanie nr 2
+                </h3>
+
+                <div className="grid gap-4">
+                  {homes
+                    .filter((home) =>
+                      ["58/2", "58/4", "58/6", "58/8"].includes(home.id)
+                    )
+                    .map((home) => (
+                      <a
+                        key={home.id}
+                        href={`/karty-lokali/lokal-${home.id.replace("/", "-")}.png`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rounded-2xl border border-black/10 p-5 transition hover:bg-black hover:text-white"
+                      >
+                        Lokal {home.id} — karta lokalu
+                      </a>
+                    ))}
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>
