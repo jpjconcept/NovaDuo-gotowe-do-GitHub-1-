@@ -2,10 +2,33 @@ import { supabase } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
+export const runtime = "nodejs";
 
 const REPORTING_START = "2026-07-23";
 const ROAD_VALID_FROM = "2026-07-23";
 const ROAD_TOTAL_PRICE = 2;
+
+const HISTORY_CACHE_TTL_MS = 60 * 1000;
+const QUERY_TIMEOUT_MS = 3500;
+const QUERY_ATTEMPTS = 2;
+
+const UNIT_USABLE_AREAS = {
+  "58/1": 118.48,
+  "58/3": 118.48,
+  "58/5": 118.48,
+  "58/7": 123.62,
+  "58/2": 118.48,
+  "58/4": 118.48,
+  "58/6": 118.48,
+  "58/8": 118.48,
+};
+
+let historyCache = {
+  data: null,
+  expiresAt: 0,
+};
+
+let historyRequestInFlight = null;
 
 const displayOrder = [
   "58/1",
@@ -99,6 +122,103 @@ function csvEscape(value) {
 
 function csvLine(values) {
   return values.map(csvEscape).join(";");
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function errorMessage(error) {
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  return String(error ?? "Nieznany błąd");
+}
+
+async function loadHistoryFromSupabase() {
+  let lastError = null;
+
+  for (let attempt = 1; attempt <= QUERY_ATTEMPTS; attempt += 1) {
+    try {
+      const result = await supabase
+        .from("unit_price_history")
+        .select(
+          "id, unit_id, old_total_price, new_total_price, changed_at"
+        )
+        .order("changed_at", { ascending: true })
+        .abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS));
+
+      if (result.error) {
+        throw new Error(result.error.message);
+      }
+
+      return result.data ?? [];
+    } catch (error) {
+      lastError = error;
+
+      if (attempt < QUERY_ATTEMPTS) {
+        await sleep(250 * attempt);
+      }
+    }
+  }
+
+  throw new Error(
+    `Nie udało się pobrać historii cen po ${QUERY_ATTEMPTS} próbach: ${errorMessage(
+      lastError
+    )}`
+  );
+}
+
+async function getHistory() {
+  const now = Date.now();
+
+  if (historyCache.data && historyCache.expiresAt > now) {
+    return historyCache.data;
+  }
+
+  if (historyRequestInFlight) {
+    return historyRequestInFlight;
+  }
+
+  historyRequestInFlight = (async () => {
+    try {
+      const data = await loadHistoryFromSupabase();
+
+      historyCache = {
+        data,
+        expiresAt: Date.now() + HISTORY_CACHE_TTL_MS,
+      };
+
+      return data;
+    } catch (error) {
+      if (historyCache.data) {
+        console.warn(
+          "Supabase chwilowo niedostępny. Używam ostatniej poprawnej historii z pamięci:",
+          error
+        );
+
+        return historyCache.data;
+      }
+
+      throw error;
+    } finally {
+      historyRequestInFlight = null;
+    }
+  })();
+
+  return historyRequestInFlight;
+}
+
+function cacheHeaders(reportDate, today) {
+  const isHistorical = reportDate < today;
+
+  return {
+    "Cache-Control": "public, max-age=0, must-revalidate",
+    "Vercel-CDN-Cache-Control": isHistorical
+      ? "public, s-maxage=604800, stale-while-revalidate=2592000"
+      : "public, s-maxage=300, stale-while-revalidate=86400",
+  };
 }
 
 function getWarsawDate(value = new Date()) {
@@ -285,6 +405,37 @@ function buildRow(unit, snapshot) {
   ];
 }
 
+export async function HEAD(request) {
+  const today = getWarsawDate();
+  const requestUrl = new URL(request.url);
+  const reportDate = requestUrl.searchParams.get("date") || today;
+
+  if (
+    !isValidIsoDate(reportDate) ||
+    reportDate < REPORTING_START ||
+    reportDate > today
+  ) {
+    return new Response(null, {
+      status: 400,
+      headers: {
+        "Cache-Control": "no-store",
+      },
+    });
+  }
+
+  return new Response(null, {
+    status: 200,
+    headers: {
+      "Content-Type": "text/csv; charset=utf-8",
+      "Content-Disposition": `inline; filename="novaduo-ceny-${reportDate}.csv"`,
+      ...cacheHeaders(reportDate, today),
+      "Access-Control-Allow-Origin": "*",
+      "X-Content-Type-Options": "nosniff",
+      "X-NovaDuo-Data-Date": reportDate,
+    },
+  });
+}
+
 export async function GET(request) {
   try {
     const today = getWarsawDate();
@@ -332,41 +483,15 @@ export async function GET(request) {
       );
     }
 
-    const [unitsResult, historyResult] = await Promise.all([
-      supabase
-        .from("units")
-        .select("id, usable_area"),
+    const history = await getHistory();
 
-      supabase
-        .from("unit_price_history")
-        .select(
-          "id, unit_id, old_total_price, new_total_price, changed_at"
-        )
-        .order("changed_at", { ascending: true }),
-    ]);
-
-    if (unitsResult.error) {
-      throw new Error(unitsResult.error.message);
-    }
-
-    if (historyResult.error) {
-      throw new Error(historyResult.error.message);
-    }
-
-    const units = [...(unitsResult.data ?? [])].sort(
-      (first, second) =>
-        displayOrder.indexOf(first.id) -
-        displayOrder.indexOf(second.id)
-    );
-
-    if (units.length !== displayOrder.length) {
-      throw new Error(
-        `Oczekiwano ${displayOrder.length} lokali, pobrano ${units.length}.`
-      );
-    }
+    const units = displayOrder.map((id) => ({
+      id,
+      usable_area: UNIT_USABLE_AREAS[id],
+    }));
 
     const snapshots = buildSnapshots(
-      historyResult.data ?? [],
+      history,
       reportDate
     );
 
@@ -395,11 +520,9 @@ export async function GET(request) {
       headers: {
         "Content-Type": "text/csv; charset=utf-8",
         "Content-Disposition": `inline; filename="novaduo-ceny-${reportDate}.csv"`,
-        "Cache-Control":
-          "no-store, no-cache, must-revalidate, max-age=0",
-        Pragma: "no-cache",
-        Expires: "0",
+        ...cacheHeaders(reportDate, today),
         "Access-Control-Allow-Origin": "*",
+        "X-Content-Type-Options": "nosniff",
         "X-NovaDuo-Data-Date": reportDate,
       },
     });
@@ -407,7 +530,7 @@ export async function GET(request) {
     console.error("Błąd generowania CSV NovaDuo:", error);
 
     return new Response(
-      `Nie udało się wygenerować pliku CSV: ${error.message}`,
+      `Nie udało się wygenerować pliku CSV: ${errorMessage(error)}`,
       {
         status: 500,
         headers: {
