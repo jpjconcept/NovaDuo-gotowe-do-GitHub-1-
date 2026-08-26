@@ -908,7 +908,7 @@ export default function Page() {
 
           <p className="max-w-xl text-black/60">
             Aktualne ceny brutto, daty ich obowiązywania, statusy sprzedaży,
-            powierzchnie lokali oraz ogrody do wyłącznego użytkowania.
+            powierzchnie lokali oraz działki do wyłącznego użytkowania.
           </p>
         </div>
 
@@ -992,7 +992,7 @@ export default function Page() {
 
                   <div className="flex items-center gap-2">
                     <Trees className="h-4 w-4" />
-                    Ogród: {home.gardenArea}
+                    Działka: {home.gardenArea}
                   </div>
 
                   <div className="flex items-center gap-2">
