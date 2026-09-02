@@ -93,7 +93,7 @@ function GalleryGrid({ images, altPrefix }) {
             className="h-44 w-full object-cover transition duration-500 group-hover:scale-[1.03] sm:h-64 lg:h-72"
           />
         </a>
-      )}
+      ))}
     </div>
   );
 }
