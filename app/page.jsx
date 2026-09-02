@@ -145,13 +145,13 @@ export default function Page() {
     },
     {
       id: "58/3",
-      total_price: 1090000,
+      total_price: 1179000,
       net_area: 154.57,
       usable_area: 118.48,
       garden_area: 272,
       plot_no: "24/11",
-      status: "Rezerwacja",
-      price_valid_from: REPORTING_START,
+      status: "Dostępny",
+      price_valid_from: "2026-09-02",
     },
     {
       id: "58/5",
@@ -983,7 +983,7 @@ export default function Page() {
 
         <div className="mb-12 overflow-hidden rounded-[2rem] bg-white shadow-2xl">
           <img
-            src="/images/novaduo_rezerwacje_v2.webp"
+            src="/images/usytuowanie-lokali-novaduo.webp"
             alt="Usytuowanie lokali NovaDuo"
             className="mx-auto max-h-[500px] w-auto object-contain"
           />
