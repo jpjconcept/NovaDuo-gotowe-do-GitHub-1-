@@ -12,6 +12,7 @@ import {
   Car,
   Ruler,
   Building2,
+  X,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -120,6 +121,8 @@ export default function Page() {
   ];
 
   const [heroIndex, setHeroIndex] = useState(0);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -655,6 +658,28 @@ export default function Page() {
               <ArrowRight className="ml-2 h-4 w-4 transition group-hover:translate-x-1" />
             </span>
           </a>
+
+          <a
+            href="/o-firmie"
+            className="group flex min-h-[225px] w-full flex-col rounded-3xl border border-[#1f3d2b]/10 bg-[#e4e6d7] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.75rem)] xl:w-[calc(25%-0.75rem)]"
+          >
+            <div className="text-xs uppercase tracking-[0.2em] text-[#1f3d2b]/60">
+              JPJ Concept
+            </div>
+
+            <h3 className="mt-3 text-xl font-semibold leading-7 tracking-tight">
+              O firmie i inwestycji NovaDuo
+            </h3>
+
+            <p className="mt-3 flex-1 text-sm leading-6 text-black/60">
+              Poznaj dewelopera, dane firmy, lokalizację i informacje o NovaDuo.
+            </p>
+
+            <span className="mt-5 inline-flex items-center text-sm font-medium text-[#1f3d2b]">
+              Poznaj JPJ Concept
+              <ArrowRight className="ml-2 h-4 w-4 transition group-hover:translate-x-1" />
+            </span>
+          </a>
         </div>
       </section>
 
@@ -758,6 +783,35 @@ export default function Page() {
               atrakcyjną propozycją dla rodzin szukających spokojnego miejsca
               do życia w pobliżu stolicy.
             </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-14">
+        <div className="rounded-[2rem] border border-[#1f3d2b]/10 bg-white/80 p-7 shadow-sm md:p-10">
+          <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-center">
+            <div>
+              <div className="mb-2 text-sm uppercase tracking-[0.25em] text-[#1f3d2b]/60">
+                Galeria NovaDuo
+              </div>
+
+              <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
+                Wszystkie zdjęcia w jednym miejscu
+              </h2>
+
+              <p className="mt-3 max-w-2xl leading-7 text-black/60">
+                Wizualizacje budynków, przykładowe wnętrza oraz zdjęcia z
+                realizacji inwestycji przenieśliśmy do osobnej galerii.
+              </p>
+            </div>
+
+            <a
+              href="/galeria"
+              className="inline-flex h-12 items-center justify-center rounded-full bg-[#1f3d2b] px-6 font-medium text-white transition hover:bg-[#152b1e]"
+            >
+              Otwórz galerię
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </a>
           </div>
         </div>
       </section>
@@ -888,7 +942,7 @@ export default function Page() {
 
           <p className="max-w-xl text-black/60">
             Aktualne ceny brutto, daty ich obowiązywania, statusy sprzedaży,
-            powierzchnie lokali oraz ogrody do wyłącznego użytkowania.
+            powierzchnie lokali oraz działki do wyłącznego użytkowania.
           </p>
         </div>
 
@@ -929,7 +983,7 @@ export default function Page() {
 
         <div className="mb-12 overflow-hidden rounded-[2rem] bg-white shadow-2xl">
           <img
-            src="/images/usytuowanie-lokali-novaduo.webp"
+            src="/images/novaduo_rezerwacje_v2.webp"
             alt="Usytuowanie lokali NovaDuo"
             className="mx-auto max-h-[500px] w-auto object-contain"
           />
@@ -972,7 +1026,7 @@ export default function Page() {
 
                   <div className="flex items-center gap-2">
                     <Trees className="h-4 w-4" />
-                    Ogród: {home.gardenArea}
+                    Działka: {home.gardenArea}
                   </div>
 
                   <div className="flex items-center gap-2">
@@ -1105,18 +1159,54 @@ export default function Page() {
               </a>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
-              {homes.map((home) => (
-                <a
-                  key={home.id}
-                  href={`/karty-lokali/lokal-${home.id.replace("/", "-")}.png`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-2xl border border-black/10 p-5 transition hover:bg-black hover:text-white"
-                >
-                  Lokal {home.id} — karta lokalu
-                </a>
-              ))}
+            <div className="grid gap-6 sm:grid-cols-2">
+              <div>
+                <h3 className="mb-4 text-lg font-semibold text-[#1f3d2b]">
+                  Karty lokali — Zadanie nr 1
+                </h3>
+
+                <div className="grid gap-4">
+                  {homes
+                    .filter((home) =>
+                      ["58/1", "58/3", "58/5", "58/7"].includes(home.id)
+                    )
+                    .map((home) => (
+                      <a
+                        key={home.id}
+                        href={`/karty-lokali/lokal-${home.id.replace("/", "-")}.png`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rounded-2xl border border-black/10 p-5 transition hover:bg-black hover:text-white"
+                      >
+                        Lokal {home.id} — karta lokalu
+                      </a>
+                    ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="mb-4 text-lg font-semibold text-[#1f3d2b]">
+                  Karty lokali — Zadanie nr 2
+                </h3>
+
+                <div className="grid gap-4">
+                  {homes
+                    .filter((home) =>
+                      ["58/2", "58/4", "58/6", "58/8"].includes(home.id)
+                    )
+                    .map((home) => (
+                      <a
+                        key={home.id}
+                        href={`/karty-lokali/lokal-${home.id.replace("/", "-")}.png`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rounded-2xl border border-black/10 p-5 transition hover:bg-black hover:text-white"
+                      >
+                        Lokal {home.id} — karta lokalu
+                      </a>
+                    ))}
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -1208,6 +1298,66 @@ export default function Page() {
         </div>
       </section>
 
+      {selectedImage && selectedImageIndex !== null && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-6">
+          <button
+            type="button"
+            aria-label="Zamknij galerię"
+            onClick={() => {
+              setSelectedImage(null);
+              setSelectedImageIndex(null);
+            }}
+            className="absolute right-6 top-6 text-white"
+          >
+            <X className="h-10 w-10" />
+          </button>
+
+          <button
+            type="button"
+            aria-label="Poprzednie zdjęcie"
+            onClick={() => {
+              const newIndex =
+                selectedImageIndex === 0
+                  ? heroImages.length - 1
+                  : selectedImageIndex - 1;
+
+              setSelectedImageIndex(newIndex);
+              setSelectedImage(heroImages[newIndex]);
+            }}
+            className="absolute left-6 top-1/2 -translate-y-1/2 rounded-full bg-white/20 px-5 py-3 text-4xl text-white"
+          >
+            ‹
+          </button>
+
+          <motion.img
+            key={selectedImage}
+            src={selectedImage}
+            alt="Powiększona wizualizacja NovaDuo"
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+            className="max-h-[90vh] max-w-[90vw] rounded-3xl object-contain"
+          />
+
+          <button
+            type="button"
+            aria-label="Następne zdjęcie"
+            onClick={() => {
+              const newIndex =
+                selectedImageIndex === heroImages.length - 1
+                  ? 0
+                  : selectedImageIndex + 1;
+
+              setSelectedImageIndex(newIndex);
+              setSelectedImage(heroImages[newIndex]);
+            }}
+            className="absolute right-6 top-1/2 -translate-y-1/2 rounded-full bg-white/20 px-5 py-3 text-4xl text-white"
+          >
+            ›
+          </button>
+        </div>
+      )}
+
       <footer className="border-t border-black/10 bg-[#f6f3ec] py-10">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 text-sm text-black/55 md:flex-row md:items-center md:justify-between">
           <div className="space-y-2">
@@ -1261,6 +1411,10 @@ export default function Page() {
                 className="hover:text-[#1f3d2b]"
               >
                 Domy z garażem
+              </a>
+
+              <a href="/o-firmie" className="hover:text-[#1f3d2b]">
+                O firmie JPJ Concept
               </a>
 
               <a href="#finansowanie" className="hover:text-[#1f3d2b]">
