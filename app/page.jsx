@@ -983,7 +983,7 @@ export default function Page() {
 
         <div className="mb-12 overflow-hidden rounded-[2rem] bg-white shadow-2xl">
           <img
-            src="/images/usytuowanie-lokali-novaduo.webp"
+            src="/images/novaduo_rezerwacje_v2.webp"
             alt="Usytuowanie lokali NovaDuo"
             className="mx-auto max-h-[500px] w-auto object-contain"
           />
