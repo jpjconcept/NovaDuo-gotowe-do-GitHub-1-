@@ -399,14 +399,14 @@ export default function Page() {
 
               <p className="mt-4 max-w-2xl leading-7 text-black/65">
                 W sprawie możliwości finansowania zakupu lokalu w inwestycji
-                NovaDuo możesz skontaktować się bezpośrednio z doradcą
+                NovaDuo możesz skontaktować się bezpośrednio z pośrednikiem
                 kredytowym.
               </p>
             </div>
 
             <div className="rounded-3xl bg-white p-6 shadow-sm">
               <div className="text-sm uppercase tracking-[0.2em] text-[#1f3d2b]/55">
-                Doradca kredytowy
+                Pośrednik kredytowy
               </div>
 
               <div className="mt-2 text-2xl font-semibold">
