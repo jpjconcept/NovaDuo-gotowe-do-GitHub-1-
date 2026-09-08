@@ -1,4 +1,5 @@
 import "./globals.css";
+import AnalyticsConsent from "./AnalyticsConsent";
 
 export const metadata = {
   metadataBase: new URL("https://www.jpjconcept.pl"),
@@ -117,6 +118,8 @@ export default function RootLayout({ children }) {
         />
 
         {children}
+
+        <AnalyticsConsent />
       </body>
     </html>
   );
