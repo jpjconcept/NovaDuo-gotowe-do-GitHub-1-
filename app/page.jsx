@@ -111,6 +111,18 @@ function buildHomeViewModel(unit) {
 }
 
 export default function Page() {
+  const trackZapytajOLokal = () => {
+    if (
+      typeof window !== "undefined" &&
+      typeof window.gtag === "function"
+    ) {
+      window.gtag("event", "zapytaj_o_lokal_click", {
+        event_category: "kontakt",
+        event_label: "Zapytaj o lokal",
+      });
+    }
+  };
+
   const heroImages = [
     "/images/postprodukcja_0000_Scene-1_upscale01.png",
     "/images/postprodukcja_0001_Scene-7_upscale01.png",
@@ -288,6 +300,7 @@ export default function Page() {
 
           <a
             href="#kontakt"
+            onClick={trackZapytajOLokal}
             className="rounded-full bg-[#1f3d2b] px-6 py-3 text-white hover:bg-[#152b1e]"
           >
             Zapytaj o lokal
