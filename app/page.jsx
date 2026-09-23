@@ -322,13 +322,14 @@ export default function Page() {
             </div>
 
             <h1 className="max-w-3xl text-5xl font-semibold leading-[1.02] tracking-tight md:text-7xl">
-              Nowoczesne domy i bliźniaki w Pogroszewie pod Warszawą
+              Nowoczesne domy i segmenty między Ożarowem Mazowieckim a Starymi Babicami
             </h1>
 
             <p className="mt-7 max-w-2xl text-lg leading-8 text-black/65">
-              NovaDuo to nowoczesna, kameralna inwestycja obejmująca
-              funkcjonalne lokale mieszkalne z garażem, ogrodem i wygodnym
-              układem pomieszczeń.
+              NovaDuo to kameralna inwestycja w Pogroszewie, położona na
+              pograniczu gmin Ożarów Mazowiecki i Stare Babice. Funkcjonalne
+              lokale mieszkalne oferują garaż, ogród i wygodny układ
+              pomieszczeń.
             </p>
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
@@ -703,12 +704,13 @@ export default function Page() {
           </div>
 
           <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">
-            Zamieszkaj w spokojnej części Pogroszewa
+            Pogroszew – między Ożarowem Mazowieckim a Starymi Babicami
           </h2>
 
           <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-black/60">
             Inwestycja NovaDuo położona jest przy ul. Nowowiejskiej 58 w
-            Pogroszewie.
+            Pogroszewie, na pograniczu gmin Ożarów Mazowiecki i Stare Babice,
+            z dogodnym dojazdem do obu rejonów oraz zachodniej części Warszawy.
           </p>
         </div>
 
@@ -721,7 +723,7 @@ export default function Page() {
                 </div>
 
                 <h3 className="mt-3 text-3xl font-semibold">
-                  Świetna lokalizacja pod Warszawą
+                  Blisko Ożarowa Mazowieckiego i Starych Babic
                 </h3>
               </div>
 
@@ -737,10 +739,10 @@ export default function Page() {
 
                 <div>
                   <div className="font-semibold text-white">
-                    Blisko Ożarowa Mazowieckiego
+                    Ożarów Mazowiecki i Stare Babice
                   </div>
                   <div className="text-sm">
-                    szkoły, sklepy i infrastruktura miejska
+                    sklepy, szkoły i lokalna infrastruktura
                   </div>
                 </div>
 
