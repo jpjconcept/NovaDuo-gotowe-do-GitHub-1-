@@ -6,20 +6,25 @@ export const metadata = {
 
   title: {
     default:
-      "NovaDuo – Segmenty, domy i bliźniaki w Pogroszewie | JPJ Concept",
+      "NovaDuo – domy i segmenty Ożarów Mazowiecki | Stare Babice",
     template: "%s | NovaDuo",
   },
 
   description:
-    "Nowoczesne domy dwulokalowe w Pogroszewie, w gminie Ożarów Mazowiecki. Kameralna inwestycja NovaDuo przy ul. Nowowiejskiej 58. Garaż, prywatny ogród, pompa ciepła i rekuperacja.",
+    "NovaDuo – nowe domy i segmenty w Pogroszewie, na pograniczu gmin Ożarów Mazowiecki i Stare Babice. Ok. 154 m² netto, garaż, ogród, pompa ciepła i rekuperacja.",
 
   keywords: [
+    "segmenty Ożarów Mazowiecki",
+    "segmenty Stare Babice",
+    "domy Ożarów Mazowiecki",
+    "domy Stare Babice",
+    "nowe domy Ożarów Mazowiecki",
+    "nowe domy Stare Babice",
     "segmenty Pogroszew",
     "segmenty pod Warszawą",
     "bliźniaki Pogroszew",
     "bliźniaki pod Warszawą",
     "domy Pogroszew",
-    "domy Ożarów Mazowiecki",
     "domy pod Warszawą",
     "nowe domy Pogroszew",
     "NovaDuo",
@@ -41,9 +46,9 @@ export const metadata = {
 
   openGraph: {
     title:
-      "NovaDuo – Segmenty, domy i bliźniaki w Pogroszewie pod Warszawą",
+      "NovaDuo – domy i segmenty między Ożarowem Mazowieckim a Starymi Babicami",
     description:
-      "Kameralna inwestycja NovaDuo przy ul. Nowowiejskiej 58 w Pogroszewie. 8 lokali z garażami, prywatnymi ogrodami, pompami ciepła i rekuperacją.",
+      "Kameralna inwestycja NovaDuo w Pogroszewie, na pograniczu gmin Ożarów Mazowiecki i Stare Babice. Ok. 154 m² netto, garaż, ogród, pompa ciepła i rekuperacja.",
     url: "/",
     siteName: "NovaDuo",
     locale: "pl_PL",
@@ -51,7 +56,7 @@ export const metadata = {
     images: [
       {
         url: "/images/postprodukcja_0000_Scene-1_upscale01.png",
-        alt: "NovaDuo – nowe segmenty i bliźniaki w Pogroszewie pod Warszawą",
+        alt: "NovaDuo – nowe domy i segmenty w Pogroszewie koło Ożarowa Mazowieckiego i Starych Babic",
       },
     ],
   },
@@ -59,9 +64,9 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     title:
-      "NovaDuo – Segmenty, domy i bliźniaki w Pogroszewie pod Warszawą",
+      "NovaDuo – domy i segmenty Ożarów Mazowiecki | Stare Babice",
     description:
-      "Kameralna inwestycja NovaDuo w Pogroszewie. Garaż, prywatny ogród, pompa ciepła i rekuperacja.",
+      "Kameralna inwestycja NovaDuo w Pogroszewie. Ok. 154 m² netto, garaż, ogród, pompa ciepła i rekuperacja.",
     images: ["/images/postprodukcja_0000_Scene-1_upscale01.png"],
   },
 
@@ -118,7 +123,6 @@ export default function RootLayout({ children }) {
         />
 
         {children}
-
         <AnalyticsConsent />
       </body>
     </html>
