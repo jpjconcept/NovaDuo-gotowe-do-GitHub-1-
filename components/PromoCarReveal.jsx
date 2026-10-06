@@ -1,44 +1,68 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const sparkles = [
   { top: "13%", left: "24%", delay: "0ms", size: 26 },
-  { top: "7%", left: "52%", delay: "160ms", size: 20 },
-  { top: "18%", left: "77%", delay: "320ms", size: 30 },
-  { top: "39%", left: "10%", delay: "480ms", size: 18 },
-  { top: "44%", left: "88%", delay: "640ms", size: 24 },
-  { top: "66%", left: "17%", delay: "800ms", size: 28 },
-  { top: "72%", left: "80%", delay: "960ms", size: 18 },
-  { top: "84%", left: "51%", delay: "1120ms", size: 24 },
-  { top: "31%", left: "49%", delay: "1280ms", size: 16 },
+  { top: "7%", left: "52%", delay: "140ms", size: 20 },
+  { top: "18%", left: "77%", delay: "280ms", size: 30 },
+  { top: "39%", left: "10%", delay: "420ms", size: 18 },
+  { top: "44%", left: "88%", delay: "560ms", size: 24 },
+  { top: "66%", left: "17%", delay: "700ms", size: 28 },
+  { top: "72%", left: "80%", delay: "840ms", size: 18 },
+  { top: "84%", left: "51%", delay: "980ms", size: 24 },
+  { top: "31%", left: "49%", delay: "1120ms", size: 16 },
 ];
 
 export default function PromoCarReveal() {
   const [revealed, setRevealed] = useState(false);
+  const [showSparkles, setShowSparkles] = useState(false);
+  const [settled, setSettled] = useState(false);
+
+  useEffect(() => {
+    const revealTimer = setTimeout(() => {
+      setRevealed(true);
+      setShowSparkles(true);
+    }, 350);
+
+    const sparklesTimer = setTimeout(() => {
+      setShowSparkles(false);
+    }, 2600);
+
+    const settleTimer = setTimeout(() => {
+      setSettled(true);
+    }, 2800);
+
+    return () => {
+      clearTimeout(revealTimer);
+      clearTimeout(sparklesTimer);
+      clearTimeout(settleTimer);
+    };
+  }, []);
 
   return (
     <div className="relative mx-auto flex min-h-[390px] w-full max-w-[760px] items-center justify-center overflow-visible md:min-h-[520px]">
-      {!revealed && (
-        <button
-          type="button"
-          onClick={() => setRevealed(true)}
-          className="group relative z-30 rounded-full border border-[#b99155]/40 bg-[#1f3d2b] px-8 py-4 text-base font-semibold text-white shadow-xl transition hover:-translate-y-0.5 hover:bg-[#152b1e] focus:outline-none focus:ring-4 focus:ring-[#d9bd84]/30"
-          aria-label="Pokaż samochód w promocji"
-        >
-          <span className="absolute inset-0 -z-10 rounded-full bg-[#d9bd84]/10 blur-xl transition group-hover:bg-[#d9bd84]/20" />
-          Pokaż auto w promocji ✦
-        </button>
-      )}
 
+      {/* Delikatna poświata podczas pojawiania się auta */}
       <div
-        className={`pointer-events-none absolute inset-8 rounded-[45%] bg-[radial-gradient(circle,rgba(185,218,255,0.48)_0%,rgba(185,218,255,0.18)_42%,transparent_72%)] blur-2xl transition-all duration-[1800ms] ease-out ${
-          revealed ? "scale-100 opacity-100" : "scale-75 opacity-0"
+        className={`pointer-events-none absolute inset-8 rounded-[45%]
+        bg-[radial-gradient(circle,rgba(185,218,255,0.50)_0%,rgba(185,218,255,0.20)_42%,transparent_72%)]
+        blur-2xl transition-all ease-out
+        ${
+          !revealed
+            ? "scale-75 opacity-0 duration-[1800ms]"
+            : settled
+            ? "scale-100 opacity-0 duration-700"
+            : "scale-100 opacity-100 duration-[1800ms]"
         }`}
       />
 
-      {revealed && (
-        <div className="pointer-events-none absolute inset-0 z-20" aria-hidden="true">
+      {/* Gwiazdki — tylko podczas pojawiania się */}
+      {showSparkles && (
+        <div
+          className="pointer-events-none absolute inset-0 z-20"
+          aria-hidden="true"
+        >
           {sparkles.map((sparkle, index) => (
             <span
               key={index}
@@ -56,10 +80,15 @@ export default function PromoCarReveal() {
         </div>
       )}
 
+      {/* Samochód */}
       <img
         src="/images/promocja-auto.png"
         alt="Ford Puma z czerwoną kokardą i kluczykami – promocja NovaDuo"
-        className={`relative z-10 w-full object-contain drop-shadow-[0_32px_38px_rgba(0,0,0,0.22)] transition-[opacity,transform,filter] duration-[2200ms] ease-out ${
+        className={`relative z-10 w-full object-contain
+        drop-shadow-[0_32px_38px_rgba(0,0,0,0.22)]
+        transition-[opacity,transform,filter]
+        duration-[2200ms] ease-out
+        ${
           revealed
             ? "scale-100 opacity-100 blur-0"
             : "scale-90 opacity-0 blur-xl"
@@ -74,7 +103,7 @@ export default function PromoCarReveal() {
             0 0 8px rgba(255, 232, 166, 1),
             0 0 18px rgba(255, 205, 95, 0.95),
             0 0 30px rgba(255, 255, 255, 0.8);
-          animation: promoSparkle 1750ms ease-out forwards;
+          animation: promoSparkle 1500ms ease-out forwards;
         }
 
         @keyframes promoSparkle {
@@ -82,17 +111,20 @@ export default function PromoCarReveal() {
             opacity: 0;
             transform: scale(0.15) rotate(0deg);
           }
-          18% {
+
+          20% {
             opacity: 1;
-            transform: scale(1.35) rotate(20deg);
+            transform: scale(1.4) rotate(20deg);
           }
-          48% {
+
+          55% {
             opacity: 0.95;
             transform: scale(0.9) rotate(45deg);
           }
+
           100% {
             opacity: 0;
-            transform: scale(0.25) rotate(80deg);
+            transform: scale(0.2) rotate(90deg);
           }
         }
       `}</style>
