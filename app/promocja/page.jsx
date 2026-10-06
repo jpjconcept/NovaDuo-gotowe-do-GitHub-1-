@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 
 export const metadata = {
-  title: "Promocja NovaDuo – dom i Ford Puma w cenie | Pogroszew",
+  title: "Promocja NovaDuo – nowy dom i Ford Puma | Pogroszew",
   description:
     "Kup lokal NovaDuo w Pogroszewie do 31.12.2026 r. i skorzystaj z promocji z nowym Fordem Puma z automatyczną skrzynią biegów o wartości katalogowej ok. 100 000 zł brutto.",
   alternates: {
@@ -40,7 +40,7 @@ export const metadata = {
   },
 };
 
-const REGULAMIN_READY = false;
+const REGULAMIN_READY = true;
 
 const steps = [
   {
@@ -59,7 +59,7 @@ const steps = [
     number: "03",
     title: "Odbierz dom i samochód",
     description:
-      "Po przeniesieniu własności lokalu i bezusterkowym zakończeniu odbioru samochód zostanie wydany zgodnie z regulaminem promocji.",
+      "Po łącznym spełnieniu wszystkich warunków określonych w regulaminie, w tym zapłacie pełnej ceny, odbiorze lokalu i przeniesieniu własności, samochód zostanie wydany zgodnie z regulaminem promocji.",
   },
 ];
 
@@ -81,9 +81,14 @@ const faq = [
       "Nie. Samochód nie podlega wymianie na gotówkę ani rabat od ceny lokalu, zgodnie z zasadami promocji.",
   },
   {
+    question: "Czy muszę dopłacić podatek od samochodu?",
+    answer:
+      "Nie. Zgodnie z regulaminem ekonomiczny ciężar podatku dochodowego związanego z Nagrodą ponosi Organizator. Uczestnik nie wpłaca dodatkowych środków na pokrycie tego podatku.",
+  },
+  {
     question: "Kiedy samochód zostanie wydany?",
     answer:
-      "W terminie do 30 dni od spełnienia ostatniego z warunków określonych w regulaminie, w szczególności po przeniesieniu własności lokalu oraz bezusterkowym zakończeniu odbioru.",
+      "W terminie do 30 dni od łącznego spełnienia wszystkich warunków określonych w regulaminie, w tym zapłaty pełnej ceny, odbioru lokalu i przeniesienia własności.",
   },
   {
     question: "Czy samochód będzie fabrycznie nowy?",
@@ -410,14 +415,14 @@ export default function PromocjaPage() {
                   Regulamin promocji „Nowy Dom. Nowy Samochód.”
                 </h2>
                 <p className="mt-3 max-w-2xl leading-7 text-black/55">
-                  Ostateczna wersja regulaminu zostanie opublikowana przed
-                  uruchomieniem promocji, po zakończeniu uzgodnień podatkowych.
+                  Regulamin promocji jest już dostępny. Pobierz dokument PDF i
+                  zapoznaj się ze szczegółowymi warunkami udziału w promocji.
                 </p>
               </div>
 
               {REGULAMIN_READY ? (
                 <a
-                  href="/dokumenty/regulamin-promocji-novaduo.pdf"
+                  href="/regulamin-promocji-novaduo.pdf"
                   className="inline-flex shrink-0 items-center justify-center rounded-full bg-[#1f3d2b] px-7 py-3.5 font-medium text-white"
                 >
                   Pobierz regulamin PDF
