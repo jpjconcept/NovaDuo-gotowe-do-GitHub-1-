@@ -286,17 +286,23 @@ export default function Page() {
             />
           </div>
 
-          <div className="hidden gap-7 text-sm text-black/70 md:flex">
-            <a href="#inwestycja">Inwestycja</a>
-            <a href="#finansowanie">Finansowanie</a>
-            <a href="#lokalizacja">Lokalizacja</a>
-            <a href="#lokale">Lokale</a>
-            <a href="#dokumenty">Dokumenty</a>
-            <a href="#standard">Standard</a>
-            <a href="/galeria">Galeria</a>
-            <a href="/historia-cen">Historia cen</a>
-            <a href="#kontakt">Kontakt</a>
-          </div>
+         <div className="hidden gap-7 text-sm text-black/70 md:flex">
+  <a href="#inwestycja">Inwestycja</a>
+  <a href="#finansowanie">Finansowanie</a>
+  <a href="#lokalizacja">Lokalizacja</a>
+  <a href="#lokale">Lokale</a>
+  <a href="#dokumenty">Dokumenty</a>
+  <a href="#standard">Standard</a>
+  <a href="/galeria">Galeria</a>
+  <a href="/historia-cen">Historia cen</a>
+  <a
+    href="/promocja"
+    className="font-semibold text-[#b8913c]"
+  >
+    PROMOCJA
+  </a>
+  <a href="#kontakt">Kontakt</a>
+</div>
 
           <a
             href="#kontakt"
