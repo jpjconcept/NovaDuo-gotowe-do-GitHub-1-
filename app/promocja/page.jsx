@@ -1,4 +1,5 @@
 import Link from "next/link";
+import PromoCarReveal from "@/components/PromoCarReveal";
 import {
   ArrowRight,
   CalendarDays,
@@ -32,7 +33,7 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: "/images/promocja-novaduo-ford-puma-web.png",
+        url: "/images/promocja-auto.png",
         alt: "Promocja NovaDuo – nowy dom i Ford Puma",
       },
     ],
@@ -168,54 +169,52 @@ export default function PromocjaPage() {
         </div>
       </nav>
 
-      <section className="mx-auto max-w-[1500px] px-4 py-6 md:px-6 md:py-10">
-        <div className="overflow-hidden rounded-[1.75rem] bg-[#10251b] shadow-2xl">
-          <img
-            src="/images/promocja-novaduo-ford-puma-web.png"
-            alt="Nowy dom. Nowy samochód. Jedna cena – promocja NovaDuo"
-            className="w-full object-cover"
-          />
-        </div>
+      <section className="relative overflow-hidden border-b border-black/5 bg-[radial-gradient(circle_at_72%_38%,rgba(212,185,120,0.18),transparent_30%),linear-gradient(135deg,#f6f3ec_0%,#ffffff_48%,#eef0e7_100%)]">
+        <div className="mx-auto grid max-w-7xl gap-8 px-6 py-14 md:py-20 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-10">
+          <div>
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#b8913c]/30 bg-[#ead09a]/25 px-4 py-2 text-sm font-medium text-[#6d531d]">
+              <CalendarDays className="h-4 w-4" />
+              Promocja do 31.12.2026 r.
+            </div>
 
-        <div className="mx-auto mt-8 flex max-w-5xl flex-col items-center text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#b8913c]/30 bg-[#ead09a]/25 px-4 py-2 text-sm font-medium text-[#6d531d]">
-            <CalendarDays className="h-4 w-4" />
-            Promocja do 31.12.2026 r.
+            <h1 className="mt-6 text-4xl font-semibold leading-[1.04] tracking-tight md:text-6xl">
+              Nowy dom. Nowy samochód. <span className="text-[#b8913c]">Jedna cena.</span>
+            </h1>
+
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-black/65 md:text-xl">
+              Kup lokal w inwestycji NovaDuo w okresie obowiązywania promocji i
+              skorzystaj ze świadczenia promocyjnego w postaci fabrycznie nowego
+              Forda Puma z automatyczną skrzynią biegów o orientacyjnej wartości
+              katalogowej około 100 000 zł brutto.
+            </p>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/#lokale"
+                className="inline-flex h-12 items-center justify-center rounded-full bg-[#1f3d2b] px-7 py-3.5 font-medium text-white transition hover:bg-[#152b1e]"
+              >
+                Sprawdź dostępne lokale
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+
+              <a
+                href="#jak-dziala"
+                className="inline-flex h-12 items-center justify-center rounded-full border border-black/15 bg-white px-7 py-3.5 font-medium transition hover:bg-black/[0.03]"
+              >
+                Poznaj zasady promocji
+              </a>
+            </div>
+
+            <p className="mt-5 text-xs leading-5 text-black/45">
+              Promocja może zakończyć się wcześniej na zasadach określonych w
+              regulaminie. Prezentowany model i kolor samochodu mają charakter
+              poglądowy.
+            </p>
           </div>
 
-          <h1 className="mt-6 text-4xl font-semibold tracking-tight md:text-6xl">
-            Nowy dom. Nowy samochód. Jedna cena.
-          </h1>
-
-          <p className="mt-6 max-w-3xl text-lg leading-8 text-black/65 md:text-xl">
-            Kup lokal w inwestycji NovaDuo w okresie obowiązywania promocji i
-            skorzystaj ze świadczenia promocyjnego w postaci fabrycznie nowego
-            Forda Puma z automatyczną skrzynią biegów o orientacyjnej wartości
-            katalogowej około 100 000 zł brutto.
-          </p>
-
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link
-              href="/#lokale"
-              className="inline-flex h-12 items-center justify-center rounded-full bg-[#1f3d2b] px-7 py-3.5 font-medium text-white transition hover:bg-[#152b1e]"
-            >
-              Sprawdź dostępne lokale
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-
-            <a
-              href="#jak-dziala"
-              className="inline-flex h-12 items-center justify-center rounded-full border border-black/15 bg-white px-7 py-3.5 font-medium"
-            >
-              Poznaj zasady promocji
-            </a>
+          <div className="relative min-h-[420px] lg:min-h-[560px]">
+            <PromoCarReveal />
           </div>
-
-          <p className="mt-5 text-xs leading-5 text-black/45">
-            Promocja może zakończyć się wcześniej na zasadach określonych w
-            regulaminie. Prezentowany model i kolor samochodu mają charakter
-            poglądowy.
-          </p>
         </div>
       </section>
 
@@ -296,11 +295,12 @@ export default function PromocjaPage() {
             </p>
           </div>
 
-          <div className="overflow-hidden rounded-[2rem] bg-[#10251b] shadow-2xl">
+          <div className="relative overflow-hidden rounded-[2rem] border border-[#b8913c]/15 bg-white p-5 shadow-2xl md:p-8">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(185,218,255,0.22),transparent_58%)]" />
             <img
-              src="/images/promocja-novaduo-ford-puma-social.png"
-              alt="Ford Puma z czerwoną kokardą – promocja NovaDuo"
-              className="w-full object-cover"
+              src="/images/promocja-auto.png"
+              alt="Ford Puma z czerwoną kokardą i kluczykami – promocja NovaDuo"
+              className="relative z-10 w-full object-contain"
             />
           </div>
         </div>
