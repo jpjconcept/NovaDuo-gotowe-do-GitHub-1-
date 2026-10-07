@@ -145,6 +145,14 @@ const heroImages = [
 ];const [heroIndex, setHeroIndex] = useState(0);
 const [selectedImage, setSelectedImage] = useState(null);
 const [selectedImageIndex, setSelectedImageIndex] = useState(null);
+const [showFinanceContact, setShowFinanceContact] = useState(false);
+const [showAgentContact, setShowAgentContact] = useState(false);
+
+const trackEvent = (name, params = {}) => {
+  if (typeof window !== "undefined" && typeof window.gtag === "function") {
+    window.gtag("event", name, params);
+  }
+};
 
 useEffect(() => {
   const interval = setInterval(() => {
@@ -315,7 +323,7 @@ useEffect(() => {
   
 </div>
 
-          <div className="hidden gap-8 text-sm text-black/70 md:flex"><a href="#inwestycja">Inwestycja</a><a href="#lokalizacja">Lokalizacja</a><a href="#lokale">Lokale</a><a href="#dokumenty">Dokumenty</a>
+          <div className="hidden gap-8 text-sm text-black/70 md:flex"><a href="#inwestycja">Inwestycja</a><a href="#finansowanie">Finansowanie</a><a href="#lokalizacja">Lokalizacja</a><a href="#lokale">Lokale</a><a href="#dokumenty">Dokumenty</a>
 <a href="#standard">Standard</a>
 <a href="#galeria">Galeria</a>
 <a href="/promocja" className="font-semibold text-[#b07f24]">PROMOCJA</a>
@@ -427,6 +435,133 @@ useEffect(() => {
               className="relative z-10 w-full max-w-[650px] object-contain transition duration-500 group-hover:scale-[1.03]"
             />
           </a>
+        </div>
+      </section>
+
+      <section
+        id="finansowanie"
+        className="scroll-mt-36 border-y border-black/5 bg-white/65 py-14"
+      >
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="mb-8 max-w-3xl">
+            <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
+              Finansowanie i sprzedaż
+            </div>
+
+            <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
+              Wybierz osobę, z którą chcesz się skontaktować
+            </h2>
+
+            <p className="mt-4 leading-7 text-black/65">
+              Dane telefonu i e-mail pojawią się dopiero po kliknięciu przycisku
+              „Kontakt”. Dzięki temu możemy również mierzyć realne zainteresowanie
+              ofertą.
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="rounded-[2rem] border border-[#1f3d2b]/10 bg-[#e4e6d7] p-7 shadow-sm md:p-8">
+              <div className="text-sm uppercase tracking-[0.22em] text-[#1f3d2b]/55">
+                Finansowanie
+              </div>
+
+              <div className="mt-3 text-2xl font-semibold">Maciej Zieliński</div>
+              <p className="mt-2 text-sm text-black/55">Pośrednik kredytowy</p>
+
+              {!showFinanceContact ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowFinanceContact(true);
+                    trackEvent("reveal_contact", {
+                      contact_type: "credit_broker",
+                    });
+                  }}
+                  className="mt-6 inline-flex h-11 w-full items-center justify-center rounded-full bg-[#1f3d2b] px-5 text-sm font-medium text-white transition hover:bg-[#152b1e]"
+                >
+                  Kontakt
+                </button>
+              ) : (
+                <div className="mt-6 space-y-3 rounded-2xl bg-white/80 p-5">
+                  <a
+                    href="tel:+48882111807"
+                    onClick={() =>
+                      trackEvent("click_phone", {
+                        contact_type: "credit_broker",
+                      })
+                    }
+                    className="flex items-center gap-3 font-semibold text-[#1f3d2b] transition hover:opacity-70"
+                  >
+                    <Phone className="h-5 w-5" />
+                    882 111 807
+                  </a>
+
+                  <a
+                    href="mailto:maciej.zielinski@notus.pl"
+                    onClick={() =>
+                      trackEvent("click_email", {
+                        contact_type: "credit_broker",
+                      })
+                    }
+                    className="block break-all text-sm text-[#1f3d2b] underline underline-offset-4"
+                  >
+                    maciej.zielinski@notus.pl
+                  </a>
+                </div>
+              )}
+            </div>
+
+            <div className="rounded-[2rem] border border-[#1f3d2b]/10 bg-white p-7 shadow-sm md:p-8">
+              <div className="text-sm uppercase tracking-[0.22em] text-[#1f3d2b]/55">
+                Agent nieruchomości
+              </div>
+
+              <div className="mt-3 text-2xl font-semibold">Anna Bieńka</div>
+              <p className="mt-2 text-sm text-black/55">Biuro sprzedaży NovaDuo</p>
+
+              {!showAgentContact ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowAgentContact(true);
+                    trackEvent("reveal_contact", {
+                      contact_type: "sales_agent",
+                    });
+                  }}
+                  className="mt-6 inline-flex h-11 w-full items-center justify-center rounded-full border border-[#1f3d2b]/20 px-5 text-sm font-medium text-[#1f3d2b] transition hover:bg-[#1f3d2b] hover:text-white"
+                >
+                  Kontakt
+                </button>
+              ) : (
+                <div className="mt-6 space-y-3 rounded-2xl bg-[#f6f3ec] p-5">
+                  <a
+                    href="tel:+48886200190"
+                    onClick={() =>
+                      trackEvent("click_phone", {
+                        contact_type: "sales_agent",
+                      })
+                    }
+                    className="flex items-center gap-3 font-semibold text-[#1f3d2b] transition hover:opacity-70"
+                  >
+                    <Phone className="h-5 w-5" />
+                    +48 886 200 190
+                  </a>
+
+                  <a
+                    href="mailto:info@bienka-nieruchomosci.pl"
+                    onClick={() =>
+                      trackEvent("click_email", {
+                        contact_type: "sales_agent",
+                      })
+                    }
+                    className="block break-all text-sm text-[#1f3d2b] underline underline-offset-4"
+                  >
+                    info@bienka-nieruchomosci.pl
+                  </a>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -840,61 +975,105 @@ viewport={{ once: true }}
   </Card>
 </section>
 
-      <section id="kontakt" className="bg-[#e4e6d7] py-20"><div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-2"><div><div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">Kontakt</div><h2 className="text-4xl font-semibold tracking-tight">Zapytaj o lokal w inwestycji NovaDuo.</h2><div className="mt-8 space-y-3 text-black/65"><p>JPJ Concept Sp. z o.o.</p><p>ul. Nowowiejska 58A, Pogroszew</p><p className="flex items-center gap-2"><Phone className="h-4 w-4" /> JPJConcept: 600 397 399</p>
-<p>E-mail inwestora: kontakt@jpjconcept.pl</p>
-<p>Agent nieruchomości Anna Bieńka: +48 886 200 190</p>
-<p>E-mail biura sprzedaży: info@bienka-nieruchomosci.pl</p></div></div><Card className="rounded-[2rem] border-white/70 bg-white/80 shadow-sm">
-  <form action="https://formspree.io/f/mdabrvqe" method="POST">
-    <CardContent className="space-y-4 p-8">
-      <input
-        name="name"
-        className="w-full rounded-2xl border border-black/10 bg-white px-5 py-4 outline-none"
-        placeholder="Imię i nazwisko"
-      />
+      <section id="kontakt" className="bg-[#e4e6d7] py-20">
+        <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-2">
+          <div>
+            <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
+              Kontakt
+            </div>
 
-      <input
-        name="contact"
-        className="w-full rounded-2xl border border-black/10 bg-white px-5 py-4 outline-none"
-        placeholder="Telefon / e-mail"
-      />
+            <h2 className="text-4xl font-semibold tracking-tight">
+              Zapytaj o lokal w inwestycji NovaDuo.
+            </h2>
 
-      <textarea
-        name="message"
-        className="min-h-32 w-full rounded-2xl border border-black/10 bg-white px-5 py-4 outline-none"
-        placeholder="Wiadomość"
-      />
+            <p className="mt-5 max-w-xl leading-7 text-black/65">
+              Wyślij zapytanie przez formularz. Jeżeli chcesz porozmawiać o
+              finansowaniu albo bezpośrednio z agentem nieruchomości, skorzystaj
+              z kafelków „Finansowanie” i „Agent nieruchomości” powyżej.
+            </p>
 
-      <div className="space-y-4 text-xs leading-5 text-black/55">
-        <label className="flex items-start gap-3">
-          <input
-            type="checkbox"
-            name="rodo"
-            required
-            className="mt-1 h-4 w-4"
-          />
+            <div className="mt-8 rounded-3xl border border-black/5 bg-white/75 p-6 shadow-sm">
+              <div className="text-xs uppercase tracking-[0.2em] text-[#1f3d2b]/55">
+                Deweloper
+              </div>
+              <div className="mt-2 text-xl font-semibold">JPJ Concept Sp. z o.o.</div>
+              <p className="mt-2 text-sm text-black/55">
+                ul. Nowowiejska 58A, Pogroszew
+              </p>
+              <a
+                href="mailto:kontakt@jpjconcept.pl"
+                onClick={() =>
+                  trackEvent("click_email", { contact_type: "developer" })
+                }
+                className="mt-4 block text-sm text-[#1f3d2b] underline underline-offset-4"
+              >
+                kontakt@jpjconcept.pl
+              </a>
+            </div>
+          </div>
 
-          <span>
-            Wyrażam zgodę na kontakt telefoniczny oraz mailowy w celu
-            przedstawienia informacji dotyczących inwestycji NovaDuo.
-          </span>
-        </label>
+          <Card className="rounded-[2rem] border-white/70 bg-white/80 shadow-sm">
+            <form
+              action="https://formspree.io/f/mdabrvqe"
+              method="POST"
+              onSubmit={() =>
+                trackEvent("generate_lead", {
+                  form_name: "contact_novaduo",
+                })
+              }
+            >
+              <CardContent className="space-y-4 p-8">
+                <input
+                  name="name"
+                  className="w-full rounded-2xl border border-black/10 bg-white px-5 py-4 outline-none"
+                  placeholder="Imię i nazwisko"
+                />
 
-        <p>
-          Administratorem danych osobowych jest JPJ Concept Sp. z o.o.
-          Dane będą przetwarzane wyłącznie w celu kontaktu dotyczącym
-          inwestycji NovaDuo. Podanie danych jest dobrowolne.
-        </p>
-      </div>
+                <input
+                  name="contact"
+                  className="w-full rounded-2xl border border-black/10 bg-white px-5 py-4 outline-none"
+                  placeholder="Telefon / e-mail"
+                />
 
-      <Button
-        type="submit"
-        className="h-12 w-full rounded-full bg-[#1f3d2b] px-5 text-white hover:bg-[#152b1e]"
-      >
-        Wyślij zapytanie
-      </Button>
-    </CardContent>
-  </form>
-</Card></div></section>
+                <textarea
+                  name="message"
+                  className="min-h-32 w-full rounded-2xl border border-black/10 bg-white px-5 py-4 outline-none"
+                  placeholder="Wiadomość"
+                />
+
+                <div className="space-y-4 text-xs leading-5 text-black/55">
+                  <label className="flex items-start gap-3">
+                    <input
+                      type="checkbox"
+                      name="rodo"
+                      required
+                      className="mt-1 h-4 w-4"
+                    />
+
+                    <span>
+                      Wyrażam zgodę na kontakt telefoniczny oraz mailowy w celu
+                      przedstawienia informacji dotyczących inwestycji NovaDuo.
+                    </span>
+                  </label>
+
+                  <p>
+                    Administratorem danych osobowych jest JPJ Concept Sp. z o.o.
+                    Dane będą przetwarzane wyłącznie w celu kontaktu dotyczącym
+                    inwestycji NovaDuo. Podanie danych jest dobrowolne.
+                  </p>
+                </div>
+
+                <Button
+                  type="submit"
+                  className="h-12 w-full rounded-full bg-[#1f3d2b] px-5 text-white hover:bg-[#152b1e]"
+                >
+                  Wyślij zapytanie
+                </Button>
+              </CardContent>
+            </form>
+          </Card>
+        </div>
+      </section>
 {selectedImage && (
   <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-6">
     
