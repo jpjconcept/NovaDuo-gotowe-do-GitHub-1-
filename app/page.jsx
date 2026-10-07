@@ -147,6 +147,7 @@ const [selectedImage, setSelectedImage] = useState(null);
 const [selectedImageIndex, setSelectedImageIndex] = useState(null);
 const [showFinanceContact, setShowFinanceContact] = useState(false);
 const [showAgentContact, setShowAgentContact] = useState(false);
+const [showDeveloperContact, setShowDeveloperContact] = useState(false);
 
 const trackEvent = (name, params = {}) => {
   if (typeof window !== "undefined" && typeof window.gtag === "function") {
@@ -1005,30 +1006,58 @@ useEffect(() => {
               <div className="text-xs uppercase tracking-[0.2em] text-[#1f3d2b]/55">
                 Deweloper
               </div>
-              <div className="mt-2 text-xl font-semibold">JPJ Concept Sp. z o.o.</div>
-              <p className="mt-2 text-sm text-black/55">
-                ul. Nowowiejska 58A, Pogroszew
-              </p>
-             <a
-  href="tel:+48600397399"
-  onClick={() =>
-    trackEvent("click_phone", { contact_type: "developer" })
-  }
-  className="mt-4 flex items-center gap-2 text-sm font-semibold text-[#1f3d2b] underline underline-offset-4"
->
-  <Phone className="h-4 w-4" />
-  600 397 399
-</a>
 
-<a
-  href="mailto:kontakt@jpjconcept.pl"
-  onClick={() =>
-    trackEvent("click_email", { contact_type: "developer" })
-  }
-  className="mt-3 block text-sm text-[#1f3d2b] underline underline-offset-4"
->
-  kontakt@jpjconcept.pl
-</a>
+              <div className="mt-2 text-xl font-semibold">
+                JPJ Concept Sp. z o.o.
+              </div>
+
+              <p className="mt-2 text-sm leading-6 text-black/55">
+                ul. Nowowiejska 58A, Pogroszew
+                <br />
+                05-850 Ożarów Mazowiecki
+              </p>
+
+              {!showDeveloperContact ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowDeveloperContact(true);
+                    trackEvent("reveal_contact", {
+                      contact_type: "developer",
+                    });
+                  }}
+                  className="mt-6 inline-flex h-11 w-full items-center justify-center rounded-full bg-[#1f3d2b] px-5 text-sm font-medium text-white transition hover:bg-[#152b1e]"
+                >
+                  Kontakt
+                </button>
+              ) : (
+                <div className="mt-6 space-y-3 rounded-2xl bg-[#f6f3ec] p-5">
+                  <a
+                    href="tel:+48600397399"
+                    onClick={() =>
+                      trackEvent("click_phone", {
+                        contact_type: "developer",
+                      })
+                    }
+                    className="flex items-center gap-3 font-semibold text-[#1f3d2b] transition hover:opacity-70"
+                  >
+                    <Phone className="h-5 w-5" />
+                    600 397 399
+                  </a>
+
+                  <a
+                    href="mailto:kontakt@jpjconcept.pl"
+                    onClick={() =>
+                      trackEvent("click_email", {
+                        contact_type: "developer",
+                      })
+                    }
+                    className="block break-all text-sm text-[#1f3d2b] underline underline-offset-4"
+                  >
+                    kontakt@jpjconcept.pl
+                  </a>
+                </div>
+              )}
             </div>
           </div>
 
