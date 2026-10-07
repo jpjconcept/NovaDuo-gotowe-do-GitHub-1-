@@ -610,38 +610,47 @@ useEffect(() => {
 
 </section>
 
-<section id="galeria" className="mx-auto max-w-7xl px-6 py-20">
-  <div className="mb-14 text-center">
-    <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
-      Inspiracje wnętrz
+<section id="galeria" className="mx-auto max-w-7xl px-6 py-12">
+  <button
+    type="button"
+    onClick={() => {
+      setSelectedImageIndex(0);
+      setSelectedImage(heroImages[0]);
+      trackEvent("open_gallery", { gallery: "main" });
+    }}
+    className="group block w-full overflow-hidden rounded-[2rem] border border-black/5 bg-white text-left shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl"
+  >
+    <div className="grid md:grid-cols-[0.9fr_1.1fr] md:items-stretch">
+      <div className="relative min-h-[220px] overflow-hidden md:min-h-[280px]">
+        <img
+          src={heroImages[0]}
+          alt="Galeria NovaDuo"
+          className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/10 to-black/0" />
+      </div>
+
+      <div className="flex flex-col justify-center p-8 md:p-10">
+        <div className="text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
+          Galeria
+        </div>
+
+        <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
+          Zobacz wizualizacje NovaDuo
+        </h2>
+
+        <p className="mt-4 max-w-xl leading-7 text-black/60">
+          Kliknij kafelek, aby otworzyć galerię. Zdjęcia wyświetlą się dopiero
+          po Twoim wyborze i będzie można przeglądać je strzałkami.
+        </p>
+
+        <span className="mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-[#1f3d2b] px-6 py-3 text-sm font-medium text-white transition group-hover:bg-[#152b1e]">
+          Otwórz galerię
+          <ArrowRight className="h-4 w-4" />
+        </span>
+      </div>
     </div>
-
-    <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">
-      Przykładowe wizualizacje wykończenia
-    </h2>
-
-    <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-black/60">
-      Nowoczesne i eleganckie wnętrza przygotowane jako inspiracja dla przyszłych mieszkańców NovaDuo.
-    </p>
-  </div>
-
-  <div className="grid gap-4 md:grid-cols-3">
-  {heroImages.map((image, index) => (
-   <motion.img
-      key={index}
-      src={image}
-initial={{ opacity: 0, y: 20 }}
-whileInView={{ opacity: 1, y: 0 }}
-transition={{ duration: 0.5 }}
-viewport={{ once: true }}
-      onClick={() => {
-  setSelectedImage(image);
-  setSelectedImageIndex(index);
-}}
-      className="h-32 w-full rounded-2xl object-cover shadow-md cursor-pointer transition duration-500 hover:scale-[1.03] hover:shadow-xl"
-    />
-  ))}
-</div>
+  </button>
 </section>
 <motion.section
   id="standard"
