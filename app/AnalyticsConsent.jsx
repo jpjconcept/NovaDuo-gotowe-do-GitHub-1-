@@ -19,8 +19,6 @@ function updateGoogleConsent(isGranted) {
 
   window.gtag("consent", "update", {
     analytics_storage: isGranted ? "granted" : "denied",
-
-    // Nie używamy zgody analitycznej do reklam Google.
     ad_storage: "denied",
     ad_user_data: "denied",
     ad_personalization: "denied",
@@ -74,7 +72,7 @@ export default function AnalyticsConsent() {
 
   return (
     <>
-      {/* 1. Domyślnie pomiar bez zgody jest ograniczony */}
+      {/* Domyślny stan zgód Google */}
       <Script id="ga-consent-default" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
@@ -93,13 +91,13 @@ export default function AnalyticsConsent() {
         `}
       </Script>
 
-      {/* 2. Google Analytics ładuje się od razu */}
+      {/* Google Analytics */}
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
         strategy="afterInteractive"
       />
 
-      {/* 3. Konfiguracja GA4 */}
+      {/* Konfiguracja GA4 */}
       <Script id="google-analytics" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
@@ -117,31 +115,36 @@ export default function AnalyticsConsent() {
         `}
       </Script>
 
-      {/* Mały, nieblokujący panel zgody */}
+      {/* Panel zgody */}
       {showPanel && (
         <div
           style={{
             position: "fixed",
-            left: "16px",
-            right: "16px",
-            bottom: "16px",
+            left: "12px",
+            bottom: "12px",
             zIndex: 99999,
-            width: "calc(100% - 32px)",
-            maxWidth: "460px",
-            padding: "14px 16px",
-            background: "#ffffff",
+
+            width: "calc(100% - 24px)",
+            maxWidth: "350px",
+
+            padding: "11px 12px",
+
+            background: "rgba(255,255,255,0.97)",
             color: "#111111",
-            borderRadius: "10px",
-            boxShadow: "0 6px 24px rgba(0,0,0,0.16)",
-            border: "1px solid #e5e5e5",
+
+            borderRadius: "9px",
+            border: "1px solid #e3e3e3",
+
+            boxShadow: "0 4px 18px rgba(0,0,0,0.13)",
+
             fontFamily: "Arial, sans-serif",
           }}
         >
           <div
             style={{
-              fontSize: "15px",
+              fontSize: "13px",
               fontWeight: "700",
-              marginBottom: "5px",
+              marginBottom: "4px",
             }}
           >
             Prywatność i analityka
@@ -149,21 +152,20 @@ export default function AnalyticsConsent() {
 
           <div
             style={{
-              fontSize: "12px",
-              lineHeight: "1.45",
-              color: "#444444",
-              marginBottom: "11px",
+              fontSize: "11px",
+              lineHeight: "1.4",
+              color: "#555555",
+              marginBottom: "9px",
             }}
           >
-            Za Twoją zgodą używamy Google Analytics, aby ulepszać stronę
-            NovaDuo. Bez zgody strona działa normalnie, a pomiar pozostaje
-            ograniczony i nie zapisuje cookies analitycznych.
+            Używamy opcjonalnej analityki, aby ulepszać stronę. Bez zgody
+            strona działa normalnie.
           </div>
 
           <div
             style={{
               display: "flex",
-              gap: "8px",
+              gap: "6px",
               flexWrap: "wrap",
             }}
           >
@@ -173,11 +175,11 @@ export default function AnalyticsConsent() {
               style={{
                 cursor: "pointer",
                 border: "none",
-                borderRadius: "7px",
-                padding: "9px 14px",
+                borderRadius: "6px",
+                padding: "7px 11px",
                 background: "#111111",
                 color: "#ffffff",
-                fontSize: "12px",
+                fontSize: "11px",
                 fontWeight: "700",
               }}
             >
@@ -190,11 +192,11 @@ export default function AnalyticsConsent() {
               style={{
                 cursor: "pointer",
                 border: "1px solid #bbbbbb",
-                borderRadius: "7px",
-                padding: "9px 14px",
+                borderRadius: "6px",
+                padding: "7px 11px",
                 background: "#ffffff",
                 color: "#111111",
-                fontSize: "12px",
+                fontSize: "11px",
                 fontWeight: "700",
               }}
             >
@@ -204,7 +206,7 @@ export default function AnalyticsConsent() {
         </div>
       )}
 
-      {/* Po dokonaniu wyboru zostaje tylko dyskretny przycisk */}
+      {/* Mały przycisk do ponownego otwarcia ustawień */}
       {consent !== undefined && !showPanel && (
         <button
           type="button"
@@ -212,18 +214,24 @@ export default function AnalyticsConsent() {
           aria-label="Ustawienia prywatności"
           style={{
             position: "fixed",
-            left: "10px",
-            bottom: "10px",
+            left: "8px",
+            bottom: "8px",
             zIndex: 9999,
+
             cursor: "pointer",
+
             border: "1px solid #dddddd",
-            borderRadius: "20px",
-            padding: "5px 9px",
-            background: "rgba(255,255,255,0.92)",
-            color: "#666666",
-            fontSize: "10px",
+            borderRadius: "18px",
+
+            padding: "4px 8px",
+
+            background: "rgba(255,255,255,0.88)",
+            color: "#777777",
+
+            fontSize: "9px",
             fontFamily: "Arial, sans-serif",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+
+            boxShadow: "0 2px 6px rgba(0,0,0,0.06)",
           }}
         >
           Prywatność
