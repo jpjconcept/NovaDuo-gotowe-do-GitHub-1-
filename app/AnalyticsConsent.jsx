@@ -50,18 +50,14 @@ export default function AnalyticsConsent() {
 
   const acceptAnalytics = () => {
     localStorage.setItem(CONSENT_KEY, "granted");
-
     updateGoogleConsent(true);
-
     setConsent("granted");
     setShowPanel(false);
   };
 
   const rejectAnalytics = () => {
     localStorage.setItem(CONSENT_KEY, "denied");
-
     updateGoogleConsent(false);
-
     setConsent("denied");
     setShowPanel(false);
   };
@@ -72,7 +68,6 @@ export default function AnalyticsConsent() {
 
   return (
     <>
-      {/* Domyślny stan zgód Google */}
       <Script id="ga-consent-default" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
@@ -91,13 +86,11 @@ export default function AnalyticsConsent() {
         `}
       </Script>
 
-      {/* Google Analytics */}
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
         strategy="afterInteractive"
       />
 
-      {/* Konfiguracja GA4 */}
       <Script id="google-analytics" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
@@ -115,36 +108,36 @@ export default function AnalyticsConsent() {
         `}
       </Script>
 
-      {/* Panel zgody */}
       {showPanel && (
         <div
           style={{
             position: "fixed",
-            left: "12px",
-            bottom: "12px",
+            left: "10px",
+            bottom: "10px",
             zIndex: 99999,
 
-            width: "calc(100% - 24px)",
-            maxWidth: "350px",
+            width: "calc(100% - 20px)",
+            maxWidth: "280px",
+            boxSizing: "border-box",
 
-            padding: "11px 12px",
+            padding: "8px 10px",
 
             background: "rgba(255,255,255,0.97)",
             color: "#111111",
 
-            borderRadius: "9px",
-            border: "1px solid #e3e3e3",
+            borderRadius: "8px",
+            border: "1px solid #e5e5e5",
 
-            boxShadow: "0 4px 18px rgba(0,0,0,0.13)",
+            boxShadow: "0 3px 12px rgba(0,0,0,0.12)",
 
             fontFamily: "Arial, sans-serif",
           }}
         >
           <div
             style={{
-              fontSize: "13px",
+              fontSize: "12px",
               fontWeight: "700",
-              marginBottom: "4px",
+              marginBottom: "3px",
             }}
           >
             Prywatność i analityka
@@ -152,21 +145,20 @@ export default function AnalyticsConsent() {
 
           <div
             style={{
-              fontSize: "11px",
-              lineHeight: "1.4",
+              fontSize: "10px",
+              lineHeight: "1.3",
               color: "#555555",
-              marginBottom: "9px",
+              marginBottom: "7px",
             }}
           >
-            Używamy opcjonalnej analityki, aby ulepszać stronę. Bez zgody
-            strona działa normalnie.
+            Opcjonalna analityka pomaga nam ulepszać stronę.
           </div>
 
           <div
             style={{
               display: "flex",
               gap: "6px",
-              flexWrap: "wrap",
+              flexWrap: "nowrap",
             }}
           >
             <button
@@ -175,12 +167,13 @@ export default function AnalyticsConsent() {
               style={{
                 cursor: "pointer",
                 border: "none",
-                borderRadius: "6px",
-                padding: "7px 11px",
+                borderRadius: "5px",
+                padding: "6px 9px",
                 background: "#111111",
                 color: "#ffffff",
-                fontSize: "11px",
+                fontSize: "10px",
                 fontWeight: "700",
+                whiteSpace: "nowrap",
               }}
             >
               Akceptuję
@@ -192,12 +185,13 @@ export default function AnalyticsConsent() {
               style={{
                 cursor: "pointer",
                 border: "1px solid #bbbbbb",
-                borderRadius: "6px",
-                padding: "7px 11px",
+                borderRadius: "5px",
+                padding: "6px 9px",
                 background: "#ffffff",
                 color: "#111111",
-                fontSize: "11px",
+                fontSize: "10px",
                 fontWeight: "700",
+                whiteSpace: "nowrap",
               }}
             >
               Tylko niezbędne
@@ -206,7 +200,6 @@ export default function AnalyticsConsent() {
         </div>
       )}
 
-      {/* Mały przycisk do ponownego otwarcia ustawień */}
       {consent !== undefined && !showPanel && (
         <button
           type="button"
@@ -214,24 +207,24 @@ export default function AnalyticsConsent() {
           aria-label="Ustawienia prywatności"
           style={{
             position: "fixed",
-            left: "8px",
-            bottom: "8px",
+            left: "7px",
+            bottom: "7px",
             zIndex: 9999,
 
             cursor: "pointer",
 
             border: "1px solid #dddddd",
-            borderRadius: "18px",
+            borderRadius: "16px",
 
-            padding: "4px 8px",
+            padding: "3px 7px",
 
-            background: "rgba(255,255,255,0.88)",
+            background: "rgba(255,255,255,0.9)",
             color: "#777777",
 
-            fontSize: "9px",
+            fontSize: "8px",
             fontFamily: "Arial, sans-serif",
 
-            boxShadow: "0 2px 6px rgba(0,0,0,0.06)",
+            boxShadow: "0 2px 5px rgba(0,0,0,0.05)",
           }}
         >
           Prywatność
