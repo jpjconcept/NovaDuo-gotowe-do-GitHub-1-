@@ -180,7 +180,7 @@ useEffect(() => {
       usable_area: 118.48,
       garden_area: 272,
       plot_no: "24/11",
-      status: "Rezerwacja",
+      status: "Dostępny",
       price_valid_from: REPORTING_START,
     },
     {
