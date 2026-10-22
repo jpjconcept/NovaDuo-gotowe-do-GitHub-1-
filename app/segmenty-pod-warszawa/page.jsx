@@ -468,22 +468,21 @@ export default function SegmentyPodWarszawaPage() {
             </div>
 
             <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">
-              Pogroszew – segmenty w pobliżu Ożarowa Mazowieckiego
-            </h2>
+  Segmenty pod Warszawą – na pograniczu gmin Ożarów Mazowiecki i Stare Babice
+</h2>
 
             <div className="mt-7 space-y-5 text-lg leading-8 text-black/65">
-              <p>
-                Pogroszew znajduje się w gminie Ożarów Mazowiecki, w zachodniej
-                części aglomeracji warszawskiej.
-              </p>
+  <p>
+    NovaDuo powstaje przy ul. Nowowiejskiej 58 w Pogroszewie, na
+    pograniczu gmin Ożarów Mazowiecki i Stare Babice.
+  </p>
 
-              <p>
-                Lokalizacja zapewnia dostęp do infrastruktury miejskiej,
-                placówek edukacyjnych, sklepów i głównych tras
-                komunikacyjnych, a jednocześnie pozwala zamieszkać poza zwartą
-                zabudową Warszawy.
-              </p>
-            </div>
+  <p>
+    Lokalizacja zapewnia wygodny dostęp do infrastruktury Ożarowa
+    Mazowieckiego i Starych Babic, a jednocześnie pozwala zamieszkać
+    w spokojnym otoczeniu zabudowy jednorodzinnej, niedaleko Warszawy.
+  </p>
+</div>
           </div>
 
           <div className="overflow-hidden rounded-[2rem] bg-white shadow-2xl">
