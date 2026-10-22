@@ -342,7 +342,17 @@ useEffect(() => {
             <h1 className="max-w-3xl text-5xl font-semibold leading-[1.02] tracking-tight md:text-7xl">
   Nowoczesne domy i bliźniaki w Pogroszewie pod Warszawą
 </h1>
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-black/65">NovaDuo to nowoczesna, kameralna inwestycja obejmująca funkcjonalne lokale mieszkalne z garażem, ogrodem i wygodnym układem pomieszczeń.</p>
+           <p className="mt-7 max-w-2xl text-lg leading-8 text-black/65">
+  NovaDuo to nowoczesna, kameralna inwestycja obejmująca funkcjonalne
+  lokale mieszkalne z garażem, ogrodem i wygodnym układem pomieszczeń.
+  {" "}Zobacz także szczegółową ofertę{" "}
+  <a
+    href="/segmenty-pod-warszawa"
+    className="font-medium text-[#1f3d2b] underline underline-offset-4 hover:opacity-70"
+  >
+    segmentów pod Warszawą
+  </a>.
+</p>
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
               <a href="#lokale" className="inline-flex h-12 items-center justify-center rounded-full bg-[#1f3d2b] px-7 text-base text-white hover:bg-[#152b1e]">Sprawdź dostępne lokale <ArrowRight className="ml-2 h-4 w-4" /></a>
               <a href="#dokumenty" className="inline-flex h-12 items-center justify-center rounded-full border border-black/20 bg-white/50 px-7 text-base">Pobierz prospekt</a>
