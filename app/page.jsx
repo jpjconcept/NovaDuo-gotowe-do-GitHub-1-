@@ -60,8 +60,8 @@ function formatPricePerSquareMeter(totalPrice, usableArea) {
   }
 
   return `${(price / area).toLocaleString("pl-PL", {
-    minimumFractionDigits: 6,
-    maximumFractionDigits: 6,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   })} zł/m²`;
 }
 
