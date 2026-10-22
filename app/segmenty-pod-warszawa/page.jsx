@@ -508,10 +508,10 @@ export default function SegmentyPodWarszawaPage() {
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <div className="overflow-hidden rounded-[2rem] bg-white shadow-2xl">
             <img
-              src="/images/usytuowanie-lokali-novaduo.webp"
-              alt="Plan usytuowania segmentów NovaDuo w Pogroszewie"
-              className="w-full object-contain"
-            />
+            src="/images/novaduo_rezerwacje_v2.webp"
+alt="Plan usytuowania segmentów NovaDuo w Pogroszewie"
+className="w-full object-contain"
+/>
           </div>
 
           <div>
