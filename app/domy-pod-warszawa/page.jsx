@@ -321,11 +321,17 @@ export default function DomyPodWarszawaPage() {
               Nowe domy pod Warszawą z ogrodem i garażem
             </h1>
 
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-black/65">
-              NovaDuo to kameralna inwestycja w Pogroszewie dla osób
-              poszukujących przestronnego domu pod Warszawą, prywatnego
-              ogrodu, garażu oraz nowoczesnych instalacji.
-            </p>
+           <p className="mt-7 max-w-2xl text-lg leading-8 text-black/65">
+  NovaDuo to kameralna inwestycja w Pogroszewie dla osób
+  poszukujących przestronnego domu pod Warszawą, prywatnego
+  ogrodu, garażu oraz nowoczesnych instalacji. Zobacz także{" "}
+  <a
+    href="/segmenty-pod-warszawa"
+    className="font-medium text-[#1f3d2b] underline underline-offset-4 hover:opacity-70"
+  >
+    segmenty pod Warszawą
+  </a>.
+</p>
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
               <a
