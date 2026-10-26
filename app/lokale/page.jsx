@@ -103,15 +103,19 @@ function formatArea(value) {
   });
 }
 
-function formatPricePerNetSquareMeter(totalPrice, netArea) {
+function formatPricePerSquareMeter(totalPrice, area) {
   const price = Number(totalPrice);
-  const area = Number(netArea);
+  const surface = Number(area);
 
-  if (!Number.isFinite(price) || !Number.isFinite(area) || area <= 0) {
+  if (
+    !Number.isFinite(price) ||
+    !Number.isFinite(surface) ||
+    surface <= 0
+  ) {
     return "—";
   }
 
-  return `${(price / area).toLocaleString("pl-PL", {
+  return `${(price / surface).toLocaleString("pl-PL", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   })} zł/m²`;
@@ -121,16 +125,37 @@ function buildHomeViewModel(unit) {
   return {
     id: unit.id,
     price: formatCurrency(unit.total_price),
+
     netArea: `${formatArea(unit.net_area)} m²`,
     usableArea: `${formatArea(unit.usable_area)} m²`,
+
     terrainArea: `${formatArea(unit.garden_area)} m²`,
+
     plot: unit.plot_no,
     status: unit.status,
-    pricePerNetSquareMeter: formatPricePerNetSquareMeter(
+
+    pricePerNetSquareMeter: formatPricePerSquareMeter(
       unit.total_price,
       unit.net_area
     ),
+
+    pricePerUsableSquareMeter: formatPricePerSquareMeter(
+      unit.total_price,
+      unit.usable_area
+    ),
   };
+}
+
+function isSold(home) {
+  return home?.status?.toLowerCase() === "sprzedany";
+}
+
+function isReserved(home) {
+  return home?.status?.toLowerCase() === "rezerwacja";
+}
+
+function isAvailable(home) {
+  return !isSold(home) && !isReserved(home);
 }
 
 export default function LokalePage() {
@@ -294,6 +319,15 @@ export default function LokalePage() {
   }
 
   function openHomeCard(id) {
+    const home = getHome(id);
+
+    /*
+      Sprzedanego lokalu nie można otworzyć.
+    */
+    if (!home || isSold(home)) {
+      return;
+    }
+
     setSelectedId(id);
     setOpenCardId(id);
   }
@@ -335,8 +369,9 @@ export default function LokalePage() {
 
           <p className="mt-5 text-lg leading-8 text-black/60">
             Najedź kursorem na wybrany lokal, aby zobaczyć jego
-            najważniejsze informacje. Kliknij lokal, aby otworzyć
-            szczegółową kartę z układem i opisem pomieszczeń.
+            najważniejsze informacje. Kliknij dostępny lub zarezerwowany
+            lokal, aby otworzyć szczegółową kartę z układem i opisem
+            pomieszczeń.
           </p>
         </div>
 
@@ -352,36 +387,86 @@ export default function LokalePage() {
 
               {HOTSPOTS.map((spot) => {
                 const home = getHome(spot.id);
-                const isSelected = selectedId === spot.id;
-                const isReserved = home?.status === "Rezerwacja";
+
+                const selected = selectedId === spot.id;
+                const sold = isSold(home);
+                const reserved = isReserved(home);
+
+                let selectedClasses = "";
+
+                if (selected && sold) {
+                  selectedClasses =
+                    "border-red-600 bg-red-500/40";
+                } else if (selected && reserved) {
+                  selectedClasses =
+                    "border-orange-500 bg-orange-400/35";
+                } else if (selected && isAvailable(home)) {
+                  selectedClasses =
+                    "border-[#1f6b42] bg-[#78b894]/40";
+                }
+
+                let hoverClasses =
+                  "border-transparent bg-transparent";
+
+                if (sold) {
+                  hoverClasses +=
+                    " hover:border-red-600 hover:bg-red-500/30";
+                } else if (reserved) {
+                  hoverClasses +=
+                    " hover:border-orange-500 hover:bg-orange-400/25";
+                } else {
+                  hoverClasses +=
+                    " hover:border-[#1f3d2b]/40 hover:bg-[#78b894]/20";
+                }
 
                 return (
                   <button
                     key={spot.id}
                     type="button"
-                    aria-label={`Wybierz lokal ${spot.id}`}
-                    title={`Lokal ${spot.id}`}
+                    aria-label={
+                      sold
+                        ? `Lokal ${spot.id} sprzedany`
+                        : `Wybierz lokal ${spot.id}`
+                    }
+                    aria-disabled={sold}
+                    title={
+                      sold
+                        ? `Lokal ${spot.id} – sprzedany`
+                        : `Lokal ${spot.id}`
+                    }
+                    tabIndex={sold ? -1 : 0}
                     onMouseEnter={() => setSelectedId(spot.id)}
-                    onFocus={() => setSelectedId(spot.id)}
-                    onClick={() => openHomeCard(spot.id)}
+                    onFocus={() => {
+                      if (!sold) {
+                        setSelectedId(spot.id);
+                      }
+                    }}
+                    onClick={() => {
+                      if (!sold) {
+                        openHomeCard(spot.id);
+                      }
+                    }}
                     style={{
                       left: spot.left,
                       top: spot.top,
                       width: spot.width,
                       height: spot.height,
                     }}
-                    className={`absolute cursor-pointer border-2 transition duration-200 ${
-                      isSelected
-                        ? isReserved
-                          ? "border-orange-500 bg-orange-400/35"
-                          : "border-[#1f6b42] bg-[#78b894]/40"
-                        : "border-transparent bg-transparent hover:border-[#1f3d2b]/40 hover:bg-[#78b894]/20"
+                    className={`absolute border-2 transition duration-200 ${
+                      sold
+                        ? "cursor-not-allowed"
+                        : "cursor-pointer"
+                    } ${
+                      selected
+                        ? selectedClasses
+                        : hoverClasses
                     }`}
                   />
                 );
               })}
             </div>
 
+            {/* LEGENDA */}
             <div className="mt-5 flex flex-wrap gap-5 text-sm text-black/55">
               <div className="flex items-center gap-2">
                 <span className="h-3 w-3 rounded-full bg-[#78b894]" />
@@ -391,6 +476,11 @@ export default function LokalePage() {
               <div className="flex items-center gap-2">
                 <span className="h-3 w-3 rounded-full bg-orange-400" />
                 Rezerwacja
+              </div>
+
+              <div className="flex items-center gap-2">
+                <span className="h-3 w-3 rounded-full bg-red-600" />
+                Sprzedany
               </div>
             </div>
           </div>
@@ -410,7 +500,43 @@ export default function LokalePage() {
                   Kliknij, aby otworzyć kartę z rozkładem pomieszczeń.
                 </p>
               </div>
+            ) : isSold(selectedHome) ? (
+              /*
+                SPRZEDANY:
+                nie pokazujemy żadnych danych lokalu.
+              */
+              <div className="rounded-[2rem] border border-red-200 bg-white p-8 shadow-xl">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <div className="text-sm uppercase tracking-[0.2em] text-black/40">
+                      NovaDuo
+                    </div>
+
+                    <h2 className="mt-2 text-3xl font-semibold">
+                      Lokal {selectedHome.id}
+                    </h2>
+                  </div>
+
+                  <span className="rounded-full bg-red-100 px-3 py-1.5 text-xs font-semibold text-red-700">
+                    Sprzedany
+                  </span>
+                </div>
+
+                <div className="mt-8 rounded-2xl bg-red-50 p-6">
+                  <div className="text-lg font-semibold text-red-700">
+                    Ten lokal został sprzedany
+                  </div>
+
+                  <p className="mt-3 text-sm leading-6 text-black/55">
+                    Dane i karta tego lokalu nie są już dostępne.
+                    Wybierz inny lokal na planie inwestycji.
+                  </p>
+                </div>
+              </div>
             ) : (
+              /*
+                DOSTĘPNY / REZERWACJA
+              */
               <div className="rounded-[2rem] border border-[#1f3d2b]/10 bg-white p-8 shadow-xl">
                 <div className="flex items-start justify-between gap-4">
                   <div>
@@ -425,7 +551,7 @@ export default function LokalePage() {
 
                   <span
                     className={`rounded-full px-3 py-1.5 text-xs font-semibold ${
-                      selectedHome.status === "Rezerwacja"
+                      isReserved(selectedHome)
                         ? "bg-orange-200 text-orange-900"
                         : "bg-[#dfead8] text-[#1f3d2b]"
                     }`}
@@ -435,6 +561,7 @@ export default function LokalePage() {
                 </div>
 
                 <div className="mt-7 space-y-5">
+                  {/* POWIERZCHNIA NETTO */}
                   <div>
                     <div className="text-sm text-black/45">
                       Powierzchnia netto
@@ -445,6 +572,7 @@ export default function LokalePage() {
                     </div>
                   </div>
 
+                  {/* TEREN */}
                   <div className="flex items-start gap-3 border-t border-black/10 pt-5">
                     <MapPin className="mt-0.5 h-5 w-5 text-[#1f3d2b]" />
 
@@ -459,6 +587,7 @@ export default function LokalePage() {
                     </div>
                   </div>
 
+                  {/* CENA ZA M2 NETTO */}
                   <div className="flex items-start gap-3">
                     <Ruler className="mt-0.5 h-5 w-5 text-[#1f3d2b]" />
 
@@ -470,9 +599,19 @@ export default function LokalePage() {
                       <div className="mt-1 text-xl font-semibold text-[#1f3d2b]">
                         {selectedHome.pricePerNetSquareMeter}
                       </div>
+
+                      {/* CENA ZA M2 UŻYTKOWEJ */}
+                      <div className="mt-3 text-xs text-black/45">
+                        Cena za 1 m² powierzchni użytkowej
+                      </div>
+
+                      <div className="mt-1 text-sm font-medium text-black/60">
+                        {selectedHome.pricePerUsableSquareMeter}
+                      </div>
                     </div>
                   </div>
 
+                  {/* CENA LOKALU */}
                   <div className="border-t border-black/10 pt-5">
                     <div className="text-sm text-black/45">
                       Cena lokalu
@@ -515,7 +654,7 @@ export default function LokalePage() {
       </section>
 
       {/* MODAL Z KARTĄ LOKALU */}
-      {openCardHome && (
+      {openCardHome && !isSold(openCardHome) && (
         <div
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-3 md:p-8"
           onClick={() => setOpenCardId(null)}
