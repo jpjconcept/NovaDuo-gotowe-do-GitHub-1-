@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ArrowRight,
   Building2,
@@ -23,6 +23,60 @@ import {
 export default function Page() {
   const [showDeveloperContact, setShowDeveloperContact] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [heroIndex, setHeroIndex] = useState(0);
+
+  const heroImages = [
+    "/images/postprodukcja_0000_Scene-1_upscale01.png",
+    "/images/postprodukcja_0001_Scene-7_upscale01.png",
+    "/images/postprodukcja_0002_Scene-2_upscale01.png",
+    "/images/postprodukcja_0003_Scene-3_upscale01.png",
+    "/images/postprodukcja_0004_Scene-4_upscale01.png",
+    "/images/postprodukcja_0005_Scene-5_upscale01.png",
+    "/images/postprodukcja_0006_Scene-6_upscale01.png",
+    "/images/postprodukcja_0007_Scene-8_upscale01.png",
+    "/images/postprodukcja_0008_Scene-9_upscale01.png",
+    "/images/postprodukcja_0009_Scene-10_upscale01.png",
+    "/images/postprodukcja_0010_Scene-11_upscale01.png",
+
+    "/images/postprodukcja_0003_Scene-27_upscale01.webp",
+    "/images/postprodukcja_0004_Scene-26_upscale01.webp",
+    "/images/postprodukcja_0005_Scene-25_upscale01.webp",
+    "/images/postprodukcja_0006_Scene-24_upscale01.webp",
+    "/images/postprodukcja_0007_Scene-23_upscale01.webp",
+    "/images/postprodukcja_0008_Scene-22_upscale01.webp",
+    "/images/postprodukcja_0009_Scene-21_upscale01.webp",
+    "/images/postprodukcja_0010_Scene-20_upscale01.webp",
+    "/images/postprodukcja_0011_Scene-19_upscale01.webp",
+    "/images/postprodukcja_0012_Scene-18_upscale01.webp",
+    "/images/postprodukcja_0013_Scene-17_upscale01.webp",
+    "/images/postprodukcja_0014_Scene-16_upscale01.webp",
+    "/images/postprodukcja_0015_Scene-15_upscale01.webp",
+    "/images/postprodukcja_0016_Scene-14_upscale01.webp",
+    "/images/postprodukcja_0017_Scene-13_upscale01.webp",
+    "/images/postprodukcja_0018_Scene-12_upscale01.webp",
+    "/images/postprodukcja_0019_Scene-11_upscale01.webp",
+    "/images/postprodukcja_0020_Scene-10_upscale01.webp",
+
+    "/images/01.jpg",
+    "/images/02.jpg",
+    "/images/03.jpg",
+    "/images/04.jpg",
+    "/images/05.jpg",
+    "/images/06.jpg",
+    "/images/07.jpg",
+    "/images/08.jpg",
+    "/images/09.jpg",
+    "/images/10.jpg",
+    "/images/11.jpg",
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setHeroIndex((current) => (current + 1) % heroImages.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [heroImages.length]);
 
   const trackEvent = (name, params = {}) => {
     if (
@@ -124,9 +178,7 @@ export default function Page() {
           🎁 PROMOCJA DO 31.12.2026
         </span>
 
-        <span className="mx-2 hidden text-white/40 sm:inline">
-          •
-        </span>
+        <span className="mx-2 hidden text-white/40 sm:inline">•</span>
 
         <span className="block sm:inline">
           Ford Puma z automatem w ramach zakupu NovaDuo
@@ -140,7 +192,6 @@ export default function Page() {
       {/* MENU */}
       <nav className="sticky top-0 z-50 border-b border-black/10 bg-[#f6f3ec]/95 backdrop-blur-xl">
         <div className="mx-auto max-w-7xl px-4 md:px-6">
-          {/* GÓRNY WIERSZ */}
           <div className="flex items-center justify-between gap-3 py-3">
             <a href="/" className="shrink-0">
               <img
@@ -150,7 +201,7 @@ export default function Page() {
               />
             </a>
 
-            {/* TELEFON */}
+            {/* MOBILE */}
             <div className="flex items-center gap-2 md:hidden">
               <button
                 type="button"
@@ -187,7 +238,7 @@ export default function Page() {
                     location: "mobile_navigation",
                   })
                 }
-                className="inline-flex h-10 shrink-0 items-center justify-center rounded-full bg-[#1f3d2b] px-4 text-xs font-medium text-white transition hover:bg-[#152b1e] sm:text-sm"
+                className="inline-flex h-10 shrink-0 items-center justify-center rounded-full bg-[#1f3d2b] px-4 text-xs font-medium text-white sm:text-sm"
               >
                 Biuro sprzedaży
               </a>
@@ -207,7 +258,7 @@ export default function Page() {
             </a>
           </div>
 
-          {/* MENU DESKTOP */}
+          {/* DESKTOP MENU */}
           <div className="hidden border-t border-black/5 md:block">
             <div className="flex items-center justify-center gap-7 py-3 text-sm text-black/70">
               <a
@@ -219,7 +270,7 @@ export default function Page() {
 
               <a
                 href="/lokale"
-                className="whitespace-nowrap font-semibold text-[#1f3d2b] transition hover:opacity-70"
+                className="whitespace-nowrap font-semibold text-[#1f3d2b]"
               >
                 Lokale
               </a>
@@ -268,104 +319,51 @@ export default function Page() {
             </div>
           </div>
 
-          {/* MENU MOBILNE */}
+          {/* MOBILE MENU */}
           {mobileMenuOpen && (
             <div className="border-t border-black/10 pb-4 pt-3 md:hidden">
               <div className="overflow-hidden rounded-[1.5rem] border border-black/10 bg-white shadow-xl">
-                <a
-                  href="/inwestycja"
-                  onClick={() =>
-                    handleMobileNavigation("inwestycja")
-                  }
-                  className="flex items-center justify-between border-b border-black/5 px-5 py-4 font-medium text-[#1f241f]"
-                >
-                  Inwestycja
-                  <ArrowRight className="h-4 w-4 text-black/35" />
-                </a>
-
-                <a
-                  href="/lokale"
-                  onClick={() =>
-                    handleMobileNavigation("lokale")
-                  }
-                  className="flex items-center justify-between border-b border-black/5 bg-[#e4e6d7]/50 px-5 py-4 font-semibold text-[#1f3d2b]"
-                >
-                  Lokale
-                  <ArrowRight className="h-4 w-4" />
-                </a>
-
-                <a
-                  href="/standard"
-                  onClick={() =>
-                    handleMobileNavigation("standard")
-                  }
-                  className="flex items-center justify-between border-b border-black/5 px-5 py-4 font-medium text-[#1f241f]"
-                >
-                  Standard
-                  <ArrowRight className="h-4 w-4 text-black/35" />
-                </a>
-
-                <a
-                  href="/lokalizacja"
-                  onClick={() =>
-                    handleMobileNavigation("lokalizacja")
-                  }
-                  className="flex items-center justify-between border-b border-black/5 px-5 py-4 font-medium text-[#1f241f]"
-                >
-                  Lokalizacja
-                  <ArrowRight className="h-4 w-4 text-black/35" />
-                </a>
-
-                <a
-                  href="/galeria"
-                  onClick={() =>
-                    handleMobileNavigation("galeria")
-                  }
-                  className="flex items-center justify-between border-b border-black/5 px-5 py-4 font-medium text-[#1f241f]"
-                >
-                  Galeria
-                  <ArrowRight className="h-4 w-4 text-black/35" />
-                </a>
-
-                <a
-                  href="/finansowanie"
-                  onClick={() =>
-                    handleMobileNavigation("finansowanie")
-                  }
-                  className="flex items-center justify-between border-b border-black/5 px-5 py-4 font-medium text-[#1f241f]"
-                >
-                  Finansowanie
-                  <ArrowRight className="h-4 w-4 text-black/35" />
-                </a>
-
-                <a
-                  href="/dokumenty"
-                  onClick={() =>
-                    handleMobileNavigation("dokumenty")
-                  }
-                  className="flex items-center justify-between border-b border-black/5 px-5 py-4 font-medium text-[#1f241f]"
-                >
-                  Dokumenty
-                  <ArrowRight className="h-4 w-4 text-black/35" />
-                </a>
-
-                <a
-                  href="/historia-cen"
-                  onClick={() =>
-                    handleMobileNavigation("historia_cen")
-                  }
-                  className="flex items-center justify-between px-5 py-4 font-medium text-[#1f241f]"
-                >
-                  Ceny i historia cen
-                  <ArrowRight className="h-4 w-4 text-black/35" />
-                </a>
+                {[
+                  ["Inwestycja", "/inwestycja", "inwestycja"],
+                  ["Lokale", "/lokale", "lokale"],
+                  ["Standard", "/standard", "standard"],
+                  ["Lokalizacja", "/lokalizacja", "lokalizacja"],
+                  ["Galeria", "/galeria", "galeria"],
+                  ["Finansowanie", "/finansowanie", "finansowanie"],
+                  ["Dokumenty", "/dokumenty", "dokumenty"],
+                  [
+                    "Ceny i historia cen",
+                    "/historia-cen",
+                    "historia_cen",
+                  ],
+                ].map(([label, href, eventName], index, array) => (
+                  <a
+                    key={label}
+                    href={href}
+                    onClick={() =>
+                      handleMobileNavigation(eventName)
+                    }
+                    className={`flex items-center justify-between px-5 py-4 font-medium ${
+                      index < array.length - 1
+                        ? "border-b border-black/5"
+                        : ""
+                    } ${
+                      label === "Lokale"
+                        ? "bg-[#e4e6d7]/50 font-semibold text-[#1f3d2b]"
+                        : "text-[#1f241f]"
+                    }`}
+                  >
+                    {label}
+                    <ArrowRight className="h-4 w-4 text-black/35" />
+                  </a>
+                ))}
               </div>
             </div>
           )}
         </div>
       </nav>
 
-      {/* DUŻA PROMOCJA NA GÓRZE */}
+      {/* PROMOCJA */}
       <section className="bg-[#10251b] py-14 text-white md:py-20">
         <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div>
@@ -439,7 +437,7 @@ export default function Page() {
         </div>
       </section>
 
-      {/* GŁÓWNY HERO NOVADUO */}
+      {/* HERO NOVADUO */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_25%,rgba(78,113,76,0.20),transparent_38%),linear-gradient(120deg,#f6f3ec,#e7eadc)]" />
 
@@ -523,11 +521,15 @@ export default function Page() {
             </div>
           </div>
 
+          {/* PRZYWRÓCONY AUTOMATYCZNY SLIDER */}
           <div className="relative">
-            <div className="overflow-hidden rounded-[2rem] shadow-2xl">
+            <div className="overflow-hidden rounded-[2rem] bg-black/5 shadow-2xl">
               <img
-                src="/images/postprodukcja_0000_Scene-1_upscale01.png"
-                alt="NovaDuo – nowoczesne domy w Pogroszewie"
+                key={heroImages[heroIndex]}
+                src={heroImages[heroIndex]}
+                alt={`NovaDuo – wizualizacja inwestycji ${
+                  heroIndex + 1
+                }`}
                 className="h-[430px] w-full object-cover md:h-[560px]"
               />
             </div>
@@ -549,16 +551,14 @@ export default function Page() {
         </div>
       </section>
 
-      {/* 4 NAJWAŻNIEJSZE PRZEWAGI */}
+      {/* 4 PRZEWAGI */}
       <section className="mx-auto max-w-7xl px-6 py-20">
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           <div className="rounded-[2rem] bg-white p-7 shadow-sm">
             <Ruler className="h-7 w-7 text-[#1f3d2b]" />
-
             <div className="mt-5 text-3xl font-semibold">
               ok. 154 m²
             </div>
-
             <div className="mt-2 text-sm leading-6 text-black/55">
               Powierzchni netto lokalu.
             </div>
@@ -566,11 +566,9 @@ export default function Page() {
 
           <div className="rounded-[2rem] bg-[#1f3d2b] p-7 text-white shadow-lg">
             <Home className="h-7 w-7 text-[#e7c46a]" />
-
             <div className="mt-5 text-3xl font-semibold">
               BEZ SKOSÓW
             </div>
-
             <div className="mt-2 text-sm leading-6 text-white/70">
               Pełnowartościowa przestrzeń na całym piętrze.
             </div>
@@ -578,11 +576,9 @@ export default function Page() {
 
           <div className="rounded-[2rem] bg-white p-7 shadow-sm">
             <Trees className="h-7 w-7 text-[#1f3d2b]" />
-
             <div className="mt-5 text-3xl font-semibold">
               255–424 m²
             </div>
-
             <div className="mt-2 text-sm leading-6 text-black/55">
               Działki do wyłącznego użytkowania.
             </div>
@@ -590,11 +586,9 @@ export default function Page() {
 
           <div className="rounded-[2rem] bg-white p-7 shadow-sm">
             <Car className="h-7 w-7 text-[#1f3d2b]" />
-
             <div className="mt-5 text-3xl font-semibold">
               Garaż
             </div>
-
             <div className="mt-2 text-sm leading-6 text-black/55">
               W bryle każdego lokalu, z bramą i napędem.
             </div>
@@ -800,8 +794,8 @@ export default function Page() {
 
               <p className="mt-3 max-w-3xl leading-7 text-black/60">
                 Na interaktywnym planie możesz sprawdzić dokładne
-                położenie, powierzchnię działki, cenę i aktualny status
-                każdego lokalu.
+                położenie, powierzchnię działki, cenę
+                i aktualny status każdego lokalu.
               </p>
             </div>
 
@@ -901,7 +895,7 @@ export default function Page() {
         </div>
       </section>
 
-      {/* GŁÓWNE CTA */}
+      {/* CTA */}
       <section className="px-6 pb-20">
         <div className="mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] bg-[#1f3d2b] px-7 py-12 text-white md:px-12 md:py-16">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
@@ -954,7 +948,6 @@ export default function Page() {
       {/* FOOTER */}
       <footer className="border-t border-black/10 bg-[#f6f3ec] py-12">
         <div className="mx-auto grid max-w-7xl gap-10 px-6 md:grid-cols-[1.1fr_0.9fr]">
-          {/* KONTAKT DO DEWELOPERA */}
           <div>
             <div className="text-sm uppercase tracking-[0.22em] text-[#1f3d2b]/50">
               Deweloper
@@ -1038,7 +1031,6 @@ export default function Page() {
             </div>
           </div>
 
-          {/* LINKI */}
           <div className="md:text-right">
             <div className="text-sm uppercase tracking-[0.22em] text-[#1f3d2b]/50">
               NovaDuo
