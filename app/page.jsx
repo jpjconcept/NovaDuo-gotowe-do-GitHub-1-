@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import {
   ArrowRight,
   Building2,
@@ -19,6 +19,8 @@ import {
 } from "lucide-react";
 
 export default function Page() {
+  const [showDeveloperContact, setShowDeveloperContact] = useState(false);
+
   const trackEvent = (name, params = {}) => {
     if (
       typeof window !== "undefined" &&
@@ -785,45 +787,29 @@ export default function Page() {
               </p>
             </div>
 
-            <div className="flex shrink-0 flex-col gap-3">
-              <div className="flex flex-col gap-3 sm:flex-row">
-                <a
-                  href="/lokale"
-                  onClick={() =>
-                    trackEvent("click_units", {
-                      location: "bottom_cta",
-                    })
-                  }
-                  className="inline-flex h-12 items-center justify-center rounded-full bg-white px-7 font-medium text-[#1f3d2b] transition hover:bg-[#e4e6d7]"
-                >
-                  Dostępne lokale
-                </a>
-
-                <a
-                  href="/biuro-sprzedazy"
-                  onClick={() =>
-                    trackEvent("click_sales_office", {
-                      location: "bottom_cta",
-                    })
-                  }
-                  className="inline-flex h-12 items-center justify-center rounded-full border border-white/25 px-7 font-medium text-white transition hover:bg-white/10"
-                >
-                  Umów prezentację
-                </a>
-              </div>
-
+            <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
               <a
-                href="tel:+48600397399"
+                href="/lokale"
                 onClick={() =>
-                  trackEvent("click_phone", {
-                    contact_type: "developer",
+                  trackEvent("click_units", {
                     location: "bottom_cta",
                   })
                 }
-                className="inline-flex items-center justify-center gap-2 text-sm font-medium text-[#e7c46a] transition hover:text-white"
+                className="inline-flex h-12 items-center justify-center rounded-full bg-white px-7 font-medium text-[#1f3d2b] transition hover:bg-[#e4e6d7]"
               >
-                <Phone className="h-4 w-4" />
-                Deweloper: 600 397 399
+                Dostępne lokale
+              </a>
+
+              <a
+                href="/biuro-sprzedazy"
+                onClick={() =>
+                  trackEvent("click_sales_office", {
+                    location: "bottom_cta",
+                  })
+                }
+                className="inline-flex h-12 items-center justify-center rounded-full border border-white/25 px-7 font-medium text-white transition hover:bg-white/10"
+              >
+                Umów prezentację
               </a>
             </div>
 
@@ -835,6 +821,7 @@ export default function Page() {
       <footer className="border-t border-black/10 bg-[#f6f3ec] py-12">
         <div className="mx-auto grid max-w-7xl gap-10 px-6 md:grid-cols-[1.1fr_0.9fr]">
 
+          {/* KONTAKT DO DEWELOPERA */}
           <div>
             <div className="text-sm uppercase tracking-[0.22em] text-[#1f3d2b]/50">
               Deweloper
@@ -844,37 +831,67 @@ export default function Page() {
               JPJ Concept Sp. z o.o.
             </div>
 
-            <div className="mt-4 space-y-3">
-              <a
-                href="tel:+48600397399"
-                onClick={() =>
-                  trackEvent("click_phone", {
+            <p className="mt-3 max-w-md text-sm leading-6 text-black/55">
+              Bezpośredni kontakt z deweloperem inwestycji NovaDuo.
+            </p>
+
+            {!showDeveloperContact ? (
+              <button
+                type="button"
+                onClick={() => {
+                  setShowDeveloperContact(true);
+
+                  trackEvent("reveal_contact", {
                     contact_type: "developer",
                     location: "footer",
-                  })
-                }
-                className="flex w-fit items-center gap-3 text-lg font-semibold text-[#1f3d2b] transition hover:opacity-65"
+                  });
+                }}
+                className="mt-6 inline-flex h-12 items-center justify-center rounded-full bg-[#1f3d2b] px-7 font-medium text-white transition hover:bg-[#152b1e]"
               >
-                <Phone className="h-5 w-5" />
-                600 397 399
-              </a>
+                Pokaż dane kontaktowe
+              </button>
+            ) : (
+              <div className="mt-6 max-w-md rounded-[1.5rem] border border-[#1f3d2b]/10 bg-white p-6 shadow-sm">
 
-              <a
-                href="mailto:kontakt@jpjconcept.pl"
-                onClick={() =>
-                  trackEvent("click_email", {
-                    contact_type: "developer",
-                    location: "footer",
-                  })
-                }
-                className="flex w-fit items-center gap-3 text-[#1f3d2b] transition hover:opacity-65"
-              >
-                <Mail className="h-5 w-5" />
-                kontakt@jpjconcept.pl
-              </a>
-            </div>
+                <div className="text-xs uppercase tracking-[0.18em] text-black/45">
+                  Telefon
+                </div>
 
-            <div className="mt-5 text-sm leading-6 text-black/55">
+                <a
+                  href="tel:+48600397399"
+                  onClick={() =>
+                    trackEvent("click_phone", {
+                      contact_type: "developer",
+                      location: "footer",
+                    })
+                  }
+                  className="mt-2 flex w-fit items-center gap-3 text-xl font-semibold text-[#1f3d2b] transition hover:opacity-65"
+                >
+                  <Phone className="h-5 w-5" />
+                  600 397 399
+                </a>
+
+                <div className="mt-5 text-xs uppercase tracking-[0.18em] text-black/45">
+                  E-mail
+                </div>
+
+                <a
+                  href="mailto:kontakt@jpjconcept.pl"
+                  onClick={() =>
+                    trackEvent("click_email", {
+                      contact_type: "developer",
+                      location: "footer",
+                    })
+                  }
+                  className="mt-2 flex w-fit items-center gap-3 text-[#1f3d2b] transition hover:opacity-65"
+                >
+                  <Mail className="h-5 w-5" />
+                  kontakt@jpjconcept.pl
+                </a>
+              </div>
+            )}
+
+            <div className="mt-6 text-sm leading-6 text-black/55">
               ul. Nowowiejska 58A, Pogroszew
               <br />
               05-850 Ożarów Mazowiecki
@@ -889,12 +906,14 @@ export default function Page() {
             </div>
           </div>
 
+          {/* LINKI */}
           <div className="md:text-right">
             <div className="text-sm uppercase tracking-[0.22em] text-[#1f3d2b]/50">
               NovaDuo
             </div>
 
             <div className="mt-4 flex flex-wrap gap-x-5 gap-y-3 md:justify-end">
+
               <a href="/inwestycja" className="hover:text-[#1f3d2b]">
                 Inwestycja
               </a>
@@ -915,6 +934,14 @@ export default function Page() {
                 Galeria
               </a>
 
+              <a href="/finansowanie" className="hover:text-[#1f3d2b]">
+                Finansowanie
+              </a>
+
+              <a href="/biuro-sprzedazy" className="hover:text-[#1f3d2b]">
+                Biuro sprzedaży
+              </a>
+
               <a href="/dokumenty" className="hover:text-[#1f3d2b]">
                 Dokumenty
               </a>
@@ -932,6 +959,7 @@ export default function Page() {
               >
                 Promocja
               </a>
+
             </div>
 
             <div className="mt-8 text-sm text-black/45">
