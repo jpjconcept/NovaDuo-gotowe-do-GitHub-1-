@@ -96,6 +96,14 @@ export default function Page() {
     });
   };
 
+  const handleDeveloperContactClick = (location) => {
+    trackEvent("click_developer_contact", {
+      location,
+    });
+
+    setMobileMenuOpen(false);
+  };
+
   const advantages = [
     {
       icon: Ruler,
@@ -232,29 +240,25 @@ export default function Page() {
               </button>
 
               <a
-                href="/biuro-sprzedazy"
+                href="#kontakt-deweloper"
                 onClick={() =>
-                  trackEvent("click_sales_office", {
-                    location: "mobile_navigation",
-                  })
+                  handleDeveloperContactClick("mobile_navigation")
                 }
                 className="inline-flex h-10 shrink-0 items-center justify-center rounded-full bg-[#1f3d2b] px-4 text-xs font-medium text-white sm:text-sm"
               >
-                Biuro sprzedaży
+                Kontakt
               </a>
             </div>
 
             {/* DESKTOP */}
             <a
-              href="/biuro-sprzedazy"
+              href="#kontakt-deweloper"
               onClick={() =>
-                trackEvent("click_sales_office", {
-                  location: "top_navigation",
-                })
+                handleDeveloperContactClick("top_navigation")
               }
               className="hidden h-11 shrink-0 items-center justify-center rounded-full bg-[#1f3d2b] px-6 text-sm font-medium text-white transition hover:bg-[#152b1e] md:inline-flex"
             >
-              Biuro sprzedaży
+              Kontakt
             </a>
           </div>
 
@@ -354,6 +358,7 @@ export default function Page() {
                     }`}
                   >
                     {label}
+
                     <ArrowRight className="h-4 w-4 text-black/35" />
                   </a>
                 ))}
@@ -521,7 +526,7 @@ export default function Page() {
             </div>
           </div>
 
-          {/* PRZYWRÓCONY AUTOMATYCZNY SLIDER */}
+          {/* AUTOMATYCZNY SLIDER */}
           <div className="relative">
             <div className="overflow-hidden rounded-[2rem] bg-black/5 shadow-2xl">
               <img
@@ -556,9 +561,11 @@ export default function Page() {
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           <div className="rounded-[2rem] bg-white p-7 shadow-sm">
             <Ruler className="h-7 w-7 text-[#1f3d2b]" />
+
             <div className="mt-5 text-3xl font-semibold">
               ok. 154 m²
             </div>
+
             <div className="mt-2 text-sm leading-6 text-black/55">
               Powierzchni netto lokalu.
             </div>
@@ -566,9 +573,11 @@ export default function Page() {
 
           <div className="rounded-[2rem] bg-[#1f3d2b] p-7 text-white shadow-lg">
             <Home className="h-7 w-7 text-[#e7c46a]" />
+
             <div className="mt-5 text-3xl font-semibold">
               BEZ SKOSÓW
             </div>
+
             <div className="mt-2 text-sm leading-6 text-white/70">
               Pełnowartościowa przestrzeń na całym piętrze.
             </div>
@@ -576,9 +585,11 @@ export default function Page() {
 
           <div className="rounded-[2rem] bg-white p-7 shadow-sm">
             <Trees className="h-7 w-7 text-[#1f3d2b]" />
+
             <div className="mt-5 text-3xl font-semibold">
               255–424 m²
             </div>
+
             <div className="mt-2 text-sm leading-6 text-black/55">
               Działki do wyłącznego użytkowania.
             </div>
@@ -586,9 +597,11 @@ export default function Page() {
 
           <div className="rounded-[2rem] bg-white p-7 shadow-sm">
             <Car className="h-7 w-7 text-[#1f3d2b]" />
+
             <div className="mt-5 text-3xl font-semibold">
               Garaż
             </div>
+
             <div className="mt-2 text-sm leading-6 text-black/55">
               W bryle każdego lokalu, z bramą i napędem.
             </div>
@@ -930,15 +943,13 @@ export default function Page() {
               </a>
 
               <a
-                href="/biuro-sprzedazy"
+                href="#kontakt-deweloper"
                 onClick={() =>
-                  trackEvent("click_sales_office", {
-                    location: "bottom_cta",
-                  })
+                  handleDeveloperContactClick("bottom_cta")
                 }
                 className="inline-flex h-12 items-center justify-center rounded-full border border-white/25 px-7 font-medium text-white transition hover:bg-white/10"
               >
-                Umów prezentację
+                Kontakt z deweloperem
               </a>
             </div>
           </div>
@@ -948,7 +959,12 @@ export default function Page() {
       {/* FOOTER */}
       <footer className="border-t border-black/10 bg-[#f6f3ec] py-12">
         <div className="mx-auto grid max-w-7xl gap-10 px-6 md:grid-cols-[1.1fr_0.9fr]">
-          <div>
+
+          {/* KONTAKT DO DEWELOPERA */}
+          <div
+            id="kontakt-deweloper"
+            className="scroll-mt-32"
+          >
             <div className="text-sm uppercase tracking-[0.22em] text-[#1f3d2b]/50">
               Deweloper
             </div>
@@ -1031,44 +1047,59 @@ export default function Page() {
             </div>
           </div>
 
+          {/* LINKI */}
           <div className="md:text-right">
             <div className="text-sm uppercase tracking-[0.22em] text-[#1f3d2b]/50">
               NovaDuo
             </div>
 
             <div className="mt-4 flex flex-wrap gap-x-5 gap-y-3 md:justify-end">
-              <a href="/inwestycja" className="hover:text-[#1f3d2b]">
+              <a
+                href="/inwestycja"
+                className="hover:text-[#1f3d2b]"
+              >
                 Inwestycja
               </a>
 
-              <a href="/lokale" className="hover:text-[#1f3d2b]">
+              <a
+                href="/lokale"
+                className="hover:text-[#1f3d2b]"
+              >
                 Lokale
               </a>
 
-              <a href="/standard" className="hover:text-[#1f3d2b]">
+              <a
+                href="/standard"
+                className="hover:text-[#1f3d2b]"
+              >
                 Standard
               </a>
 
-              <a href="/lokalizacja" className="hover:text-[#1f3d2b]">
+              <a
+                href="/lokalizacja"
+                className="hover:text-[#1f3d2b]"
+              >
                 Lokalizacja
               </a>
 
-              <a href="/galeria" className="hover:text-[#1f3d2b]">
+              <a
+                href="/galeria"
+                className="hover:text-[#1f3d2b]"
+              >
                 Galeria
               </a>
 
-              <a href="/finansowanie" className="hover:text-[#1f3d2b]">
+              <a
+                href="/finansowanie"
+                className="hover:text-[#1f3d2b]"
+              >
                 Finansowanie
               </a>
 
               <a
-                href="/biuro-sprzedazy"
+                href="/dokumenty"
                 className="hover:text-[#1f3d2b]"
               >
-                Biuro sprzedaży
-              </a>
-
-              <a href="/dokumenty" className="hover:text-[#1f3d2b]">
                 Dokumenty
               </a>
 
