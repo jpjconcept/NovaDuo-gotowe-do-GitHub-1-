@@ -10,16 +10,19 @@ import {
   LayoutGrid,
   Mail,
   MapPin,
+  Menu,
   Phone,
   Ruler,
   ShieldCheck,
   ThermometerSun,
   Trees,
   Wind,
+  X,
 } from "lucide-react";
 
 export default function Page() {
   const [showDeveloperContact, setShowDeveloperContact] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const trackEvent = (name, params = {}) => {
     if (
@@ -28,6 +31,15 @@ export default function Page() {
     ) {
       window.gtag("event", name, params);
     }
+  };
+
+  const handleMobileNavigation = (item) => {
+    setMobileMenuOpen(false);
+
+    trackEvent("click_navigation", {
+      menu_item: item,
+      device_menu: "mobile",
+    });
   };
 
   const advantages = [
@@ -98,7 +110,6 @@ export default function Page() {
 
   return (
     <main className="min-h-screen bg-[#f6f3ec] text-[#1f241f]">
-
       {/* MAŁY PASEK PROMOCJI */}
       <a
         href="/promocja"
@@ -129,16 +140,60 @@ export default function Page() {
       {/* MENU */}
       <nav className="sticky top-0 z-50 border-b border-black/10 bg-[#f6f3ec]/95 backdrop-blur-xl">
         <div className="mx-auto max-w-7xl px-4 md:px-6">
-
-          <div className="flex items-center justify-between gap-4 py-3">
+          {/* GÓRNY WIERSZ */}
+          <div className="flex items-center justify-between gap-3 py-3">
             <a href="/" className="shrink-0">
               <img
                 src="/images/logo-novaduo.png"
                 alt="NovaDuo"
-                className="h-20 w-auto md:h-24"
+                className="h-14 w-auto sm:h-16 md:h-24"
               />
             </a>
 
+            {/* TELEFON */}
+            <div className="flex items-center gap-2 md:hidden">
+              <button
+                type="button"
+                aria-expanded={mobileMenuOpen}
+                aria-label={
+                  mobileMenuOpen ? "Zamknij menu" : "Otwórz menu"
+                }
+                onClick={() => {
+                  setMobileMenuOpen((current) => !current);
+
+                  if (!mobileMenuOpen) {
+                    trackEvent("open_mobile_menu");
+                  }
+                }}
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-[#1f3d2b]/20 bg-white px-4 text-sm font-semibold text-[#1f3d2b]"
+              >
+                {mobileMenuOpen ? (
+                  <>
+                    <X className="h-4 w-4" />
+                    Zamknij
+                  </>
+                ) : (
+                  <>
+                    <Menu className="h-4 w-4" />
+                    Menu
+                  </>
+                )}
+              </button>
+
+              <a
+                href="/biuro-sprzedazy"
+                onClick={() =>
+                  trackEvent("click_sales_office", {
+                    location: "mobile_navigation",
+                  })
+                }
+                className="inline-flex h-10 shrink-0 items-center justify-center rounded-full bg-[#1f3d2b] px-4 text-xs font-medium text-white transition hover:bg-[#152b1e] sm:text-sm"
+              >
+                Biuro sprzedaży
+              </a>
+            </div>
+
+            {/* DESKTOP */}
             <a
               href="/biuro-sprzedazy"
               onClick={() =>
@@ -146,15 +201,15 @@ export default function Page() {
                   location: "top_navigation",
                 })
               }
-              className="inline-flex h-11 shrink-0 items-center justify-center rounded-full bg-[#1f3d2b] px-5 text-sm font-medium text-white transition hover:bg-[#152b1e] md:px-6"
+              className="hidden h-11 shrink-0 items-center justify-center rounded-full bg-[#1f3d2b] px-6 text-sm font-medium text-white transition hover:bg-[#152b1e] md:inline-flex"
             >
               Biuro sprzedaży
             </a>
           </div>
 
-          <div className="-mx-4 overflow-x-auto border-t border-black/5 px-4 md:mx-0 md:px-0">
-            <div className="flex min-w-max items-center gap-5 py-3 text-sm text-black/70 md:justify-center md:gap-7">
-
+          {/* MENU DESKTOP */}
+          <div className="hidden border-t border-black/5 md:block">
+            <div className="flex items-center justify-center gap-7 py-3 text-sm text-black/70">
               <a
                 href="/inwestycja"
                 className="whitespace-nowrap transition hover:text-[#1f3d2b]"
@@ -210,16 +265,109 @@ export default function Page() {
               >
                 Ceny i historia cen
               </a>
-
             </div>
           </div>
+
+          {/* MENU MOBILNE */}
+          {mobileMenuOpen && (
+            <div className="border-t border-black/10 pb-4 pt-3 md:hidden">
+              <div className="overflow-hidden rounded-[1.5rem] border border-black/10 bg-white shadow-xl">
+                <a
+                  href="/inwestycja"
+                  onClick={() =>
+                    handleMobileNavigation("inwestycja")
+                  }
+                  className="flex items-center justify-between border-b border-black/5 px-5 py-4 font-medium text-[#1f241f]"
+                >
+                  Inwestycja
+                  <ArrowRight className="h-4 w-4 text-black/35" />
+                </a>
+
+                <a
+                  href="/lokale"
+                  onClick={() =>
+                    handleMobileNavigation("lokale")
+                  }
+                  className="flex items-center justify-between border-b border-black/5 bg-[#e4e6d7]/50 px-5 py-4 font-semibold text-[#1f3d2b]"
+                >
+                  Lokale
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+
+                <a
+                  href="/standard"
+                  onClick={() =>
+                    handleMobileNavigation("standard")
+                  }
+                  className="flex items-center justify-between border-b border-black/5 px-5 py-4 font-medium text-[#1f241f]"
+                >
+                  Standard
+                  <ArrowRight className="h-4 w-4 text-black/35" />
+                </a>
+
+                <a
+                  href="/lokalizacja"
+                  onClick={() =>
+                    handleMobileNavigation("lokalizacja")
+                  }
+                  className="flex items-center justify-between border-b border-black/5 px-5 py-4 font-medium text-[#1f241f]"
+                >
+                  Lokalizacja
+                  <ArrowRight className="h-4 w-4 text-black/35" />
+                </a>
+
+                <a
+                  href="/galeria"
+                  onClick={() =>
+                    handleMobileNavigation("galeria")
+                  }
+                  className="flex items-center justify-between border-b border-black/5 px-5 py-4 font-medium text-[#1f241f]"
+                >
+                  Galeria
+                  <ArrowRight className="h-4 w-4 text-black/35" />
+                </a>
+
+                <a
+                  href="/finansowanie"
+                  onClick={() =>
+                    handleMobileNavigation("finansowanie")
+                  }
+                  className="flex items-center justify-between border-b border-black/5 px-5 py-4 font-medium text-[#1f241f]"
+                >
+                  Finansowanie
+                  <ArrowRight className="h-4 w-4 text-black/35" />
+                </a>
+
+                <a
+                  href="/dokumenty"
+                  onClick={() =>
+                    handleMobileNavigation("dokumenty")
+                  }
+                  className="flex items-center justify-between border-b border-black/5 px-5 py-4 font-medium text-[#1f241f]"
+                >
+                  Dokumenty
+                  <ArrowRight className="h-4 w-4 text-black/35" />
+                </a>
+
+                <a
+                  href="/historia-cen"
+                  onClick={() =>
+                    handleMobileNavigation("historia_cen")
+                  }
+                  className="flex items-center justify-between px-5 py-4 font-medium text-[#1f241f]"
+                >
+                  Ceny i historia cen
+                  <ArrowRight className="h-4 w-4 text-black/35" />
+                </a>
+              </div>
+            </div>
+          )}
         </div>
       </nav>
 
       {/* DUŻA PROMOCJA NA GÓRZE */}
       <section className="bg-[#10251b] py-14 text-white md:py-20">
         <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-
           <div>
             <div className="inline-flex rounded-full border border-[#e7c46a]/30 bg-[#e7c46a]/10 px-4 py-2 text-sm font-semibold text-[#e7c46a]">
               PROMOCJA DO 31.12.2026
@@ -234,8 +382,8 @@ export default function Page() {
             </h2>
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-white/75">
-              Przy zakupie lokalu NovaDuo w okresie obowiązywania promocji
-              możesz otrzymać fabrycznie nowego Forda Puma
+              Przy zakupie lokalu NovaDuo w okresie obowiązywania
+              promocji możesz otrzymać fabrycznie nowego Forda Puma
               z automatyczną skrzynią biegów.
             </p>
 
@@ -288,7 +436,6 @@ export default function Page() {
               className="w-full max-w-[680px] object-contain transition duration-500 group-hover:scale-[1.03]"
             />
           </a>
-
         </div>
       </section>
 
@@ -297,7 +444,6 @@ export default function Page() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_25%,rgba(78,113,76,0.20),transparent_38%),linear-gradient(120deg,#f6f3ec,#e7eadc)]" />
 
         <div className="relative mx-auto grid max-w-7xl gap-12 px-6 py-16 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:py-24">
-
           <div>
             <div className="mb-5 inline-flex rounded-full border border-[#1f3d2b]/20 bg-white/65 px-4 py-2 text-sm font-medium text-[#1f3d2b]">
               NovaDuo • tylko 8 lokali • Pogroszew pod Warszawą
@@ -324,7 +470,11 @@ export default function Page() {
             <p className="mt-5 max-w-2xl text-lg leading-8 text-black/65">
               Garaż w bryle, działka do wyłącznego użytkowania
               od <strong>255 do 424 m²</strong> oraz
-              <strong> pompa ciepła i rekuperator w cenie lokalu</strong>.
+              <strong>
+                {" "}
+                pompa ciepła i rekuperator w cenie lokalu
+              </strong>
+              .
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -396,14 +546,12 @@ export default function Page() {
               </div>
             </div>
           </div>
-
         </div>
       </section>
 
       {/* 4 NAJWAŻNIEJSZE PRZEWAGI */}
       <section className="mx-auto max-w-7xl px-6 py-20">
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-
           <div className="rounded-[2rem] bg-white p-7 shadow-sm">
             <Ruler className="h-7 w-7 text-[#1f3d2b]" />
 
@@ -451,14 +599,12 @@ export default function Page() {
               W bryle każdego lokalu, z bramą i napędem.
             </div>
           </div>
-
         </div>
       </section>
 
       {/* BEZ SKOSÓW */}
       <section className="bg-[#10251b] py-20 text-white">
         <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
-
           <div>
             <div className="inline-flex rounded-full border border-[#e7c46a]/30 bg-[#e7c46a]/10 px-4 py-2 text-sm font-semibold text-[#e7c46a]">
               PEŁNOWARTOŚCIOWE METRY
@@ -478,8 +624,8 @@ export default function Page() {
 
             <p className="mt-6 max-w-2xl text-lg leading-8 text-white/75">
               W NovaDuo piętro nie jest poddaszem ograniczonym skosami.
-              Otrzymujesz pełnowartościową kondygnację z pionowymi ścianami,
-              którą możesz normalnie umeblować i wykorzystać.
+              Otrzymujesz pełnowartościową kondygnację z pionowymi
+              ścianami, którą możesz normalnie umeblować i wykorzystać.
             </p>
 
             <p className="mt-5 max-w-2xl text-lg leading-8 text-white/75">
@@ -522,14 +668,12 @@ export default function Page() {
               className="h-[440px] w-full rounded-[1.5rem] object-cover md:h-[580px]"
             />
           </div>
-
         </div>
       </section>
 
       {/* DLACZEGO NOVADUO */}
       <section className="py-20">
         <div className="mx-auto max-w-7xl px-6">
-
           <div className="mx-auto max-w-4xl text-center">
             <div className="text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/55">
               Dlaczego NovaDuo?
@@ -575,14 +719,12 @@ export default function Page() {
               );
             })}
           </div>
-
         </div>
       </section>
 
       {/* STANDARD */}
       <section className="border-y border-black/5 bg-white/70 py-20">
         <div className="mx-auto max-w-7xl px-6">
-
           <div className="max-w-4xl">
             <div className="text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/55">
               Standard NovaDuo
@@ -634,16 +776,13 @@ export default function Page() {
             Zobacz pełny standard techniczny
             <ArrowRight className="ml-2 h-4 w-4" />
           </a>
-
         </div>
       </section>
 
       {/* DZIAŁKI */}
       <section className="mx-auto max-w-7xl px-6 py-20">
         <div className="rounded-[2.5rem] bg-[#e4e6d7] p-8 md:p-12">
-
           <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
-
             <div>
               <div className="text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/55">
                 Więcej własnej przestrzeni
@@ -655,13 +794,14 @@ export default function Page() {
 
               <p className="mt-6 max-w-3xl text-lg leading-8 text-black/65">
                 Do każdego lokalu przypisana jest działka
-                do wyłącznego użytkowania.
-                Jej powierzchnia zależy od wybranego lokalu.
+                do wyłącznego użytkowania. Jej powierzchnia zależy
+                od wybranego lokalu.
               </p>
 
               <p className="mt-3 max-w-3xl leading-7 text-black/60">
-                Na interaktywnym planie możesz sprawdzić dokładne położenie,
-                powierzchnię działki, cenę i aktualny status każdego lokalu.
+                Na interaktywnym planie możesz sprawdzić dokładne
+                położenie, powierzchnię działki, cenę i aktualny status
+                każdego lokalu.
               </p>
             </div>
 
@@ -677,7 +817,6 @@ export default function Page() {
               Zobacz plan i lokale
               <ArrowRight className="ml-2 h-4 w-4" />
             </a>
-
           </div>
         </div>
       </section>
@@ -685,7 +824,6 @@ export default function Page() {
       {/* LOKALIZACJA */}
       <section className="bg-[#e4e6d7] py-20">
         <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
-
           <div>
             <MapPin className="h-8 w-8 text-[#1f3d2b]" />
 
@@ -726,14 +864,12 @@ export default function Page() {
               className="h-[380px] w-full object-cover md:h-[460px]"
             />
           </div>
-
         </div>
       </section>
 
       {/* SEO */}
       <section className="mx-auto max-w-5xl px-6 py-16">
         <div className="rounded-[2rem] border border-black/5 bg-white p-8 shadow-sm md:p-10">
-
           <h2 className="text-2xl font-semibold">
             NovaDuo – nowoczesne domy i segmenty pod Warszawą
           </h2>
@@ -762,28 +898,27 @@ export default function Page() {
               Domy pod Warszawą
             </a>
           </div>
-
         </div>
       </section>
 
       {/* GŁÓWNE CTA */}
       <section className="px-6 pb-20">
         <div className="mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] bg-[#1f3d2b] px-7 py-12 text-white md:px-12 md:py-16">
-
           <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
-
             <div>
               <div className="text-sm uppercase tracking-[0.25em] text-white/45">
                 NovaDuo
               </div>
 
               <h2 className="mt-3 max-w-3xl text-3xl font-semibold md:text-4xl">
-                Zanim porównasz cenę za metr, sprawdź jakie metry naprawdę kupujesz.
+                Zanim porównasz cenę za metr, sprawdź jakie metry
+                naprawdę kupujesz.
               </h2>
 
               <p className="mt-4 max-w-2xl text-white/65">
                 Bez skosów. Bez niewykończonego poddasza.
-                Z garażem, działką oraz pompą ciepła i rekuperatorem w cenie.
+                Z garażem, działką oraz pompą ciepła
+                i rekuperatorem w cenie.
               </p>
             </div>
 
@@ -812,7 +947,6 @@ export default function Page() {
                 Umów prezentację
               </a>
             </div>
-
           </div>
         </div>
       </section>
@@ -820,7 +954,6 @@ export default function Page() {
       {/* FOOTER */}
       <footer className="border-t border-black/10 bg-[#f6f3ec] py-12">
         <div className="mx-auto grid max-w-7xl gap-10 px-6 md:grid-cols-[1.1fr_0.9fr]">
-
           {/* KONTAKT DO DEWELOPERA */}
           <div>
             <div className="text-sm uppercase tracking-[0.22em] text-[#1f3d2b]/50">
@@ -852,7 +985,6 @@ export default function Page() {
               </button>
             ) : (
               <div className="mt-6 max-w-md rounded-[1.5rem] border border-[#1f3d2b]/10 bg-white p-6 shadow-sm">
-
                 <div className="text-xs uppercase tracking-[0.18em] text-black/45">
                   Telefon
                 </div>
@@ -913,7 +1045,6 @@ export default function Page() {
             </div>
 
             <div className="mt-4 flex flex-wrap gap-x-5 gap-y-3 md:justify-end">
-
               <a href="/inwestycja" className="hover:text-[#1f3d2b]">
                 Inwestycja
               </a>
@@ -938,7 +1069,10 @@ export default function Page() {
                 Finansowanie
               </a>
 
-              <a href="/biuro-sprzedazy" className="hover:text-[#1f3d2b]">
+              <a
+                href="/biuro-sprzedazy"
+                className="hover:text-[#1f3d2b]"
+              >
                 Biuro sprzedaży
               </a>
 
@@ -959,17 +1093,14 @@ export default function Page() {
               >
                 Promocja
               </a>
-
             </div>
 
             <div className="mt-8 text-sm text-black/45">
               © 2026 NovaDuo | JPJ Concept Sp. z o.o.
             </div>
           </div>
-
         </div>
       </footer>
-
     </main>
   );
 }
