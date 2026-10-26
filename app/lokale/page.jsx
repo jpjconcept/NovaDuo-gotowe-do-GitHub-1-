@@ -16,67 +16,68 @@ const DISPLAY_ORDER = [
 ];
 
 /*
-  To są na razie pola wyboru na mapie.
-  Po uruchomieniu strony dopasujemy je dokładnie do Twojego rysunku.
-  Nie zmieniamy samego rysunku ani granic działek.
+  Aktywne pola znajdują się wyłącznie nad bryłami poszczególnych lokali.
+  Nie zmieniamy oryginalnego planu ani granic działek.
 */
 const HOTSPOTS = [
+  // GÓRNY RZĄD
   {
     id: "58/2",
-    left: "4%",
-    top: "7%",
-    width: "21%",
-    height: "31%",
+    left: "29.5%",
+    top: "12%",
+    width: "10.3%",
+    height: "15%",
   },
   {
     id: "58/4",
-    left: "26%",
-    top: "7%",
-    width: "21%",
-    height: "31%",
+    left: "39.8%",
+    top: "12%",
+    width: "10.3%",
+    height: "15%",
   },
   {
     id: "58/6",
-    left: "48%",
-    top: "7%",
-    width: "21%",
-    height: "31%",
+    left: "50.1%",
+    top: "12%",
+    width: "10.3%",
+    height: "15%",
   },
   {
     id: "58/8",
-    left: "70%",
-    top: "7%",
-    width: "25%",
-    height: "31%",
+    left: "60.4%",
+    top: "12%",
+    width: "10.3%",
+    height: "15%",
   },
 
+  // DOLNY RZĄD
   {
     id: "58/1",
-    left: "4%",
-    top: "61%",
-    width: "21%",
-    height: "31%",
+    left: "29.5%",
+    top: "68.2%",
+    width: "10.3%",
+    height: "15%",
   },
   {
     id: "58/3",
-    left: "26%",
-    top: "61%",
-    width: "21%",
-    height: "31%",
+    left: "39.8%",
+    top: "68.2%",
+    width: "10.3%",
+    height: "15%",
   },
   {
     id: "58/5",
-    left: "48%",
-    top: "61%",
-    width: "21%",
-    height: "31%",
+    left: "50.1%",
+    top: "68.2%",
+    width: "10.3%",
+    height: "15%",
   },
   {
     id: "58/7",
-    left: "70%",
-    top: "61%",
-    width: "25%",
-    height: "31%",
+    left: "60.4%",
+    top: "68.2%",
+    width: "10.3%",
+    height: "15%",
   },
 ];
 
@@ -113,9 +114,7 @@ function formatPricePerNetSquareMeter(totalPrice, netArea) {
 function buildHomeViewModel(unit) {
   return {
     id: unit.id,
-    totalPrice: Number(unit.total_price),
     price: formatCurrency(unit.total_price),
-    netAreaValue: Number(unit.net_area),
     netArea: `${formatArea(unit.net_area)} m²`,
     usableArea: `${formatArea(unit.usable_area)} m²`,
     terrainArea: `${formatArea(unit.garden_area)} m²`,
@@ -212,8 +211,8 @@ export default function LokalePage() {
   const [homes, setHomes] = useState(fallbackHomes);
 
   /*
-    selectedId zostaje zapamiętany.
-    Dzięki temu po odsunięciu myszy informacje NIE znikają.
+    Ostatnio wskazany lokal pozostaje zaznaczony,
+    nawet gdy użytkownik odsunie kursor.
   */
   const [selectedId, setSelectedId] = useState(null);
 
@@ -303,7 +302,7 @@ export default function LokalePage() {
         </div>
 
         <div className="grid gap-8 lg:grid-cols-[1.5fr_0.7fr] lg:items-start">
-          {/* MAPA */}
+          {/* PLAN INWESTYCJI */}
           <div>
             <div className="relative overflow-hidden rounded-[2rem] bg-white shadow-xl">
               <img
@@ -332,24 +331,14 @@ export default function LokalePage() {
                       width: spot.width,
                       height: spot.height,
                     }}
-                    className={`absolute flex items-center justify-center rounded-xl border-2 transition duration-200 ${
+                    className={`absolute cursor-pointer border-2 transition duration-200 ${
                       isSelected
                         ? isReserved
-                          ? "border-orange-500 bg-orange-400/30"
-                          : "border-[#1f6b42] bg-[#78b894]/35"
+                          ? "border-orange-500 bg-orange-400/35"
+                          : "border-[#1f6b42] bg-[#78b894]/40"
                         : "border-transparent bg-transparent hover:border-[#1f3d2b]/40 hover:bg-[#78b894]/20"
                     }`}
-                  >
-                    <span
-                      className={`rounded-full px-3 py-1.5 text-sm font-semibold shadow-sm transition ${
-                        isSelected
-                          ? "bg-white text-[#1f3d2b]"
-                          : "bg-white/85 text-[#1f3d2b]"
-                      }`}
-                    >
-                      {spot.id}
-                    </span>
-                  </button>
+                  />
                 );
               })}
             </div>
