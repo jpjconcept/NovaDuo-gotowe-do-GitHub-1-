@@ -21,32 +21,32 @@ export default function Page() {
     {
       icon: Ruler,
       title: "Około 154 m² powierzchni netto",
-      text: "Duża, realna przestrzeń domu. Powierzchnię netto pokazujemy jasno i czytelnie, bez ukrywania jej za marketingowymi określeniami.",
+      text: "Duża, realna przestrzeń domu. Powierzchnię pokazujemy jasno i czytelnie, bez ukrywania jej za marketingowymi określeniami.",
     },
     {
       icon: Home,
       title: "Bez ograniczających skosów",
-      text: "Piętro pozostaje pełnowartościową przestrzenią. Łatwiej ustawić meble, zaplanować szafy i wykorzystać każdy metr.",
+      text: "Piętro jest pełnowartościową kondygnacją. Możesz normalnie ustawić łóżko, szafy, biurko i wykorzystać przestrzeń przy każdej ścianie.",
     },
     {
       icon: CheckCircle2,
-      title: "Cała przestrzeń w standardzie deweloperskim",
-      text: "Nie sprzedajemy dodatkowych metrów wymagających późniejszej adaptacji. Powierzchnia objęta ofertą jest przygotowana w standardzie deweloperskim.",
+      title: "Całość w standardzie deweloperskim",
+      text: "Nie kupujesz dodatkowej powierzchni, którą dopiero po odbiorze trzeba adaptować i wykańczać na własny koszt.",
     },
     {
       icon: LayoutGrid,
       title: "Praktyczny układ pomieszczeń",
-      text: "Dom został zaprojektowany pod codzienne życie rodziny — z czytelnym podziałem stref, wygodną komunikacją i funkcjonalnymi pomieszczeniami.",
+      text: "Układ został zaprojektowany pod codzienne życie rodziny — z czytelnym podziałem stref, wygodną komunikacją i funkcjonalnymi pomieszczeniami.",
     },
     {
       icon: Building2,
       title: "Nowoczesna architektura",
-      text: "Prosta bryła, płaski dach i współczesna elewacja tworzą nowoczesny styl, który odróżnia NovaDuo od klasycznej zabudowy bliźniaczej.",
+      text: "Prosta bryła, płaski dach i współczesna elewacja tworzą nowoczesny styl odróżniający NovaDuo od klasycznej zabudowy bliźniaczej.",
     },
     {
       icon: Car,
       title: "Garaż w bryle każdego lokalu",
-      text: "Pełnoprawny garaż stanowi część domu. Brama garażowa jest segmentowa, z napędem i sterowaniem pilotem.",
+      text: "Pełnoprawny garaż jest częścią domu. Brama garażowa jest segmentowa, z napędem i sterowaniem pilotem.",
     },
   ];
 
@@ -201,7 +201,7 @@ export default function Page() {
 
           <div>
             <div className="mb-5 inline-flex rounded-full border border-[#1f3d2b]/20 bg-white/65 px-4 py-2 text-sm font-medium text-[#1f3d2b]">
-              NovaDuo • Pogroszew pod Warszawą
+              NovaDuo • tylko 8 lokali • Pogroszew pod Warszawą
             </div>
 
             <h1 className="max-w-4xl text-5xl font-semibold leading-[1.02] tracking-tight md:text-6xl lg:text-7xl">
@@ -214,17 +214,18 @@ export default function Page() {
               </span>
             </h1>
 
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-black/65 md:text-xl">
-              NovaDuo to kameralna inwestycja tylko 8 lokali.
-              Około <strong>154 m² powierzchni netto</strong>,
-              garaż w bryle oraz działka do wyłącznego użytkowania
-              od <strong>255 do 424 m²</strong>.
+            <p className="mt-7 max-w-2xl text-xl font-medium leading-8 text-[#1f3d2b] md:text-2xl">
+              Około 154 m² powierzchni netto.
+              <br />
+              <strong>Bez skosów.</strong>
+              <br />
+              Bez niewykończonego poddasza do późniejszej adaptacji.
             </p>
 
-            <p className="mt-4 max-w-2xl leading-7 text-black/60">
-              Bez ograniczających skosów. Bez konieczności adaptowania
-              niewykończonego poddasza. Pompa ciepła i rekuperator
-              znajdują się w cenie lokalu.
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-black/65">
+              Garaż w bryle, działka do wyłącznego użytkowania
+              od <strong>255 do 424 m²</strong> oraz
+              <strong> pompa ciepła i rekuperator w cenie lokalu</strong>.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -245,23 +246,23 @@ export default function Page() {
             </div>
 
             <div className="mt-9 flex flex-wrap gap-3">
-              <span className="rounded-full bg-white/70 px-4 py-2 text-sm shadow-sm">
+              <span className="rounded-full bg-white/80 px-4 py-2 text-sm font-medium shadow-sm">
                 ok. 154 m² netto
               </span>
 
-              <span className="rounded-full bg-white/70 px-4 py-2 text-sm shadow-sm">
-                brak skosów
+              <span className="rounded-full bg-[#1f3d2b] px-5 py-2 text-sm font-semibold text-white shadow-sm">
+                BEZ SKOSÓW
               </span>
 
-              <span className="rounded-full bg-white/70 px-4 py-2 text-sm shadow-sm">
+              <span className="rounded-full bg-white/80 px-4 py-2 text-sm font-medium shadow-sm">
                 garaż w bryle
               </span>
 
-              <span className="rounded-full bg-white/70 px-4 py-2 text-sm shadow-sm">
+              <span className="rounded-full bg-white/80 px-4 py-2 text-sm font-medium shadow-sm">
                 pompa ciepła w cenie
               </span>
 
-              <span className="rounded-full bg-white/70 px-4 py-2 text-sm shadow-sm">
+              <span className="rounded-full bg-white/80 px-4 py-2 text-sm font-medium shadow-sm">
                 rekuperator w cenie
               </span>
             </div>
@@ -278,15 +279,15 @@ export default function Page() {
 
             <div className="absolute -bottom-6 left-6 right-6 rounded-[1.5rem] bg-[#1f3d2b]/95 p-5 text-white shadow-xl backdrop-blur md:left-10 md:right-auto md:max-w-sm">
               <div className="text-xs uppercase tracking-[0.2em] text-white/50">
-                W cenie każdego lokalu
+                Jedna z głównych przewag NovaDuo
               </div>
 
-              <div className="mt-2 text-xl font-semibold">
-                Pompa ciepła + rekuperator
+              <div className="mt-2 text-2xl font-semibold">
+                Pełne piętro bez skosów
               </div>
 
-              <div className="mt-1 text-sm text-white/70">
-                Bez dodatkowej dopłaty za urządzenia.
+              <div className="mt-2 text-sm leading-6 text-white/70">
+                Więcej ustawnej i naprawdę użytecznej przestrzeni.
               </div>
             </div>
           </div>
@@ -294,21 +295,9 @@ export default function Page() {
         </div>
       </section>
 
-      {/* NAJWAŻNIEJSZE LICZBY */}
+      {/* 4 NAJWAŻNIEJSZE PRZEWAGI */}
       <section className="mx-auto max-w-7xl px-6 py-20">
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-
-          <div className="rounded-[2rem] bg-white p-7 shadow-sm">
-            <Home className="h-7 w-7 text-[#1f3d2b]" />
-
-            <div className="mt-5 text-3xl font-semibold">
-              8 lokali
-            </div>
-
-            <div className="mt-2 text-sm leading-6 text-black/55">
-              Kameralna inwestycja zamiast dużego osiedla.
-            </div>
-          </div>
 
           <div className="rounded-[2rem] bg-white p-7 shadow-sm">
             <Ruler className="h-7 w-7 text-[#1f3d2b]" />
@@ -319,6 +308,18 @@ export default function Page() {
 
             <div className="mt-2 text-sm leading-6 text-black/55">
               Powierzchni netto lokalu.
+            </div>
+          </div>
+
+          <div className="rounded-[2rem] bg-[#1f3d2b] p-7 text-white shadow-lg">
+            <Home className="h-7 w-7 text-[#e7c46a]" />
+
+            <div className="mt-5 text-3xl font-semibold">
+              BEZ SKOSÓW
+            </div>
+
+            <div className="mt-2 text-sm leading-6 text-white/70">
+              Pełnowartościowa przestrzeń na całym piętrze.
             </div>
           </div>
 
@@ -349,28 +350,94 @@ export default function Page() {
         </div>
       </section>
 
-      {/* PRZEWAGI */}
-      <section className="bg-[#1f3d2b] py-20 text-white">
+      {/* GŁÓWNA SEKCJA BEZ SKOSÓW */}
+      <section className="bg-[#10251b] py-20 text-white">
+        <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+
+          <div>
+            <div className="inline-flex rounded-full border border-[#e7c46a]/30 bg-[#e7c46a]/10 px-4 py-2 text-sm font-semibold text-[#e7c46a]">
+              PEŁNOWARTOŚCIOWE METRY
+            </div>
+
+            <h2 className="mt-6 text-4xl font-semibold leading-tight tracking-tight md:text-6xl">
+              154 m² to nie tylko liczba.
+              <br />
+              <span className="text-[#e7c46a]">
+                Liczy się, jak możesz je wykorzystać.
+              </span>
+            </h2>
+
+            <div className="mt-8 text-4xl font-bold tracking-tight md:text-5xl">
+              BEZ SKOSÓW.
+            </div>
+
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-white/75">
+              W NovaDuo piętro nie jest poddaszem ograniczonym skosami.
+              Otrzymujesz pełnowartościową kondygnację z pionowymi ścianami,
+              którą możesz normalnie umeblować i wykorzystać.
+            </p>
+
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-white/75">
+              Łóżko, szafa, biurko czy zabudowa mogą stanąć tam,
+              gdzie są naprawdę potrzebne — a nie tylko tam,
+              gdzie pozwala na to wysokość pod skosem.
+            </p>
+
+            <div className="mt-8 rounded-[1.5rem] border border-white/10 bg-white/[0.06] p-6">
+              <div className="text-xl font-semibold text-[#e7c46a]">
+                Bez dodatkowej adaptacji
+              </div>
+
+              <p className="mt-3 leading-7 text-white/70">
+                Cała oferowana przestrzeń jest wykonana w standardzie
+                deweloperskim. Nie kupujesz niewykończonego poddasza,
+                które dopiero później trzeba ocieplać, zabudowywać,
+                instalować i wykańczać na własny koszt.
+              </p>
+            </div>
+
+            <a
+              href="/lokale"
+              className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-[#e7c46a] px-7 font-semibold text-[#10251b] transition hover:bg-[#f0d681]"
+            >
+              Zobacz układy lokali
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </a>
+          </div>
+
+          <div className="overflow-hidden rounded-[2rem] bg-white/5 p-3 shadow-2xl">
+            <img
+              src="/images/postprodukcja_0005_Scene-25_upscale01.webp"
+              alt="NovaDuo – pełnowartościowe piętro bez skosów"
+              className="h-[440px] w-full rounded-[1.5rem] object-cover md:h-[580px]"
+            />
+          </div>
+
+        </div>
+      </section>
+
+      {/* PRZEWAGI NOVADUO */}
+      <section className="bg-[#f6f3ec] py-20">
         <div className="mx-auto max-w-7xl px-6">
 
           <div className="mx-auto max-w-4xl text-center">
-            <div className="text-sm uppercase tracking-[0.28em] text-white/45">
+            <div className="text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/55">
               Dlaczego NovaDuo?
             </div>
 
             <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
               Nie porównuj tylko ceny.
               <br />
-              <span className="text-[#e7c46a]">
-                Porównaj, co faktycznie dostajesz.
+              <span className="text-[#1f3d2b]">
+                Porównaj, co naprawdę dostajesz.
               </span>
             </h2>
 
-            <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-white/70">
+            <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-black/65">
               Sam metraż nie mówi wszystkiego. Znaczenie ma to,
-              czy powierzchnia jest rzeczywiście funkcjonalna,
+              czy powierzchnia jest naprawdę funkcjonalna,
               wykończona w standardzie deweloperskim i czy po zakupie
-              trzeba jeszcze ponosić znaczne dodatkowe koszty.
+              trzeba ponosić kolejne duże koszty.
             </p>
           </div>
 
@@ -381,9 +448,9 @@ export default function Page() {
               return (
                 <div
                   key={item.title}
-                  className="rounded-[2rem] border border-white/10 bg-white/[0.06] p-7"
+                  className="rounded-[2rem] border border-black/5 bg-white p-7 shadow-sm"
                 >
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#e7c46a] text-[#1f3d2b]">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#e4e6d7] text-[#1f3d2b]">
                     <Icon className="h-6 w-6" />
                   </div>
 
@@ -391,7 +458,7 @@ export default function Page() {
                     {item.title}
                   </h3>
 
-                  <p className="mt-3 text-sm leading-7 text-white/65">
+                  <p className="mt-3 text-sm leading-7 text-black/60">
                     {item.text}
                   </p>
                 </div>
@@ -402,60 +469,11 @@ export default function Page() {
           <div className="mt-10 text-center">
             <a
               href="/inwestycja"
-              className="inline-flex h-12 items-center justify-center rounded-full bg-white px-7 font-medium text-[#1f3d2b] transition hover:bg-[#e4e6d7]"
+              className="inline-flex h-12 items-center justify-center rounded-full bg-[#1f3d2b] px-7 font-medium text-white transition hover:bg-[#152b1e]"
             >
               Poznaj inwestycję
               <ArrowRight className="ml-2 h-4 w-4" />
             </a>
-          </div>
-
-        </div>
-      </section>
-
-      {/* PEŁNOWARTOŚCIOWA POWIERZCHNIA */}
-      <section className="mx-auto max-w-7xl px-6 py-20">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-center">
-
-          <div>
-            <div className="text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/55">
-              Metry, które naprawdę wykorzystasz
-            </div>
-
-            <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
-              Pełna wysokość.
-              <br />
-              Bez skosów.
-              <br />
-              Bez późniejszej adaptacji.
-            </h2>
-
-            <p className="mt-6 max-w-xl text-lg leading-8 text-black/65">
-              W NovaDuo piętro nie jest poddaszem ograniczonym skosami.
-              Dzięki płaskiemu dachowi otrzymujesz pełnowartościową
-              przestrzeń, którą łatwiej urządzić i wykorzystać.
-            </p>
-
-            <p className="mt-4 max-w-xl leading-7 text-black/60">
-              Nie trzeba również kupować dodatkowej powierzchni,
-              która dopiero po odbiorze będzie wymagała kosztownej
-              adaptacji do funkcji mieszkalnej.
-            </p>
-
-            <a
-              href="/lokale"
-              className="mt-7 inline-flex items-center font-semibold text-[#1f3d2b] transition hover:opacity-60"
-            >
-              Zobacz układy lokali
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </a>
-          </div>
-
-          <div className="overflow-hidden rounded-[2rem] shadow-xl">
-            <img
-              src="/images/postprodukcja_0005_Scene-25_upscale01.webp"
-              alt="Nowoczesna architektura NovaDuo bez skosów"
-              className="h-[420px] w-full object-cover md:h-[520px]"
-            />
           </div>
 
         </div>
@@ -650,7 +668,7 @@ export default function Page() {
         </div>
       </section>
 
-      {/* SEO / KRÓTKI OPIS */}
+      {/* SEO */}
       <section className="mx-auto max-w-5xl px-6 py-16">
         <div className="rounded-[2rem] border border-black/5 bg-white p-8 shadow-sm md:p-10">
 
@@ -686,7 +704,7 @@ export default function Page() {
         </div>
       </section>
 
-      {/* GŁÓWNE CTA */}
+      {/* CTA */}
       <section className="px-6 pb-20">
         <div className="mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] bg-[#1f3d2b] px-7 py-12 text-white md:px-12 md:py-16">
 
@@ -698,12 +716,12 @@ export default function Page() {
               </div>
 
               <h2 className="mt-3 max-w-3xl text-3xl font-semibold md:text-4xl">
-                Zobacz lokal, zanim porównasz go tylko po cenie za metr.
+                Zanim porównasz cenę za metr, sprawdź jakie metry naprawdę kupujesz.
               </h2>
 
               <p className="mt-4 max-w-2xl text-white/65">
-                Sprawdź powierzchnię, działkę, układ pomieszczeń,
-                standard i wyposażenie, które otrzymujesz w cenie.
+                Bez skosów. Bez niewykończonego poddasza.
+                Z garażem, działką oraz pompą ciepła i rekuperatorem w cenie.
               </p>
             </div>
 
