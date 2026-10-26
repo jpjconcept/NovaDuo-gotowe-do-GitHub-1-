@@ -6,6 +6,7 @@ import {
   Building2,
   Car,
   CheckCircle2,
+  Gift,
   Home,
   LayoutGrid,
   Mail,
@@ -172,7 +173,7 @@ export default function Page() {
 
   return (
     <main className="min-h-screen bg-[#f6f3ec] text-[#1f241f]">
-      {/* MAŁY PASEK PROMOCJI */}
+      {/* GÓRNY PASEK PROMOCJI - ZOSTAJE */}
       <a
         href="/promocja"
         onClick={() =>
@@ -186,7 +187,9 @@ export default function Page() {
           🎁 PROMOCJA DO 31.12.2026
         </span>
 
-        <span className="mx-2 hidden text-white/40 sm:inline">•</span>
+        <span className="mx-2 hidden text-white/40 sm:inline">
+          •
+        </span>
 
         <span className="block sm:inline">
           Ford Puma z automatem w ramach zakupu NovaDuo
@@ -250,7 +253,7 @@ export default function Page() {
               </a>
             </div>
 
-            {/* DESKTOP */}
+            {/* DESKTOP KONTAKT */}
             <a
               href="#kontakt-deweloper"
               onClick={() =>
@@ -262,9 +265,9 @@ export default function Page() {
             </a>
           </div>
 
-          {/* DESKTOP MENU */}
+          {/* MENU DESKTOP */}
           <div className="hidden border-t border-black/5 md:block">
-            <div className="flex items-center justify-center gap-7 py-3 text-sm text-black/70">
+            <div className="flex items-center justify-center gap-5 py-3 text-sm text-black/70">
               <a
                 href="/inwestycja"
                 className="whitespace-nowrap transition hover:text-[#1f3d2b]"
@@ -320,13 +323,46 @@ export default function Page() {
               >
                 Ceny i historia cen
               </a>
+
+              {/* WYRÓŻNIONA PROMOCJA */}
+              <a
+                href="/promocja"
+                onClick={() =>
+                  trackEvent("click_promotion", {
+                    location: "desktop_navigation",
+                  })
+                }
+                className="inline-flex h-9 items-center gap-2 whitespace-nowrap rounded-full bg-[#e7c46a] px-4 font-semibold text-[#10251b] shadow-sm transition hover:bg-[#f0d681]"
+              >
+                <Gift className="h-4 w-4" />
+                Promocja
+              </a>
             </div>
           </div>
 
-          {/* MOBILE MENU */}
+          {/* MENU MOBILE */}
           {mobileMenuOpen && (
             <div className="border-t border-black/10 pb-4 pt-3 md:hidden">
               <div className="overflow-hidden rounded-[1.5rem] border border-black/10 bg-white shadow-xl">
+                <a
+                  href="/promocja"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+
+                    trackEvent("click_promotion", {
+                      location: "mobile_navigation",
+                    });
+                  }}
+                  className="flex items-center justify-between border-b border-[#d7b358]/30 bg-[#f7edce] px-5 py-4 font-semibold text-[#7a5916]"
+                >
+                  <span className="flex items-center gap-2">
+                    <Gift className="h-5 w-5" />
+                    Promocja
+                  </span>
+
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+
                 {[
                   ["Inwestycja", "/inwestycja", "inwestycja"],
                   ["Lokale", "/lokale", "lokale"],
@@ -368,81 +404,7 @@ export default function Page() {
         </div>
       </nav>
 
-      {/* PROMOCJA */}
-      <section className="bg-[#10251b] py-14 text-white md:py-20">
-        <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-          <div>
-            <div className="inline-flex rounded-full border border-[#e7c46a]/30 bg-[#e7c46a]/10 px-4 py-2 text-sm font-semibold text-[#e7c46a]">
-              PROMOCJA DO 31.12.2026
-            </div>
-
-            <h2 className="mt-6 text-4xl font-semibold leading-tight tracking-tight md:text-6xl">
-              Nowy dom.
-              <br />
-              <span className="text-[#e7c46a]">
-                Nowy samochód.
-              </span>
-            </h2>
-
-            <p className="mt-6 max-w-xl text-lg leading-8 text-white/75">
-              Przy zakupie lokalu NovaDuo w okresie obowiązywania
-              promocji możesz otrzymać fabrycznie nowego Forda Puma
-              z automatyczną skrzynią biegów.
-            </p>
-
-            <p className="mt-4 max-w-xl text-sm leading-6 text-white/50">
-              Szczegółowe warunki promocji określa regulamin.
-              Model, kolor i wyposażenie samochodu mogą zależeć
-              od aktualnej oferty producenta.
-            </p>
-
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <a
-                href="/promocja"
-                onClick={() =>
-                  trackEvent("click_promotion", {
-                    location: "promotion_hero",
-                  })
-                }
-                className="inline-flex h-12 items-center justify-center rounded-full bg-[#e7c46a] px-7 font-semibold text-[#10251b] transition hover:bg-[#f0d681]"
-              >
-                Poznaj warunki promocji
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </a>
-
-              <a
-                href="/lokale"
-                onClick={() =>
-                  trackEvent("click_units", {
-                    location: "promotion_hero",
-                  })
-                }
-                className="inline-flex h-12 items-center justify-center rounded-full border border-white/25 px-7 font-medium text-white transition hover:bg-white/10"
-              >
-                Sprawdź dostępne lokale
-              </a>
-            </div>
-          </div>
-
-          <a
-            href="/promocja"
-            onClick={() =>
-              trackEvent("click_promotion", {
-                location: "promotion_car",
-              })
-            }
-            className="group flex min-h-[300px] items-center justify-center overflow-hidden rounded-[2rem] bg-white/5 p-5 md:min-h-[390px]"
-          >
-            <img
-              src="/images/promocja-auto.png"
-              alt="Ford Puma w promocji NovaDuo"
-              className="w-full max-w-[680px] object-contain transition duration-500 group-hover:scale-[1.03]"
-            />
-          </a>
-        </div>
-      </section>
-
-      {/* HERO NOVADUO */}
+      {/* HERO NOVADUO - TERAZ OD RAZU PO MENU */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_25%,rgba(78,113,76,0.20),transparent_38%),linear-gradient(120deg,#f6f3ec,#e7eadc)]" />
 
@@ -959,8 +921,6 @@ export default function Page() {
       {/* FOOTER */}
       <footer className="border-t border-black/10 bg-[#f6f3ec] py-12">
         <div className="mx-auto grid max-w-7xl gap-10 px-6 md:grid-cols-[1.1fr_0.9fr]">
-
-          {/* KONTAKT DO DEWELOPERA */}
           <div
             id="kontakt-deweloper"
             className="scroll-mt-32"
@@ -1047,7 +1007,6 @@ export default function Page() {
             </div>
           </div>
 
-          {/* LINKI */}
           <div className="md:text-right">
             <div className="text-sm uppercase tracking-[0.22em] text-[#1f3d2b]/50">
               NovaDuo
@@ -1112,7 +1071,12 @@ export default function Page() {
 
               <a
                 href="/promocja"
-                className="font-medium text-[#b07f24]"
+                onClick={() =>
+                  trackEvent("click_promotion", {
+                    location: "footer",
+                  })
+                }
+                className="font-semibold text-[#b07f24]"
               >
                 Promocja
               </a>
