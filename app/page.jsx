@@ -1,320 +1,92 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import React from "react";
 import {
-  Home,
-  MapPin,
-  FileText,
-  Phone,
   ArrowRight,
-  Trees,
-  Car,
-  Ruler,
   Building2,
-  X,
+  Car,
+  CheckCircle2,
+  Home,
+  LayoutGrid,
+  MapPin,
+  Ruler,
+  ShieldCheck,
+  ThermometerSun,
+  Trees,
+  Wind,
 } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { supabase } from "@/lib/supabase";
-
-const REPORTING_START = "2026-07-23";
-
-const ROAD_RIGHTS = [
-  {
-    label: "Udział w działce ewid. 24/10 – droga wewnętrzna",
-    price: 1,
-  },
-  {
-    label:
-      "Udział w działce ewid. 24/3 – droga dojazdowa do drogi publicznej",
-    price: 1,
-  },
-];
-
-const ROAD_TOTAL_PRICE = ROAD_RIGHTS.reduce(
-  (sum, right) => sum + right.price,
-  0
-);
-
-const DISPLAY_ORDER = [
-  "58/1",
-  "58/3",
-  "58/5",
-  "58/7",
-  "58/2",
-  "58/4",
-  "58/6",
-  "58/8",
-];
-
-function formatCurrency(value) {
-  return `${Number(value).toLocaleString("pl-PL", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })} zł`;
-}
-
-function formatArea(value) {
-  const number = Number(value);
-
-  return number.toLocaleString("pl-PL", {
-    minimumFractionDigits: Number.isInteger(number) ? 0 : 2,
-    maximumFractionDigits: 2,
-  });
-}
-
-function formatPricePerSquareMeter(totalPrice, usableArea) {
-  const price = Number(totalPrice);
-  const area = Number(usableArea);
-
-  if (!Number.isFinite(price) || !Number.isFinite(area) || area <= 0) {
-    return "—";
-  }
-
-  return `${(price / area).toLocaleString("pl-PL", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })} zł/m²`;
-}
-
-function formatPriceDate(value) {
-  const isoDate = String(value || REPORTING_START).slice(0, 10);
-  const [year, month, day] = isoDate.split("-");
-
-  if (!year || !month || !day) {
-    return isoDate;
-  }
-
-  return `${day}.${month}.${year}`;
-}
-
-function buildHomeViewModel(unit) {
-  const totalPrice = Number(unit.total_price);
-
-  return {
-    id: unit.id,
-    price: formatCurrency(totalPrice),
-    pricePerSquareMeter: formatPricePerSquareMeter(
-      totalPrice,
-      unit.usable_area
-    ),
-    totalOfferPrice: formatCurrency(totalPrice + ROAD_TOTAL_PRICE),
-    roadRightPrice: formatCurrency(1),
-    netArea: `${formatArea(unit.net_area)} m²`,
-    usableArea: `${formatArea(unit.usable_area)} m²`,
-    gardenArea: `${formatArea(unit.garden_area)} m²`,
-    plot: `dz. ${unit.plot_no}`,
-    status: unit.status,
-    priceValidFrom: formatPriceDate(unit.price_valid_from),
-  };
-}
 
 export default function Page() {
-  const heroImages = [
-    "/images/postprodukcja_0000_Scene-1_upscale01.png",
-    "/images/postprodukcja_0001_Scene-7_upscale01.png",
-    "/images/postprodukcja_0002_Scene-2_upscale01.png",
-    "/images/postprodukcja_0003_Scene-3_upscale01.png",
-    "/images/postprodukcja_0004_Scene-4_upscale01.png",
-    "/images/postprodukcja_0005_Scene-5_upscale01.png",
-    "/images/postprodukcja_0006_Scene-6_upscale01.png",
-    "/images/postprodukcja_0007_Scene-8_upscale01.png",
-    "/images/postprodukcja_0008_Scene-9_upscale01.png",
-    "/images/postprodukcja_0009_Scene-10_upscale01.png",
-    "/images/postprodukcja_0010_Scene-11_upscale01.png",
-
-    "/images/postprodukcja_0003_Scene-27_upscale01.webp",
-    "/images/postprodukcja_0004_Scene-26_upscale01.webp",
-    "/images/postprodukcja_0005_Scene-25_upscale01.webp",
-    "/images/postprodukcja_0006_Scene-24_upscale01.webp",
-    "/images/postprodukcja_0007_Scene-23_upscale01.webp",
-    "/images/postprodukcja_0008_Scene-22_upscale01.webp",
-    "/images/postprodukcja_0009_Scene-21_upscale01.webp",
-    "/images/postprodukcja_0010_Scene-20_upscale01.webp",
-    "/images/postprodukcja_0011_Scene-19_upscale01.webp",
-    "/images/postprodukcja_0012_Scene-18_upscale01.webp",
-    "/images/postprodukcja_0013_Scene-17_upscale01.webp",
-    "/images/postprodukcja_0014_Scene-16_upscale01.webp",
-    "/images/postprodukcja_0015_Scene-15_upscale01.webp",
-    "/images/postprodukcja_0016_Scene-14_upscale01.webp",
-    "/images/postprodukcja_0017_Scene-13_upscale01.webp",
-    "/images/postprodukcja_0018_Scene-12_upscale01.webp",
-    "/images/postprodukcja_0019_Scene-11_upscale01.webp",
-    "/images/postprodukcja_0020_Scene-10_upscale01.webp",
-
-    "/images/01.jpg",
-    "/images/02.jpg",
-    "/images/03.jpg",
-    "/images/04.jpg",
-    "/images/05.jpg",
-    "/images/06.jpg",
-    "/images/07.jpg",
-    "/images/08.jpg",
-    "/images/09.jpg",
-    "/images/10.jpg",
-    "/images/11.jpg",
+  const advantages = [
+    {
+      icon: Ruler,
+      title: "Około 154 m² powierzchni netto",
+      text: "Duża, realna przestrzeń domu. Powierzchnię netto pokazujemy jasno i czytelnie, bez ukrywania jej za marketingowymi określeniami.",
+    },
+    {
+      icon: Home,
+      title: "Bez ograniczających skosów",
+      text: "Piętro pozostaje pełnowartościową przestrzenią. Łatwiej ustawić meble, zaplanować szafy i wykorzystać każdy metr.",
+    },
+    {
+      icon: CheckCircle2,
+      title: "Cała przestrzeń w standardzie deweloperskim",
+      text: "Nie sprzedajemy dodatkowych metrów wymagających późniejszej adaptacji. Powierzchnia objęta ofertą jest przygotowana w standardzie deweloperskim.",
+    },
+    {
+      icon: LayoutGrid,
+      title: "Praktyczny układ pomieszczeń",
+      text: "Dom został zaprojektowany pod codzienne życie rodziny — z czytelnym podziałem stref, wygodną komunikacją i funkcjonalnymi pomieszczeniami.",
+    },
+    {
+      icon: Building2,
+      title: "Nowoczesna architektura",
+      text: "Prosta bryła, płaski dach i współczesna elewacja tworzą nowoczesny styl, który odróżnia NovaDuo od klasycznej zabudowy bliźniaczej.",
+    },
+    {
+      icon: Car,
+      title: "Garaż w bryle każdego lokalu",
+      text: "Pełnoprawny garaż stanowi część domu. Brama garażowa jest segmentowa, z napędem i sterowaniem pilotem.",
+    },
   ];
 
-  const [heroIndex, setHeroIndex] = useState(0);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [selectedImageIndex, setSelectedImageIndex] = useState(null);
-  const [showFinanceContact, setShowFinanceContact] = useState(false);
-  const [showAgentContact, setShowAgentContact] = useState(false);
-  const [showDeveloperContact, setShowDeveloperContact] = useState(false);
-
-  const trackEvent = (name, params = {}) => {
-    if (
-      typeof window !== "undefined" &&
-      typeof window.gtag === "function"
-    ) {
-      window.gtag("event", name, params);
-    }
-  };
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setHeroIndex(
-        (current) => (current + 1) % heroImages.length
-      );
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  const fallbackHomes = [
+  const standardItems = [
     {
-      id: "58/1",
-      total_price: 1279000,
-      net_area: 154.57,
-      usable_area: 118.48,
-      garden_area: 424,
-      plot_no: "24/11",
-      status: "Dostępny",
-      price_valid_from: REPORTING_START,
+      icon: ThermometerSun,
+      title: "Pompa ciepła w cenie",
+      text: "Każdy lokal otrzymuje pompę ciepła w standardzie. Klient nie musi dopłacać za urządzenie.",
     },
     {
-      id: "58/3",
-      total_price: 1179000,
-      net_area: 154.57,
-      usable_area: 118.48,
-      garden_area: 272,
-      plot_no: "24/11",
-      status: "Dostępny",
-      price_valid_from: "2026-09-02",
+      icon: Wind,
+      title: "Rekuperator w cenie",
+      text: "Rekuperator również znajduje się w cenie lokalu — bez dodatkowej dopłaty za urządzenie.",
     },
     {
-      id: "58/5",
-      total_price: 1179000,
-      net_area: 154.57,
-      usable_area: 118.48,
-      garden_area: 272,
-      plot_no: "24/12",
-      status: "Rezerwacja",
-      price_valid_from: REPORTING_START,
+      icon: ThermometerSun,
+      title: "Ogrzewanie podłogowe",
+      text: "Komfortowe ogrzewanie podłogowe współpracujące z pompą ciepła.",
     },
     {
-      id: "58/7",
-      total_price: 1279000,
-      net_area: 154.02,
-      usable_area: 123.62,
-      garden_area: 405,
-      plot_no: "24/12",
-      status: "Rezerwacja",
-      price_valid_from: REPORTING_START,
+      icon: Wind,
+      title: "Przygotowanie pod 3 klimatyzatory",
+      text: "Instalacja jest przygotowana pod późniejszy montaż trzech jednostek klimatyzacji.",
     },
     {
-      id: "58/2",
-      total_price: 1279000,
-      net_area: 154.57,
-      usable_area: 118.48,
-      garden_area: 408,
-      plot_no: "24/8",
-      status: "Dostępny",
-      price_valid_from: REPORTING_START,
+      icon: ShieldCheck,
+      title: "Przygotowanie pod system bezpieczeństwa",
+      text: "Instalacja pod alarm, okablowanie pod kamery zewnętrzne oraz indywidualny wideofon przy bramie.",
     },
     {
-      id: "58/4",
-      total_price: 1179000,
-      net_area: 154.57,
-      usable_area: 118.48,
-      garden_area: 255,
-      plot_no: "24/8",
-      status: "Dostępny",
-      price_valid_from: REPORTING_START,
+      icon: Trees,
+      title: "Zamknięte, kameralne osiedle",
+      text: "Tylko 8 lokali, brama wjazdowa sterowana pilotem oraz własne oświetlenie części wspólnej.",
     },
-    {
-      id: "58/6",
-      total_price: 1179000,
-      net_area: 154.57,
-      usable_area: 118.48,
-      garden_area: 255,
-      plot_no: "24/9",
-      status: "Dostępny",
-      price_valid_from: REPORTING_START,
-    },
-    {
-      id: "58/8",
-      total_price: 1279000,
-      net_area: 154.57,
-      usable_area: 118.48,
-      garden_area: 345,
-      plot_no: "24/9",
-      status: "Dostępny",
-      price_valid_from: REPORTING_START,
-    },
-  ]
-    .map(buildHomeViewModel)
-    .sort(
-      (first, second) =>
-        DISPLAY_ORDER.indexOf(first.id) -
-        DISPLAY_ORDER.indexOf(second.id)
-    );
-
-  const [homes, setHomes] = useState(fallbackHomes);
-
-  useEffect(() => {
-    let active = true;
-
-    async function loadHomes() {
-      const { data, error } = await supabase
-        .from("units")
-        .select(
-          "id, usable_area, net_area, garden_area, plot_no, total_price, status, price_valid_from"
-        );
-
-      if (error) {
-        console.error(
-          "Nie udało się pobrać lokali z Supabase:",
-          error.message
-        );
-        return;
-      }
-
-      if (!active || !data) {
-        return;
-      }
-
-      const homesFromDatabase = data
-        .map(buildHomeViewModel)
-        .sort(
-          (first, second) =>
-            DISPLAY_ORDER.indexOf(first.id) -
-            DISPLAY_ORDER.indexOf(second.id)
-        );
-
-      setHomes(homesFromDatabase);
-    }
-
-    loadHomes();
-
-    return () => {
-      active = false;
-    };
-  }, []);
+  ];
 
   return (
     <main className="min-h-screen bg-[#f6f3ec] text-[#1f241f]">
+
+      {/* PROMOCJA */}
       <a
         href="/promocja"
         className="block bg-[#1f3d2b] px-4 py-3 text-center text-sm font-medium text-white transition hover:bg-[#152b1e]"
@@ -328,7 +100,7 @@ export default function Page() {
         </span>
 
         <span className="block sm:inline">
-          Nowy Ford Puma z automatem w ramach zakupu NovaDuo
+          Ford Puma z automatem w ramach zakupu NovaDuo
         </span>
 
         <span className="ml-2 font-semibold text-[#e7c46a]">
@@ -336,9 +108,10 @@ export default function Page() {
         </span>
       </a>
 
-      {/* NOWE MENU */}
+      {/* MENU */}
       <nav className="sticky top-0 z-50 border-b border-black/10 bg-[#f6f3ec]/95 backdrop-blur-xl">
         <div className="mx-auto max-w-7xl px-4 md:px-6">
+
           <div className="flex items-center justify-between gap-4 py-3">
             <a href="/" className="shrink-0">
               <img
@@ -358,6 +131,7 @@ export default function Page() {
 
           <div className="-mx-4 overflow-x-auto border-t border-black/5 px-4 md:mx-0 md:px-0">
             <div className="flex min-w-max items-center gap-5 py-3 text-sm text-black/70 md:justify-center md:gap-7">
+
               <a
                 href="/inwestycja"
                 className="whitespace-nowrap transition hover:text-[#1f3d2b]"
@@ -413,1168 +187,593 @@ export default function Page() {
               >
                 Ceny i historia cen
               </a>
+
             </div>
           </div>
         </div>
       </nav>
 
+      {/* HERO */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(78,113,76,0.22),transparent_38%),linear-gradient(120deg,#f6f3ec,#e8eadb)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_25%,rgba(78,113,76,0.20),transparent_38%),linear-gradient(120deg,#f6f3ec,#e7eadc)]" />
 
-        <div className="relative mx-auto grid max-w-7xl gap-12 px-6 py-24 lg:grid-cols-[1.05fr_0.95fr] lg:py-32">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-          >
-            <div className="mb-6 inline-flex rounded-full border border-[#1f3d2b]/20 bg-white/60 px-4 py-2 text-sm text-[#1f3d2b] shadow-sm">
-              Kameralna inwestycja przy ul. Nowowiejskiej 58 w
-              Pogroszewie
+        <div className="relative mx-auto grid max-w-7xl gap-12 px-6 py-16 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:py-24">
+
+          <div>
+            <div className="mb-5 inline-flex rounded-full border border-[#1f3d2b]/20 bg-white/65 px-4 py-2 text-sm font-medium text-[#1f3d2b]">
+              NovaDuo • Pogroszew pod Warszawą
             </div>
 
-            <h1 className="max-w-3xl text-5xl font-semibold leading-[1.02] tracking-tight md:text-7xl">
-              Nowoczesne domy i bliźniaki w Pogroszewie pod Warszawą
+            <h1 className="max-w-4xl text-5xl font-semibold leading-[1.02] tracking-tight md:text-6xl lg:text-7xl">
+              Więcej domu.
+              <br />
+              Więcej działki.
+              <br />
+              <span className="text-[#1f3d2b]">
+                Więcej w standardzie.
+              </span>
             </h1>
 
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-black/65">
-              NovaDuo to nowoczesna, kameralna inwestycja obejmująca
-              funkcjonalne lokale mieszkalne z garażem, ogrodem i
-              wygodnym układem pomieszczeń.{" "}
-              Zobacz także szczegółową ofertę{" "}
-              <a
-                href="/segmenty-pod-warszawa"
-                className="font-medium text-[#1f3d2b] underline underline-offset-4 hover:opacity-70"
-              >
-                segmentów pod Warszawą
-              </a>
-              .
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-black/65 md:text-xl">
+              NovaDuo to kameralna inwestycja tylko 8 lokali.
+              Około <strong>154 m² powierzchni netto</strong>,
+              garaż w bryle oraz działka do wyłącznego użytkowania
+              od <strong>255 do 424 m²</strong>.
             </p>
 
-            <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+            <p className="mt-4 max-w-2xl leading-7 text-black/60">
+              Bez ograniczających skosów. Bez konieczności adaptowania
+              niewykończonego poddasza. Pompa ciepła i rekuperator
+              znajdują się w cenie lokalu.
+            </p>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <a
-                href="#lokale"
-                className="inline-flex h-12 items-center justify-center rounded-full bg-[#1f3d2b] px-7 text-base text-white hover:bg-[#152b1e]"
+                href="/lokale"
+                className="inline-flex h-12 items-center justify-center rounded-full bg-[#1f3d2b] px-7 font-medium text-white transition hover:bg-[#152b1e]"
               >
                 Sprawdź dostępne lokale
                 <ArrowRight className="ml-2 h-4 w-4" />
               </a>
 
               <a
-                href="#dokumenty"
-                className="inline-flex h-12 items-center justify-center rounded-full border border-black/20 bg-white/50 px-7 text-base"
+                href="/standard"
+                className="inline-flex h-12 items-center justify-center rounded-full border border-[#1f3d2b]/20 bg-white/65 px-7 font-medium text-[#1f3d2b] transition hover:bg-white"
               >
-                Pobierz prospekt
+                Zobacz pełny standard
               </a>
             </div>
-          </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7, delay: 0.15 }}
-          >
-            <div className="grid gap-4">
-              <div className="overflow-hidden rounded-[2rem] shadow-2xl">
-                <img
-                  src={heroImages[heroIndex]}
-                  alt="NovaDuo"
-                  className="h-[420px] w-full object-cover"
-                />
+            <div className="mt-9 flex flex-wrap gap-3">
+              <span className="rounded-full bg-white/70 px-4 py-2 text-sm shadow-sm">
+                ok. 154 m² netto
+              </span>
+
+              <span className="rounded-full bg-white/70 px-4 py-2 text-sm shadow-sm">
+                brak skosów
+              </span>
+
+              <span className="rounded-full bg-white/70 px-4 py-2 text-sm shadow-sm">
+                garaż w bryle
+              </span>
+
+              <span className="rounded-full bg-white/70 px-4 py-2 text-sm shadow-sm">
+                pompa ciepła w cenie
+              </span>
+
+              <span className="rounded-full bg-white/70 px-4 py-2 text-sm shadow-sm">
+                rekuperator w cenie
+              </span>
+            </div>
+          </div>
+
+          <div className="relative">
+            <div className="overflow-hidden rounded-[2rem] shadow-2xl">
+              <img
+                src="/images/postprodukcja_0003_Scene-27_upscale01.webp"
+                alt="NovaDuo – nowoczesne domy w Pogroszewie"
+                className="h-[430px] w-full object-cover md:h-[560px]"
+              />
+            </div>
+
+            <div className="absolute -bottom-6 left-6 right-6 rounded-[1.5rem] bg-[#1f3d2b]/95 p-5 text-white shadow-xl backdrop-blur md:left-10 md:right-auto md:max-w-sm">
+              <div className="text-xs uppercase tracking-[0.2em] text-white/50">
+                W cenie każdego lokalu
               </div>
 
-              <div className="grid grid-cols-3 gap-4">
-                <img
-                  src="/images/postprodukcja_0004_Scene-26_upscale01.webp"
-                  alt="NovaDuo"
-                  className="h-40 w-full rounded-3xl object-cover"
-                />
+              <div className="mt-2 text-xl font-semibold">
+                Pompa ciepła + rekuperator
+              </div>
 
-                <img
-                  src="/images/postprodukcja_0005_Scene-25_upscale01.webp"
-                  alt="NovaDuo"
-                  className="h-40 w-full rounded-3xl object-cover"
-                />
-
-                <img
-                  src="/images/postprodukcja_0006_Scene-24_upscale01.webp"
-                  alt="NovaDuo"
-                  className="h-40 w-full rounded-3xl object-cover"
-                />
+              <div className="mt-1 text-sm text-white/70">
+                Bez dodatkowej dopłaty za urządzenia.
               </div>
             </div>
-          </motion.div>
+          </div>
+
         </div>
       </section>
 
-      <section className="border-y border-[#b8913c]/20 bg-[#10251b] py-14 text-white md:py-20">
-        <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-[1fr_1fr] lg:items-center">
+      {/* NAJWAŻNIEJSZE LICZBY */}
+      <section className="mx-auto max-w-7xl px-6 py-20">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+
+          <div className="rounded-[2rem] bg-white p-7 shadow-sm">
+            <Home className="h-7 w-7 text-[#1f3d2b]" />
+
+            <div className="mt-5 text-3xl font-semibold">
+              8 lokali
+            </div>
+
+            <div className="mt-2 text-sm leading-6 text-black/55">
+              Kameralna inwestycja zamiast dużego osiedla.
+            </div>
+          </div>
+
+          <div className="rounded-[2rem] bg-white p-7 shadow-sm">
+            <Ruler className="h-7 w-7 text-[#1f3d2b]" />
+
+            <div className="mt-5 text-3xl font-semibold">
+              ok. 154 m²
+            </div>
+
+            <div className="mt-2 text-sm leading-6 text-black/55">
+              Powierzchni netto lokalu.
+            </div>
+          </div>
+
+          <div className="rounded-[2rem] bg-white p-7 shadow-sm">
+            <Trees className="h-7 w-7 text-[#1f3d2b]" />
+
+            <div className="mt-5 text-3xl font-semibold">
+              255–424 m²
+            </div>
+
+            <div className="mt-2 text-sm leading-6 text-black/55">
+              Działki do wyłącznego użytkowania.
+            </div>
+          </div>
+
+          <div className="rounded-[2rem] bg-white p-7 shadow-sm">
+            <Car className="h-7 w-7 text-[#1f3d2b]" />
+
+            <div className="mt-5 text-3xl font-semibold">
+              Garaż
+            </div>
+
+            <div className="mt-2 text-sm leading-6 text-black/55">
+              W bryle każdego lokalu, z bramą i napędem.
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* PRZEWAGI */}
+      <section className="bg-[#1f3d2b] py-20 text-white">
+        <div className="mx-auto max-w-7xl px-6">
+
+          <div className="mx-auto max-w-4xl text-center">
+            <div className="text-sm uppercase tracking-[0.28em] text-white/45">
+              Dlaczego NovaDuo?
+            </div>
+
+            <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
+              Nie porównuj tylko ceny.
+              <br />
+              <span className="text-[#e7c46a]">
+                Porównaj, co faktycznie dostajesz.
+              </span>
+            </h2>
+
+            <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-white/70">
+              Sam metraż nie mówi wszystkiego. Znaczenie ma to,
+              czy powierzchnia jest rzeczywiście funkcjonalna,
+              wykończona w standardzie deweloperskim i czy po zakupie
+              trzeba jeszcze ponosić znaczne dodatkowe koszty.
+            </p>
+          </div>
+
+          <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {advantages.map((item) => {
+              const Icon = item.icon;
+
+              return (
+                <div
+                  key={item.title}
+                  className="rounded-[2rem] border border-white/10 bg-white/[0.06] p-7"
+                >
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#e7c46a] text-[#1f3d2b]">
+                    <Icon className="h-6 w-6" />
+                  </div>
+
+                  <h3 className="mt-6 text-xl font-semibold">
+                    {item.title}
+                  </h3>
+
+                  <p className="mt-3 text-sm leading-7 text-white/65">
+                    {item.text}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="mt-10 text-center">
+            <a
+              href="/inwestycja"
+              className="inline-flex h-12 items-center justify-center rounded-full bg-white px-7 font-medium text-[#1f3d2b] transition hover:bg-[#e4e6d7]"
+            >
+              Poznaj inwestycję
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </a>
+          </div>
+
+        </div>
+      </section>
+
+      {/* PEŁNOWARTOŚCIOWA POWIERZCHNIA */}
+      <section className="mx-auto max-w-7xl px-6 py-20">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-center">
+
+          <div>
+            <div className="text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/55">
+              Metry, które naprawdę wykorzystasz
+            </div>
+
+            <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
+              Pełna wysokość.
+              <br />
+              Bez skosów.
+              <br />
+              Bez późniejszej adaptacji.
+            </h2>
+
+            <p className="mt-6 max-w-xl text-lg leading-8 text-black/65">
+              W NovaDuo piętro nie jest poddaszem ograniczonym skosami.
+              Dzięki płaskiemu dachowi otrzymujesz pełnowartościową
+              przestrzeń, którą łatwiej urządzić i wykorzystać.
+            </p>
+
+            <p className="mt-4 max-w-xl leading-7 text-black/60">
+              Nie trzeba również kupować dodatkowej powierzchni,
+              która dopiero po odbiorze będzie wymagała kosztownej
+              adaptacji do funkcji mieszkalnej.
+            </p>
+
+            <a
+              href="/lokale"
+              className="mt-7 inline-flex items-center font-semibold text-[#1f3d2b] transition hover:opacity-60"
+            >
+              Zobacz układy lokali
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </a>
+          </div>
+
+          <div className="overflow-hidden rounded-[2rem] shadow-xl">
+            <img
+              src="/images/postprodukcja_0005_Scene-25_upscale01.webp"
+              alt="Nowoczesna architektura NovaDuo bez skosów"
+              className="h-[420px] w-full object-cover md:h-[520px]"
+            />
+          </div>
+
+        </div>
+      </section>
+
+      {/* STANDARD W CENIE */}
+      <section className="border-y border-black/5 bg-white/70 py-20">
+        <div className="mx-auto max-w-7xl px-6">
+
+          <div className="max-w-4xl">
+            <div className="text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/55">
+              Standard NovaDuo
+            </div>
+
+            <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
+              Ważne elementy są już w cenie.
+            </h2>
+
+            <p className="mt-5 max-w-3xl text-lg leading-8 text-black/65">
+              Pompa ciepła i rekuperator nie są dodatkowymi opcjami,
+              za które trzeba później dopłacać. Otrzymujesz je
+              razem z lokalem.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {standardItems.map((item) => {
+              const Icon = item.icon;
+
+              return (
+                <div
+                  key={item.title}
+                  className="rounded-[2rem] border border-black/5 bg-[#f6f3ec] p-7"
+                >
+                  <Icon className="h-7 w-7 text-[#1f3d2b]" />
+
+                  <h3 className="mt-5 text-xl font-semibold">
+                    {item.title}
+                  </h3>
+
+                  <p className="mt-3 text-sm leading-7 text-black/60">
+                    {item.text}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="mt-10">
+            <a
+              href="/standard"
+              className="inline-flex h-12 items-center justify-center rounded-full border border-[#1f3d2b]/20 px-7 font-medium text-[#1f3d2b] transition hover:bg-[#1f3d2b] hover:text-white"
+            >
+              Zobacz pełny standard techniczny
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </a>
+          </div>
+
+        </div>
+      </section>
+
+      {/* DZIAŁKA */}
+      <section className="mx-auto max-w-7xl px-6 py-20">
+        <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+
+          <div className="overflow-hidden rounded-[2rem] bg-white shadow-xl">
+            <img
+              src="/images/novaduo_rezerwacje_v2.webp"
+              alt="Plan inwestycji NovaDuo"
+              className="w-full object-contain"
+            />
+          </div>
+
+          <div>
+            <div className="text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/55">
+              Więcej własnej przestrzeni
+            </div>
+
+            <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
+              Działka do wyłącznego użytkowania.
+            </h2>
+
+            <p className="mt-6 text-lg leading-8 text-black/65">
+              Do poszczególnych lokali przypisane są działki
+              do wyłącznego użytkowania o powierzchni od
+              <strong> 255 do 424 m²</strong>.
+            </p>
+
+            <p className="mt-4 leading-7 text-black/60">
+              To przestrzeń przypisana konkretnie do Twojego lokalu —
+              obejmująca budynek, podjazd, dojście oraz część zieloną.
+            </p>
+
+            <a
+              href="/lokale"
+              className="mt-7 inline-flex h-12 items-center justify-center rounded-full bg-[#1f3d2b] px-7 font-medium text-white transition hover:bg-[#152b1e]"
+            >
+              Sprawdź działkę przy każdym lokalu
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </a>
+          </div>
+
+        </div>
+      </section>
+
+      {/* LOKALIZACJA */}
+      <section className="bg-[#e4e6d7] py-20">
+        <div className="mx-auto max-w-7xl px-6">
+
+          <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
+            <div>
+              <MapPin className="h-8 w-8 text-[#1f3d2b]" />
+
+              <div className="mt-5 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/55">
+                Pogroszew
+              </div>
+
+              <h2 className="mt-3 text-4xl font-semibold tracking-tight">
+                Blisko Warszawy.
+                <br />
+                Z dala od dużego osiedla.
+              </h2>
+
+              <p className="mt-5 leading-8 text-black/65">
+                NovaDuo powstaje przy ul. Nowowiejskiej 58
+                w Pogroszewie, na granicy gmin Ożarów Mazowiecki
+                i Stare Babice.
+              </p>
+
+              <a
+                href="/lokalizacja"
+                className="mt-7 inline-flex items-center font-semibold text-[#1f3d2b]"
+              >
+                Zobacz lokalizację
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </a>
+            </div>
+
+            <div className="overflow-hidden rounded-[2rem] shadow-xl">
+              <img
+                src="/images/postprodukcja_0006_Scene-24_upscale01.webp"
+                alt="NovaDuo w Pogroszewie"
+                className="h-[380px] w-full object-cover md:h-[460px]"
+              />
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* PROMOCJA FORD */}
+      <section className="bg-[#10251b] py-20 text-white">
+        <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-2 lg:items-center">
+
           <div>
             <div className="inline-flex rounded-full border border-[#e7c46a]/30 bg-[#e7c46a]/10 px-4 py-2 text-sm font-semibold text-[#e7c46a]">
               PROMOCJA DO 31.12.2026
             </div>
 
-            <h2 className="mt-6 text-4xl font-semibold leading-tight tracking-tight md:text-5xl">
+            <h2 className="mt-6 text-4xl font-semibold leading-tight md:text-5xl">
               Nowy dom.
               <br />
               Nowy samochód.
-              <br />
-              <span className="text-[#e7c46a]">
-                Jedna cena.
-              </span>
             </h2>
 
-            <p className="mt-6 max-w-xl text-lg leading-8 text-white/75">
-              Kup lokal w inwestycji NovaDuo w okresie obowiązywania
-              promocji i skorzystaj z oferty z fabrycznie nowym Fordem
-              Puma z automatyczną skrzynią biegów o wartości
-              katalogowej około 100 000 zł brutto.
+            <p className="mt-5 max-w-xl text-lg leading-8 text-white/70">
+              Przy zakupie lokalu NovaDuo w okresie obowiązywania
+              promocji możesz otrzymać fabrycznie nowego
+              Forda Puma z automatyczną skrzynią biegów.
             </p>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <a
-                href="/promocja"
-                className="inline-flex h-12 items-center justify-center rounded-full bg-[#e7c46a] px-7 font-semibold text-[#10251b] transition hover:bg-[#f0d681]"
-              >
-                Poznaj promocję
-              </a>
-
-              <a
-                href="#lokale"
-                className="inline-flex h-12 items-center justify-center rounded-full border border-white/25 px-7 font-medium text-white transition hover:bg-white/10"
-              >
-                Sprawdź dostępne lokale
-              </a>
-            </div>
-
-            <p className="mt-5 text-xs leading-5 text-white/45">
-              Szczegółowe warunki promocji określa regulamin. Model,
-              kolor i wyposażenie samochodu mogą zależeć od aktualnej
-              oferty producenta.
-            </p>
+            <a
+              href="/promocja"
+              className="mt-7 inline-flex h-12 items-center justify-center rounded-full bg-[#e7c46a] px-7 font-semibold text-[#10251b] transition hover:bg-[#f0d681]"
+            >
+              Poznaj warunki promocji
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </a>
           </div>
 
           <a
             href="/promocja"
-            className="group relative flex min-h-[320px] items-center justify-center overflow-hidden rounded-[2rem] bg-white/5 p-6 md:min-h-[420px]"
+            className="group flex min-h-[320px] items-center justify-center overflow-hidden rounded-[2rem] bg-white/5 p-6"
           >
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(231,196,106,0.13),transparent_65%)]" />
-
             <img
               src="/images/promocja-auto.png"
               alt="Ford Puma w promocji NovaDuo"
-              className="relative z-10 w-full max-w-[650px] object-contain transition duration-500 group-hover:scale-[1.03]"
+              className="w-full max-w-[650px] object-contain transition duration-500 group-hover:scale-[1.03]"
             />
           </a>
+
         </div>
       </section>
 
-      <section
-        id="finansowanie"
-        className="scroll-mt-36 border-y border-black/5 bg-white/65 py-14"
-      >
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="mb-8 max-w-3xl">
-            <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
-              Finansowanie i sprzedaż
-            </div>
+      {/* SEO / KRÓTKI OPIS */}
+      <section className="mx-auto max-w-5xl px-6 py-16">
+        <div className="rounded-[2rem] border border-black/5 bg-white p-8 shadow-sm md:p-10">
 
-            <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-              Wybierz osobę, z którą chcesz się skontaktować
-            </h2>
+          <h2 className="text-2xl font-semibold">
+            NovaDuo – nowoczesne domy i segmenty pod Warszawą
+          </h2>
 
-            <p className="mt-4 leading-7 text-black/65">
-              Dane telefonu i e-mail pojawią się dopiero po kliknięciu
-              przycisku „Kontakt”. Dzięki temu możemy również mierzyć
-              realne zainteresowanie ofertą.
-            </p>
-          </div>
+          <p className="mt-4 leading-7 text-black/60">
+            NovaDuo to kameralna inwestycja mieszkaniowa
+            w Pogroszewie, w gminie Ożarów Mazowiecki,
+            w bezpośrednim sąsiedztwie gminy Stare Babice.
+            Inwestycja obejmuje 8 lokali z garażami,
+            działkami do wyłącznego użytkowania i nowoczesnym
+            standardem technicznym.
+          </p>
 
-          <div className="grid gap-6 md:grid-cols-2">
-            <div className="rounded-[2rem] border border-[#1f3d2b]/10 bg-[#e4e6d7] p-7 shadow-sm md:p-8">
-              <div className="text-sm uppercase tracking-[0.22em] text-[#1f3d2b]/55">
-                Finansowanie
-              </div>
-
-              <div className="mt-3 text-2xl font-semibold">
-                Maciej Zieliński
-              </div>
-
-              <p className="mt-2 text-sm text-black/55">
-                Pośrednik kredytowy
-              </p>
-
-              {!showFinanceContact ? (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setShowFinanceContact(true);
-
-                    trackEvent("reveal_contact", {
-                      contact_type: "credit_broker",
-                    });
-                  }}
-                  className="mt-6 inline-flex h-11 w-full items-center justify-center rounded-full bg-[#1f3d2b] px-5 text-sm font-medium text-white transition hover:bg-[#152b1e]"
-                >
-                  Kontakt
-                </button>
-              ) : (
-                <div className="mt-6 space-y-3 rounded-2xl bg-white/80 p-5">
-                  <a
-                    href="tel:+48882111807"
-                    onClick={() =>
-                      trackEvent("click_phone", {
-                        contact_type: "credit_broker",
-                      })
-                    }
-                    className="flex items-center gap-3 font-semibold text-[#1f3d2b] transition hover:opacity-70"
-                  >
-                    <Phone className="h-5 w-5" />
-                    882 111 807
-                  </a>
-
-                  <a
-                    href="mailto:maciej.zielinski@notus.pl"
-                    onClick={() =>
-                      trackEvent("click_email", {
-                        contact_type: "credit_broker",
-                      })
-                    }
-                    className="block break-all text-sm text-[#1f3d2b] underline underline-offset-4"
-                  >
-                    maciej.zielinski@notus.pl
-                  </a>
-                </div>
-              )}
-            </div>
-
-            <div className="rounded-[2rem] border border-[#1f3d2b]/10 bg-white p-7 shadow-sm md:p-8">
-              <div className="text-sm uppercase tracking-[0.22em] text-[#1f3d2b]/55">
-                Agent nieruchomości
-              </div>
-
-              <div className="mt-3 text-2xl font-semibold">
-                Anna Bieńka
-              </div>
-
-              <p className="mt-2 text-sm text-black/55">
-                Biuro sprzedaży NovaDuo
-              </p>
-
-              {!showAgentContact ? (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setShowAgentContact(true);
-
-                    trackEvent("reveal_contact", {
-                      contact_type: "sales_agent",
-                    });
-                  }}
-                  className="mt-6 inline-flex h-11 w-full items-center justify-center rounded-full border border-[#1f3d2b]/20 px-5 text-sm font-medium text-[#1f3d2b] transition hover:bg-[#1f3d2b] hover:text-white"
-                >
-                  Kontakt
-                </button>
-              ) : (
-                <div className="mt-6 space-y-3 rounded-2xl bg-[#f6f3ec] p-5">
-                  <a
-                    href="tel:+48886200190"
-                    onClick={() =>
-                      trackEvent("click_phone", {
-                        contact_type: "sales_agent",
-                      })
-                    }
-                    className="flex items-center gap-3 font-semibold text-[#1f3d2b] transition hover:opacity-70"
-                  >
-                    <Phone className="h-5 w-5" />
-                    +48 886 200 190
-                  </a>
-
-                  <a
-                    href="mailto:info@bienka-nieruchomosci.pl"
-                    onClick={() =>
-                      trackEvent("click_email", {
-                        contact_type: "sales_agent",
-                      })
-                    }
-                    className="block break-all text-sm text-[#1f3d2b] underline underline-offset-4"
-                  >
-                    info@bienka-nieruchomosci.pl
-                  </a>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section
-        id="inwestycja"
-        className="mx-auto max-w-7xl px-6 py-20"
-      >
-        <div className="grid gap-6 md:grid-cols-4">
-          {[
-            [Home, "8 lokali", "kameralna inwestycja"],
-            [Ruler, "154 m²", "powierzchnia netto lokalu"],
-            [Car, "Garaż", "w bryle każdego lokalu"],
-            [Trees, "255–424 m²", "powierzchnie działek"],
-          ].map(([Icon, title, text]) => (
-            <Card
-              key={title}
-              className="rounded-3xl border-black/5 bg-white/70 shadow-sm"
+          <div className="mt-5 flex flex-wrap gap-x-6 gap-y-3 text-sm">
+            <a
+              href="/segmenty-pod-warszawa"
+              className="font-medium text-[#1f3d2b] underline underline-offset-4"
             >
-              <CardContent className="p-7">
-                <Icon className="mb-5 h-7 w-7 text-[#1f3d2b]" />
+              Segmenty pod Warszawą
+            </a>
 
-                <div className="text-2xl font-semibold">
-                  {title}
-                </div>
+            <a
+              href="/domy-pod-warszawa"
+              className="font-medium text-[#1f3d2b] underline underline-offset-4"
+            >
+              Domy pod Warszawą
+            </a>
+          </div>
 
-                <p className="mt-2 text-sm leading-6 text-black/55">
-                  {text}
-                </p>
-              </CardContent>
-            </Card>
-          ))}
         </div>
       </section>
 
-      <section className="bg-[#1f3d2b] py-20 text-white">
-        <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-2">
-          <div>
-            <div className="mb-4 text-sm uppercase tracking-[0.28em] text-white/50">
-              O inwestycji
-            </div>
+      {/* GŁÓWNE CTA */}
+      <section className="px-6 pb-20">
+        <div className="mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] bg-[#1f3d2b] px-7 py-12 text-white md:px-12 md:py-16">
 
-            <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">
-              Przestrzeń dla rodzin, blisko natury i miasta.
-            </h2>
-          </div>
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
 
-          <div className="text-lg leading-8 text-white/75">
-            Inwestycja położona jest przy ul. Nowowiejskiej 58 w
-            Pogroszewie, na działkach ewidencyjnych 24/8, 24/9,
-            24/11 i 24/12. Projekt zakłada kameralną zabudowę z
-            wygodnym układem lokali, garażami oraz indywidualnymi
-            przestrzeniami zielonymi.
-          </div>
-        </div>
-      </section>
-
-      <section
-        id="lokalizacja"
-        className="mx-auto max-w-7xl px-6 py-20"
-      >
-        <div className="mb-14 text-center">
-          <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
-            Lokalizacja
-          </div>
-
-          <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">
-            Zamieszkaj w spokojnej części Pogroszewa
-          </h2>
-
-          <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-black/60">
-            Inwestycja NovaDuo położona jest przy ul. Nowowiejskiej 58
-            w Pogroszewie.
-          </p>
-        </div>
-
-        <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
-          <Card className="rounded-[2rem] border-black/5 bg-[#1f3d2b] text-white shadow-xl">
-            <CardContent className="space-y-6 p-10">
-              <div>
-                <div className="text-sm uppercase tracking-[0.25em] text-white/50">
-                  Najważniejsze atuty
-                </div>
-
-                <h3 className="mt-3 text-3xl font-semibold">
-                  Świetna lokalizacja pod Warszawą
-                </h3>
-              </div>
-
-              <div className="space-y-5 text-white/80">
-                <div>
-                  <div className="font-semibold text-white">
-                    Dogodny dojazd do Warszawy
-                  </div>
-
-                  <div className="text-sm">
-                    szybki dostęp do głównych tras komunikacyjnych
-                  </div>
-                </div>
-
-                <div>
-                  <div className="font-semibold text-white">
-                    Blisko Ożarowa Mazowieckiego
-                  </div>
-
-                  <div className="text-sm">
-                    szkoły, sklepy i infrastruktura miejska
-                  </div>
-                </div>
-
-                <div>
-                  <div className="font-semibold text-white">
-                    Kameralne otoczenie
-                  </div>
-
-                  <div className="text-sm">
-                    zabudowa jednorodzinna i tereny zielone
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <div className="overflow-hidden rounded-[2rem] bg-white shadow-2xl">
-            <iframe
-              src="https://www.google.com/maps?q=Nowowiejska+58,+Pogroszew&output=embed"
-              width="100%"
-              height="520"
-              style={{ border: 0 }}
-              allowFullScreen=""
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-          </div>
-        </div>
-
-        <div className="mx-auto mt-16 max-w-5xl">
-          <h3 className="mb-6 text-3xl font-semibold text-[#1f241f]">
-            Lokalizacja inwestycji NovaDuo
-          </h3>
-
-          <div className="space-y-5 text-lg leading-8 text-black/70">
-            <p>
-              Inwestycja NovaDuo zlokalizowana jest przy ul.
-              Nowowiejskiej 58 w Pogroszewie, w gminie Ożarów
-              Mazowiecki. To idealne miejsce dla osób poszukujących
-              nowoczesnego domu pod Warszawą, łączącego komfort
-              codziennego życia z dostępem do terenów zielonych.
-            </p>
-
-            <p>
-              Pogroszew położony jest w dogodnej lokalizacji,
-              zapewniającej szybki dojazd do Warszawy, Ożarowa
-              Mazowieckiego oraz głównych tras komunikacyjnych
-              regionu. W pobliżu znajdują się szkoły, przedszkola,
-              sklepy oraz pełna infrastruktura niezbędna do wygodnego
-              funkcjonowania.
-            </p>
-
-            <p>
-              Kameralne otoczenie, sąsiedztwo zabudowy jednorodzinnej
-              oraz bliskość terenów rekreacyjnych sprawiają, że NovaDuo
-              jest atrakcyjną propozycją dla rodzin szukających
-              spokojnego miejsca do życia w pobliżu stolicy.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section
-        id="galeria"
-        className="mx-auto max-w-7xl px-6 py-12"
-      >
-        <button
-          type="button"
-          onClick={() => {
-            setSelectedImageIndex(0);
-            setSelectedImage(heroImages[0]);
-
-            trackEvent("open_gallery", {
-              gallery: "main",
-            });
-          }}
-          className="group block w-full overflow-hidden rounded-[2rem] border border-black/5 bg-white text-left shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl"
-        >
-          <div className="grid md:grid-cols-[0.9fr_1.1fr] md:items-stretch">
-            <div className="relative min-h-[220px] overflow-hidden md:min-h-[280px]">
-              <img
-                src={heroImages[0]}
-                alt="Galeria NovaDuo"
-                className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
-              />
-
-              <div className="absolute inset-0 bg-gradient-to-r from-black/10 to-black/0" />
-            </div>
-
-            <div className="flex flex-col justify-center p-8 md:p-10">
-              <div className="text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
-                Galeria
-              </div>
-
-              <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
-                Zobacz wizualizacje NovaDuo
-              </h2>
-
-              <p className="mt-4 max-w-xl leading-7 text-black/60">
-                Kliknij kafelek, aby otworzyć galerię. Zdjęcia
-                wyświetlą się dopiero po Twoim wyborze i będzie można
-                przeglądać je strzałkami.
-              </p>
-
-              <span className="mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-[#1f3d2b] px-6 py-3 text-sm font-medium text-white transition group-hover:bg-[#152b1e]">
-                Otwórz galerię
-                <ArrowRight className="h-4 w-4" />
-              </span>
-            </div>
-          </div>
-        </button>
-      </section>
-
-      <motion.section
-        id="standard"
-        className="mx-auto max-w-7xl px-6 py-20"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7 }}
-        viewport={{ once: true }}
-      >
-        <div className="mb-14 text-center">
-          <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
-            Standard wykończenia
-          </div>
-
-          <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">
-            Standard deweloperski NovaDuo
-          </h2>
-
-          <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-black/60">
-            Lokale realizowane są w standardzie deweloperskim.
-          </p>
-        </div>
-
-        <div className="grid gap-6 lg:grid-cols-3">
-          <Card className="rounded-3xl border-black/5 bg-white shadow-sm">
-            <CardContent className="p-8">
-              <h3 className="text-2xl font-semibold">
-                Wykończenie wewnętrzne
-              </h3>
-
-              <ul className="mt-6 space-y-3 text-sm leading-7 text-black/65">
-                <li>• Posadzki Parter – szlichta cementowa</li>
-                <li>• Garaż – szlichta cementowa</li>
-                <li>• Piętro – szlichta cementowa</li>
-                <li>• Wykończenie ścian – tynk gipsowy</li>
-                <li>• Wykończenie sufitów – tynk gipsowy</li>
-                <li>• Schody wew. betonowe</li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card className="rounded-3xl border-black/5 bg-white shadow-sm">
-            <CardContent className="p-8">
-              <h3 className="text-2xl font-semibold">
-                Wykończenie zewnętrzne
-              </h3>
-
-              <ul className="mt-6 space-y-3 text-sm leading-7 text-black/65">
-                <li>
-                  • Stolarka zewnętrzna – PCV lub aluminiowe – kolor
-                  grafit (antracyt) 3 szybowe
-                </li>
-
-                <li>• Parapety zew blaszane</li>
-
-                <li>
-                  • Okładziny ścian – tynk cienkowarstwowy silikonowy
-                  kolor biały, szary i grafitowy
-                </li>
-
-                <li>
-                  • Cokół – tynk mozaikowy – kolor jasny szary
-                </li>
-
-                <li>• Pokrycie dachu – papa</li>
-
-                <li>
-                  • Drzwi wejściowe klasa C kolor antracyt
-                </li>
-
-                <li>
-                  • Brama garażowa panelowa z napędem kolor antracyt
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card className="rounded-3xl border-black/5 bg-white shadow-sm">
-            <CardContent className="p-8">
-              <h3 className="text-2xl font-semibold">
-                Instalacje
-              </h3>
-
-              <ul className="mt-6 space-y-3 text-sm leading-7 text-black/65">
-                <li>
-                  • Instalacje wodociągową, przyłączoną do sieci
-                  wodociągowej
-                </li>
-
-                <li>
-                  • Instalację wody ciepłej i zimnej
-                </li>
-
-                <li>
-                  • Instalację kanalizacji sanitarnej, odprowadzenie
-                  ścieków do szczelnego zbiornika na nieczystości
-                  ciekłe
-                </li>
-
-                <li>
-                  • Ogrzewanie budynku i przygotowanie CWU –
-                  przewidziano wyposażenie budynku w pompę ciepła
-                  powietrznej
-                </li>
-
-                <li>
-                  • Instalację elektryczna – oświetlenia ogólnego,
-                  zewnętrznego, gniazd wtykowych, rozdzielnic
-                </li>
-
-                <li>
-                  • Instalację niskoprądową – sieć LAN
-                </li>
-
-                <li>
-                  • Instalacje wentylacji (rekuperacja) – stosownie do
-                  przeznaczenia poszczególnych pomieszczeń
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
-        </div>
-
-        <div className="mx-auto mt-16 max-w-5xl space-y-5 text-lg leading-8 text-black/70">
-          <p>
-            Inwestycja NovaDuo realizowana jest w podwyższonym
-            standardzie deweloperskim z wykorzystaniem nowoczesnych
-            technologii budowlanych.
-          </p>
-
-          <p>
-            Każdy lokal wyposażony jest w pompę ciepła, instalację
-            rekuperacji, garaż oraz funkcjonalny układ pomieszczeń
-            dostosowany do potrzeb rodzin.
-          </p>
-        </div>
-      </motion.section>
-
-      <section
-        id="lokale"
-        className="mx-auto max-w-7xl px-6 py-20"
-      >
-        <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
-          <div>
-            <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
-              Oferta
-            </div>
-
-            <h2 className="text-4xl font-semibold tracking-tight">
-              Ceny ofertowe lokali
-            </h2>
-          </div>
-
-          <p className="max-w-xl text-black/60">
-            Aktualne ceny brutto, daty ich obowiązywania, statusy
-            sprzedaży, powierzchnie lokali oraz ogrody do wyłącznego
-            użytkowania.
-          </p>
-        </div>
-
-        <div className="mb-8 rounded-[2rem] border border-[#1f3d2b]/15 bg-white/80 p-6 shadow-sm md:p-8">
-          <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-center">
             <div>
-              <h3 className="text-xl font-semibold text-[#1f3d2b]">
-                Informacja o składnikach ceny
-              </h3>
+              <div className="text-sm uppercase tracking-[0.25em] text-white/45">
+                NovaDuo
+              </div>
 
-              <p className="mt-3 max-w-4xl text-sm leading-6 text-black/65">
-                Cena łączna każdego lokalu obejmuje cenę lokalu oraz
-                dwa prawa niezbędne do korzystania z nieruchomości:
-                udział w działce ewid. 24/10 – 1,00 zł brutto oraz
-                udział w działce ewid. 24/3 – 1,00 zł brutto.
-                Wszystkie ceny są cenami brutto.
-              </p>
-            </div>
-
-            <div className="flex flex-col gap-3 sm:flex-row md:flex-col">
-              <a
-                href="/historia-cen"
-                className="inline-flex items-center justify-center rounded-full bg-[#1f3d2b] px-5 py-3 text-sm font-medium text-white transition hover:bg-[#152b1e]"
-              >
-                Historia cen
-              </a>
-
-              <a
-                href="/dane/novaduo-ceny.csv"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-full border border-black/15 px-5 py-3 text-sm font-medium transition hover:bg-black hover:text-white"
-              >
-                Pobierz dane CSV
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div className="mb-12 overflow-hidden rounded-[2rem] bg-white shadow-2xl">
-          <img
-            src="/images/novaduo_rezerwacje_v2.webp"
-            alt="Usytuowanie lokali NovaDuo"
-            className="mx-auto max-h-[500px] w-auto object-contain"
-          />
-        </div>
-
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-          {homes.map((home) => (
-            <Card
-              key={home.id}
-              id={`lokal-${home.id.replace("/", "-")}`}
-              className="rounded-3xl border-black/5 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
-            >
-              <CardContent className="p-7">
-                <div className="mb-5 flex items-center justify-between gap-3">
-                  <div className="text-3xl font-semibold">
-                    Lokal {home.id}
-                  </div>
-
-                  <span
-                    className={`rounded-full px-3 py-1 text-xs font-medium ${
-                      home.status === "Rezerwacja"
-                        ? "bg-orange-200 text-orange-900"
-                        : "bg-[#dfead8] text-[#1f3d2b]"
-                    }`}
-                  >
-                    {home.status}
-                  </span>
-                </div>
-
-                <div className="space-y-3 text-sm text-black/60">
-                  <div className="flex items-center gap-2">
-                    <Ruler className="h-4 w-4" />
-                    {home.usableArea} użytkowej
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <Building2 className="h-4 w-4" />
-                    {home.netArea} netto
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <Trees className="h-4 w-4" />
-                    Ogród: {home.gardenArea}
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <MapPin className="h-4 w-4" />
-                    {home.plot}
-                  </div>
-                </div>
-
-                <div className="mt-6 space-y-3 border-t border-black/10 pt-5 text-sm">
-                  <div>
-                    <div className="text-black/50">
-                      Cena za 1 m²
-                    </div>
-
-                    <div className="font-semibold text-[#1f3d2b]">
-                      {home.pricePerSquareMeter}
-                    </div>
-                  </div>
-
-                  <div className="flex items-start justify-between gap-4">
-                    <span className="text-black/50">
-                      Cena lokalu
-                    </span>
-
-                    <span className="text-right font-medium">
-                      {home.price}
-                    </span>
-                  </div>
-
-                  {ROAD_RIGHTS.map((right) => (
-                    <div
-                      key={right.label}
-                      className="flex items-start justify-between gap-4"
-                    >
-                      <span className="text-black/50">
-                        {right.label}
-                      </span>
-
-                      <span className="whitespace-nowrap text-right font-medium">
-                        {home.roadRightPrice}
-                      </span>
-                    </div>
-                  ))}
-
-                  <div className="flex items-start justify-between gap-4 border-t border-black/10 pt-3">
-                    <span className="font-semibold">
-                      Cena łączna
-                    </span>
-
-                    <span className="text-right text-lg font-semibold text-[#1f3d2b]">
-                      {home.totalOfferPrice}
-                    </span>
-                  </div>
-
-                  <div className="pt-1 text-xs text-black/50">
-                    Cena obowiązuje od: {home.priceValidFrom}
-                  </div>
-                </div>
-
-                <div className="mt-6 grid gap-3">
-                  <a
-                    href={`/karty-lokali/lokal-${home.id.replace(
-                      "/",
-                      "-"
-                    )}.png`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex w-full items-center justify-center rounded-full border border-black/15 px-4 py-3 font-medium transition hover:bg-[#1f3d2b] hover:text-white"
-                  >
-                    Pobierz kartę lokalu
-                  </a>
-
-                  <a
-                    href={`/historia-cen#lokal-${home.id.replace(
-                      "/",
-                      "-"
-                    )}`}
-                    className="inline-flex w-full items-center justify-center rounded-full bg-[#f6f3ec] px-4 py-3 text-sm font-medium text-[#1f3d2b] transition hover:bg-[#e4e6d7]"
-                  >
-                    Zobacz historię ceny
-                  </a>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      <div className="mx-auto mt-16 max-w-5xl space-y-5 text-lg leading-8 text-black/70">
-        <p>
-          Lokale NovaDuo w Pogroszewie oferują funkcjonalny układ
-          pomieszczeń, garaż w bryle budynku oraz prywatne ogródki.
-        </p>
-
-        <p>
-          Każdy lokal posiada około 154 m² powierzchni netto i stanowi
-          atrakcyjną alternatywę dla domu jednorodzinnego pod Warszawą.
-        </p>
-      </div>
-
-      <section
-        id="dokumenty"
-        className="mx-auto max-w-7xl px-6 pb-20"
-      >
-        <Card className="rounded-[2rem] border-black/5 bg-white shadow-sm">
-          <CardContent className="p-8 md:p-12">
-            <div className="mb-8">
-              <FileText className="mb-5 h-9 w-9 text-[#1f3d2b]" />
-
-              <h2 className="text-3xl font-semibold">
-                Dokumenty i informacje
+              <h2 className="mt-3 max-w-3xl text-3xl font-semibold md:text-4xl">
+                Zobacz lokal, zanim porównasz go tylko po cenie za metr.
               </h2>
 
-              <p className="mt-3 max-w-3xl text-black/60">
-                Pobierz prospekt informacyjny odpowiedni dla wybranego
-                lokalu oraz kartę lokalu.
+              <p className="mt-4 max-w-2xl text-white/65">
+                Sprawdź powierzchnię, działkę, układ pomieszczeń,
+                standard i wyposażenie, które otrzymujesz w cenie.
               </p>
             </div>
 
-            <div className="mb-10 grid gap-4 sm:grid-cols-2">
+            <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
               <a
-                href="/prospekt-novaduo-zadanie-1-do-publikacji.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-2xl border border-[#1f3d2b]/20 bg-[#f6f3ec] p-6 transition hover:bg-[#1f3d2b] hover:text-white"
+                href="/lokale"
+                className="inline-flex h-12 items-center justify-center rounded-full bg-white px-7 font-medium text-[#1f3d2b] transition hover:bg-[#e4e6d7]"
               >
-                <div className="text-lg font-semibold">
-                  Prospekt informacyjny — Zadanie nr 1
-                </div>
-
-                <div className="mt-2 text-sm opacity-70">
-                  Lokale 58/1, 58/3, 58/5 i 58/7
-                </div>
+                Dostępne lokale
               </a>
 
               <a
-                href="/prospekt-novaduo-zadanie-2-do-publikacji.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-2xl border border-[#1f3d2b]/20 bg-[#f6f3ec] p-6 transition hover:bg-[#1f3d2b] hover:text-white"
+                href="/biuro-sprzedazy"
+                className="inline-flex h-12 items-center justify-center rounded-full border border-white/25 px-7 font-medium text-white transition hover:bg-white/10"
               >
-                <div className="text-lg font-semibold">
-                  Prospekt informacyjny — Zadanie nr 2
-                </div>
-
-                <div className="mt-2 text-sm opacity-70">
-                  Lokale 58/2, 58/4, 58/6 i 58/8
-                </div>
+                Umów prezentację
               </a>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
-              {homes.map((home) => (
-                <a
-                  key={home.id}
-                  href={`/karty-lokali/lokal-${home.id.replace(
-                    "/",
-                    "-"
-                  )}.png`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-2xl border border-black/10 p-5 transition hover:bg-black hover:text-white"
-                >
-                  Lokal {home.id} — karta lokalu
-                </a>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </section>
-
-      <section
-        id="kontakt"
-        className="bg-[#e4e6d7] py-20"
-      >
-        <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-2">
-          <div>
-            <div className="mb-3 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/60">
-              Kontakt
-            </div>
-
-            <h2 className="text-4xl font-semibold tracking-tight">
-              Zapytaj o lokal w inwestycji NovaDuo.
-            </h2>
-
-            <p className="mt-5 max-w-xl leading-7 text-black/65">
-              Wyślij zapytanie przez formularz. Jeżeli chcesz
-              porozmawiać o finansowaniu albo bezpośrednio z agentem
-              nieruchomości, skorzystaj z kafelków „Finansowanie” i
-              „Agent nieruchomości” powyżej.
-            </p>
-
-            <div className="mt-8 rounded-3xl border border-black/5 bg-white/75 p-6 shadow-sm">
-              <div className="text-xs uppercase tracking-[0.2em] text-[#1f3d2b]/55">
-                Deweloper
-              </div>
-
-              <div className="mt-2 text-xl font-semibold">
-                JPJ Concept Sp. z o.o.
-              </div>
-
-              <p className="mt-2 text-sm leading-6 text-black/55">
-                ul. Nowowiejska 58A, Pogroszew
-                <br />
-                05-850 Ożarów Mazowiecki
-              </p>
-
-              {!showDeveloperContact ? (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setShowDeveloperContact(true);
-
-                    trackEvent("reveal_contact", {
-                      contact_type: "developer",
-                    });
-                  }}
-                  className="mt-6 inline-flex h-11 w-full items-center justify-center rounded-full bg-[#1f3d2b] px-5 text-sm font-medium text-white transition hover:bg-[#152b1e]"
-                >
-                  Kontakt
-                </button>
-              ) : (
-                <div className="mt-6 space-y-3 rounded-2xl bg-[#f6f3ec] p-5">
-                  <a
-                    href="tel:+48600397399"
-                    onClick={() =>
-                      trackEvent("click_phone", {
-                        contact_type: "developer",
-                      })
-                    }
-                    className="flex items-center gap-3 font-semibold text-[#1f3d2b] transition hover:opacity-70"
-                  >
-                    <Phone className="h-5 w-5" />
-                    600 397 399
-                  </a>
-
-                  <a
-                    href="mailto:kontakt@jpjconcept.pl"
-                    onClick={() =>
-                      trackEvent("click_email", {
-                        contact_type: "developer",
-                      })
-                    }
-                    className="block break-all text-sm text-[#1f3d2b] underline underline-offset-4"
-                  >
-                    kontakt@jpjconcept.pl
-                  </a>
-                </div>
-              )}
-            </div>
           </div>
-
-          <Card className="rounded-[2rem] border-white/70 bg-white/80 shadow-sm">
-            <form
-              action="https://formspree.io/f/mdabrvqe"
-              method="POST"
-              onSubmit={() =>
-                trackEvent("generate_lead", {
-                  form_name: "contact_novaduo",
-                })
-              }
-            >
-              <CardContent className="space-y-4 p-8">
-                <input
-                  name="name"
-                  className="w-full rounded-2xl border border-black/10 bg-white px-5 py-4 outline-none"
-                  placeholder="Imię i nazwisko"
-                />
-
-                <input
-                  name="contact"
-                  className="w-full rounded-2xl border border-black/10 bg-white px-5 py-4 outline-none"
-                  placeholder="Telefon / e-mail"
-                />
-
-                <textarea
-                  name="message"
-                  className="min-h-32 w-full rounded-2xl border border-black/10 bg-white px-5 py-4 outline-none"
-                  placeholder="Wiadomość"
-                />
-
-                <div className="space-y-4 text-xs leading-5 text-black/55">
-                  <label className="flex items-start gap-3">
-                    <input
-                      type="checkbox"
-                      name="rodo"
-                      required
-                      className="mt-1 h-4 w-4"
-                    />
-
-                    <span>
-                      Wyrażam zgodę na kontakt telefoniczny oraz mailowy
-                      w celu przedstawienia informacji dotyczących
-                      inwestycji NovaDuo.
-                    </span>
-                  </label>
-
-                  <p>
-                    Administratorem danych osobowych jest JPJ Concept
-                    Sp. z o.o. Dane będą przetwarzane wyłącznie w celu
-                    kontaktu dotyczącym inwestycji NovaDuo. Podanie
-                    danych jest dobrowolne.
-                  </p>
-                </div>
-
-                <Button
-                  type="submit"
-                  className="h-12 w-full rounded-full bg-[#1f3d2b] px-5 text-white hover:bg-[#152b1e]"
-                >
-                  Wyślij zapytanie
-                </Button>
-              </CardContent>
-            </form>
-          </Card>
         </div>
       </section>
 
-      {selectedImage && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-6">
-          <button
-            onClick={() => setSelectedImage(null)}
-            className="absolute right-6 top-6 text-white"
-          >
-            <X className="h-10 w-10" />
-          </button>
-
-          <button
-            onClick={() => {
-              const newIndex =
-                selectedImageIndex === 0
-                  ? heroImages.length - 1
-                  : selectedImageIndex - 1;
-
-              setSelectedImageIndex(newIndex);
-              setSelectedImage(heroImages[newIndex]);
-            }}
-            className="absolute left-6 top-1/2 -translate-y-1/2 rounded-full bg-white/20 px-5 py-3 text-4xl text-white"
-          >
-            ‹
-          </button>
-
-          <motion.img
-            key={selectedImage}
-            src={selectedImage}
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3 }}
-            className="max-h-[90vh] max-w-[90vw] rounded-3xl object-contain"
-          />
-
-          <button
-            onClick={() => {
-              const newIndex =
-                selectedImageIndex === heroImages.length - 1
-                  ? 0
-                  : selectedImageIndex + 1;
-
-              setSelectedImageIndex(newIndex);
-              setSelectedImage(heroImages[newIndex]);
-            }}
-            className="absolute right-6 top-1/2 -translate-y-1/2 rounded-full bg-white/20 px-5 py-3 text-4xl text-white"
-          >
-            ›
-          </button>
-        </div>
-      )}
-
+      {/* FOOTER */}
       <footer className="border-t border-black/10 bg-[#f6f3ec] py-10">
-        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 text-sm text-black/55 md:flex-row md:items-center md:justify-between">
-          <div className="space-y-2">
-            <div>
+        <div className="mx-auto grid max-w-7xl gap-8 px-6 text-sm text-black/55 md:grid-cols-2">
+
+          <div>
+            <div className="font-medium text-[#1f241f]">
               © 2026 NovaDuo | JPJ Concept Sp. z o.o.
             </div>
 
-            <div className="flex flex-wrap gap-4">
-              <a
-                href="/promocja"
-                className="font-medium text-[#b07f24] hover:text-[#8f641b]"
-              >
-                Promocja
-              </a>
-
-              <a
-                href="/historia-cen"
-                className="hover:text-[#1f3d2b]"
-              >
-                Historia cen
-              </a>
-
-              <a
-                href="/dane/novaduo-ceny.csv"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-[#1f3d2b]"
-              >
-                Dane CSV
-              </a>
+            <div className="mt-3">
+              ul. Nowowiejska 58A, Pogroszew
+              <br />
+              05-850 Ożarów Mazowiecki
             </div>
           </div>
 
-          <div className="flex flex-col gap-1 md:items-end">
-            <div>NIP: 1182300374</div>
-            <div>KRS: 0001156346</div>
-            <div>REGON: 540927078</div>
-            <div>
-              ul. Nowowiejska 58A, Pogroszew, 05-850 Ożarów
-              Mazowiecki
-            </div>
+          <div className="flex flex-wrap gap-x-5 gap-y-3 md:justify-end">
+            <a href="/lokale" className="hover:text-[#1f3d2b]">
+              Lokale
+            </a>
+
+            <a href="/standard" className="hover:text-[#1f3d2b]">
+              Standard
+            </a>
+
+            <a href="/dokumenty" className="hover:text-[#1f3d2b]">
+              Dokumenty
+            </a>
+
+            <a
+              href="/historia-cen"
+              className="hover:text-[#1f3d2b]"
+            >
+              Historia cen
+            </a>
+
+            <a
+              href="/promocja"
+              className="font-medium text-[#b07f24]"
+            >
+              Promocja
+            </a>
           </div>
+
         </div>
       </footer>
+
     </main>
   );
 }
