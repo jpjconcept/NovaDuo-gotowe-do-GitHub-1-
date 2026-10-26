@@ -8,7 +8,9 @@ import {
   CheckCircle2,
   Home,
   LayoutGrid,
+  Mail,
   MapPin,
+  Phone,
   Ruler,
   ShieldCheck,
   ThermometerSun,
@@ -17,6 +19,15 @@ import {
 } from "lucide-react";
 
 export default function Page() {
+  const trackEvent = (name, params = {}) => {
+    if (
+      typeof window !== "undefined" &&
+      typeof window.gtag === "function"
+    ) {
+      window.gtag("event", name, params);
+    }
+  };
+
   const advantages = [
     {
       icon: Ruler,
@@ -89,6 +100,11 @@ export default function Page() {
       {/* MAŁY PASEK PROMOCJI */}
       <a
         href="/promocja"
+        onClick={() =>
+          trackEvent("click_promotion", {
+            location: "top_banner",
+          })
+        }
         className="block bg-[#10251b] px-4 py-3 text-center text-sm font-medium text-white transition hover:bg-[#152b1e]"
       >
         <span className="font-semibold text-[#e7c46a]">
@@ -123,6 +139,11 @@ export default function Page() {
 
             <a
               href="/biuro-sprzedazy"
+              onClick={() =>
+                trackEvent("click_sales_office", {
+                  location: "top_navigation",
+                })
+              }
               className="inline-flex h-11 shrink-0 items-center justify-center rounded-full bg-[#1f3d2b] px-5 text-sm font-medium text-white transition hover:bg-[#152b1e] md:px-6"
             >
               Biuro sprzedaży
@@ -193,8 +214,8 @@ export default function Page() {
         </div>
       </nav>
 
-      {/* DUŻA PROMOCJA NA SAMEJ GÓRZE */}
-      <section className="bg-[#10251b] py-14 text-white md:py-18">
+      {/* DUŻA PROMOCJA NA GÓRZE */}
+      <section className="bg-[#10251b] py-14 text-white md:py-20">
         <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
 
           <div>
@@ -202,13 +223,13 @@ export default function Page() {
               PROMOCJA DO 31.12.2026
             </div>
 
-            <h1 className="mt-6 text-4xl font-semibold leading-tight tracking-tight md:text-6xl">
+            <h2 className="mt-6 text-4xl font-semibold leading-tight tracking-tight md:text-6xl">
               Nowy dom.
               <br />
               <span className="text-[#e7c46a]">
                 Nowy samochód.
               </span>
-            </h1>
+            </h2>
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-white/75">
               Przy zakupie lokalu NovaDuo w okresie obowiązywania promocji
@@ -225,6 +246,11 @@ export default function Page() {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <a
                 href="/promocja"
+                onClick={() =>
+                  trackEvent("click_promotion", {
+                    location: "promotion_hero",
+                  })
+                }
                 className="inline-flex h-12 items-center justify-center rounded-full bg-[#e7c46a] px-7 font-semibold text-[#10251b] transition hover:bg-[#f0d681]"
               >
                 Poznaj warunki promocji
@@ -233,6 +259,11 @@ export default function Page() {
 
               <a
                 href="/lokale"
+                onClick={() =>
+                  trackEvent("click_units", {
+                    location: "promotion_hero",
+                  })
+                }
                 className="inline-flex h-12 items-center justify-center rounded-full border border-white/25 px-7 font-medium text-white transition hover:bg-white/10"
               >
                 Sprawdź dostępne lokale
@@ -242,6 +273,11 @@ export default function Page() {
 
           <a
             href="/promocja"
+            onClick={() =>
+              trackEvent("click_promotion", {
+                location: "promotion_car",
+              })
+            }
             className="group flex min-h-[300px] items-center justify-center overflow-hidden rounded-[2rem] bg-white/5 p-5 md:min-h-[390px]"
           >
             <img
@@ -254,7 +290,7 @@ export default function Page() {
         </div>
       </section>
 
-      {/* GŁÓWNY EKRAN NOVADUO */}
+      {/* GŁÓWNY HERO NOVADUO */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_25%,rgba(78,113,76,0.20),transparent_38%),linear-gradient(120deg,#f6f3ec,#e7eadc)]" />
 
@@ -265,7 +301,7 @@ export default function Page() {
               NovaDuo • tylko 8 lokali • Pogroszew pod Warszawą
             </div>
 
-            <h2 className="max-w-4xl text-5xl font-semibold leading-[1.02] tracking-tight md:text-6xl lg:text-7xl">
+            <h1 className="max-w-4xl text-5xl font-semibold leading-[1.02] tracking-tight md:text-6xl lg:text-7xl">
               Więcej domu.
               <br />
               Więcej działki.
@@ -273,7 +309,7 @@ export default function Page() {
               <span className="text-[#1f3d2b]">
                 Więcej w standardzie.
               </span>
-            </h2>
+            </h1>
 
             <p className="mt-7 max-w-2xl text-xl font-medium leading-8 text-[#1f3d2b] md:text-2xl">
               Około 154 m² powierzchni netto.
@@ -292,6 +328,11 @@ export default function Page() {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <a
                 href="/lokale"
+                onClick={() =>
+                  trackEvent("click_units", {
+                    location: "main_hero",
+                  })
+                }
                 className="inline-flex h-12 items-center justify-center rounded-full bg-[#1f3d2b] px-7 font-medium text-white transition hover:bg-[#152b1e]"
               >
                 Sprawdź dostępne lokale
@@ -300,6 +341,11 @@ export default function Page() {
 
               <a
                 href="/standard"
+                onClick={() =>
+                  trackEvent("click_standard", {
+                    location: "main_hero",
+                  })
+                }
                 className="inline-flex h-12 items-center justify-center rounded-full border border-[#1f3d2b]/20 bg-white/65 px-7 font-medium text-[#1f3d2b] transition hover:bg-white"
               >
                 Zobacz pełny standard
@@ -455,6 +501,11 @@ export default function Page() {
 
             <a
               href="/lokale"
+              onClick={() =>
+                trackEvent("click_units", {
+                  location: "no_slopes_section",
+                })
+              }
               className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-[#e7c46a] px-7 font-semibold text-[#10251b] transition hover:bg-[#f0d681]"
             >
               Zobacz układy lokali
@@ -571,6 +622,11 @@ export default function Page() {
 
           <a
             href="/standard"
+            onClick={() =>
+              trackEvent("click_standard", {
+                location: "standard_section",
+              })
+            }
             className="mt-10 inline-flex h-12 items-center justify-center rounded-full border border-[#1f3d2b]/20 px-7 font-medium text-[#1f3d2b] transition hover:bg-[#1f3d2b] hover:text-white"
           >
             Zobacz pełny standard techniczny
@@ -580,7 +636,7 @@ export default function Page() {
         </div>
       </section>
 
-      {/* DZIAŁKA - JUŻ BEZ PLANU USYTUOWANIA */}
+      {/* DZIAŁKI */}
       <section className="mx-auto max-w-7xl px-6 py-20">
         <div className="rounded-[2.5rem] bg-[#e4e6d7] p-8 md:p-12">
 
@@ -609,6 +665,11 @@ export default function Page() {
 
             <a
               href="/lokale"
+              onClick={() =>
+                trackEvent("click_units", {
+                  location: "plots_section",
+                })
+              }
               className="inline-flex h-12 shrink-0 items-center justify-center rounded-full bg-[#1f3d2b] px-7 font-medium text-white transition hover:bg-[#152b1e]"
             >
               Zobacz plan i lokale
@@ -644,6 +705,11 @@ export default function Page() {
 
             <a
               href="/lokalizacja"
+              onClick={() =>
+                trackEvent("click_location", {
+                  location: "location_section",
+                })
+              }
               className="mt-7 inline-flex items-center font-semibold text-[#1f3d2b]"
             >
               Zobacz lokalizację
@@ -698,7 +764,7 @@ export default function Page() {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* GŁÓWNE CTA */}
       <section className="px-6 pb-20">
         <div className="mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] bg-[#1f3d2b] px-7 py-12 text-white md:px-12 md:py-16">
 
@@ -719,19 +785,45 @@ export default function Page() {
               </p>
             </div>
 
-            <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
-              <a
-                href="/lokale"
-                className="inline-flex h-12 items-center justify-center rounded-full bg-white px-7 font-medium text-[#1f3d2b] transition hover:bg-[#e4e6d7]"
-              >
-                Dostępne lokale
-              </a>
+            <div className="flex shrink-0 flex-col gap-3">
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <a
+                  href="/lokale"
+                  onClick={() =>
+                    trackEvent("click_units", {
+                      location: "bottom_cta",
+                    })
+                  }
+                  className="inline-flex h-12 items-center justify-center rounded-full bg-white px-7 font-medium text-[#1f3d2b] transition hover:bg-[#e4e6d7]"
+                >
+                  Dostępne lokale
+                </a>
+
+                <a
+                  href="/biuro-sprzedazy"
+                  onClick={() =>
+                    trackEvent("click_sales_office", {
+                      location: "bottom_cta",
+                    })
+                  }
+                  className="inline-flex h-12 items-center justify-center rounded-full border border-white/25 px-7 font-medium text-white transition hover:bg-white/10"
+                >
+                  Umów prezentację
+                </a>
+              </div>
 
               <a
-                href="/biuro-sprzedazy"
-                className="inline-flex h-12 items-center justify-center rounded-full border border-white/25 px-7 font-medium text-white transition hover:bg-white/10"
+                href="tel:+48600397399"
+                onClick={() =>
+                  trackEvent("click_phone", {
+                    contact_type: "developer",
+                    location: "bottom_cta",
+                  })
+                }
+                className="inline-flex items-center justify-center gap-2 text-sm font-medium text-[#e7c46a] transition hover:text-white"
               >
-                Umów prezentację
+                <Phone className="h-4 w-4" />
+                Deweloper: 600 397 399
               </a>
             </div>
 
@@ -740,47 +832,111 @@ export default function Page() {
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-black/10 bg-[#f6f3ec] py-10">
-        <div className="mx-auto grid max-w-7xl gap-8 px-6 text-sm text-black/55 md:grid-cols-2">
+      <footer className="border-t border-black/10 bg-[#f6f3ec] py-12">
+        <div className="mx-auto grid max-w-7xl gap-10 px-6 md:grid-cols-[1.1fr_0.9fr]">
 
           <div>
-            <div className="font-medium text-[#1f241f]">
-              © 2026 NovaDuo | JPJ Concept Sp. z o.o.
+            <div className="text-sm uppercase tracking-[0.22em] text-[#1f3d2b]/50">
+              Deweloper
             </div>
 
-            <div className="mt-3">
+            <div className="mt-2 text-xl font-semibold text-[#1f241f]">
+              JPJ Concept Sp. z o.o.
+            </div>
+
+            <div className="mt-4 space-y-3">
+              <a
+                href="tel:+48600397399"
+                onClick={() =>
+                  trackEvent("click_phone", {
+                    contact_type: "developer",
+                    location: "footer",
+                  })
+                }
+                className="flex w-fit items-center gap-3 text-lg font-semibold text-[#1f3d2b] transition hover:opacity-65"
+              >
+                <Phone className="h-5 w-5" />
+                600 397 399
+              </a>
+
+              <a
+                href="mailto:kontakt@jpjconcept.pl"
+                onClick={() =>
+                  trackEvent("click_email", {
+                    contact_type: "developer",
+                    location: "footer",
+                  })
+                }
+                className="flex w-fit items-center gap-3 text-[#1f3d2b] transition hover:opacity-65"
+              >
+                <Mail className="h-5 w-5" />
+                kontakt@jpjconcept.pl
+              </a>
+            </div>
+
+            <div className="mt-5 text-sm leading-6 text-black/55">
               ul. Nowowiejska 58A, Pogroszew
               <br />
               05-850 Ożarów Mazowiecki
             </div>
+
+            <div className="mt-4 text-xs leading-5 text-black/45">
+              NIP: 1182300374
+              <br />
+              KRS: 0001156346
+              <br />
+              REGON: 540927078
+            </div>
           </div>
 
-          <div className="flex flex-wrap gap-x-5 gap-y-3 md:justify-end">
-            <a href="/lokale" className="hover:text-[#1f3d2b]">
-              Lokale
-            </a>
+          <div className="md:text-right">
+            <div className="text-sm uppercase tracking-[0.22em] text-[#1f3d2b]/50">
+              NovaDuo
+            </div>
 
-            <a href="/standard" className="hover:text-[#1f3d2b]">
-              Standard
-            </a>
+            <div className="mt-4 flex flex-wrap gap-x-5 gap-y-3 md:justify-end">
+              <a href="/inwestycja" className="hover:text-[#1f3d2b]">
+                Inwestycja
+              </a>
 
-            <a href="/dokumenty" className="hover:text-[#1f3d2b]">
-              Dokumenty
-            </a>
+              <a href="/lokale" className="hover:text-[#1f3d2b]">
+                Lokale
+              </a>
 
-            <a
-              href="/historia-cen"
-              className="hover:text-[#1f3d2b]"
-            >
-              Historia cen
-            </a>
+              <a href="/standard" className="hover:text-[#1f3d2b]">
+                Standard
+              </a>
 
-            <a
-              href="/promocja"
-              className="font-medium text-[#b07f24]"
-            >
-              Promocja
-            </a>
+              <a href="/lokalizacja" className="hover:text-[#1f3d2b]">
+                Lokalizacja
+              </a>
+
+              <a href="/galeria" className="hover:text-[#1f3d2b]">
+                Galeria
+              </a>
+
+              <a href="/dokumenty" className="hover:text-[#1f3d2b]">
+                Dokumenty
+              </a>
+
+              <a
+                href="/historia-cen"
+                className="hover:text-[#1f3d2b]"
+              >
+                Historia cen
+              </a>
+
+              <a
+                href="/promocja"
+                className="font-medium text-[#b07f24]"
+              >
+                Promocja
+              </a>
+            </div>
+
+            <div className="mt-8 text-sm text-black/45">
+              © 2026 NovaDuo | JPJ Concept Sp. z o.o.
+            </div>
           </div>
 
         </div>
