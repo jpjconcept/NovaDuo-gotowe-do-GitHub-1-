@@ -1,7 +1,13 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Building2, MapPin, Ruler, ArrowRight } from "lucide-react";
+import {
+  Building2,
+  MapPin,
+  Ruler,
+  ArrowRight,
+  X,
+} from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 const DISPLAY_ORDER = [
@@ -16,8 +22,8 @@ const DISPLAY_ORDER = [
 ];
 
 /*
-  Aktywne pola znajdują się wyłącznie nad bryłami poszczególnych lokali.
-  Nie zmieniamy oryginalnego planu ani granic działek.
+  Aktywne pola nad bryłami lokali.
+  Nie zmieniamy oryginalnego planu.
 */
 const HOTSPOTS = [
   // GÓRNY RZĄD
@@ -211,10 +217,14 @@ export default function LokalePage() {
   const [homes, setHomes] = useState(fallbackHomes);
 
   /*
-    Ostatnio wskazany lokal pozostaje zaznaczony,
-    nawet gdy użytkownik odsunie kursor.
+    Lokal wskazany kursorem pozostaje wybrany.
   */
   const [selectedId, setSelectedId] = useState(null);
+
+  /*
+    Lokal, którego karta jest aktualnie otwarta.
+  */
+  const [openCardId, setOpenCardId] = useState(null);
 
   useEffect(() => {
     let active = true;
@@ -256,11 +266,40 @@ export default function LokalePage() {
     };
   }, []);
 
+  /*
+    ESC zamyka kartę lokalu.
+  */
+  useEffect(() => {
+    function handleKeyDown(event) {
+      if (event.key === "Escape") {
+        setOpenCardId(null);
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   const selectedHome =
     homes.find((home) => home.id === selectedId) || null;
 
+  const openCardHome =
+    homes.find((home) => home.id === openCardId) || null;
+
   function getHome(id) {
     return homes.find((home) => home.id === id);
+  }
+
+  function openHomeCard(id) {
+    setSelectedId(id);
+    setOpenCardId(id);
+  }
+
+  function getCardPath(id) {
+    return `/karty-lokali/lokal-${id.replace("/", "-")}.png`;
   }
 
   return (
@@ -295,9 +334,9 @@ export default function LokalePage() {
           </h1>
 
           <p className="mt-5 text-lg leading-8 text-black/60">
-            Najedź kursorem na wybrany lokal. Zostanie on podświetlony,
-            a obok pojawią się jego najważniejsze informacje.
-            Na telefonie wystarczy dotknąć wybranego lokalu.
+            Najedź kursorem na wybrany lokal, aby zobaczyć jego
+            najważniejsze informacje. Kliknij lokal, aby otworzyć
+            szczegółową kartę z układem i opisem pomieszczeń.
           </p>
         </div>
 
@@ -324,7 +363,7 @@ export default function LokalePage() {
                     title={`Lokal ${spot.id}`}
                     onMouseEnter={() => setSelectedId(spot.id)}
                     onFocus={() => setSelectedId(spot.id)}
-                    onClick={() => setSelectedId(spot.id)}
+                    onClick={() => openHomeCard(spot.id)}
                     style={{
                       left: spot.left,
                       top: spot.top,
@@ -367,8 +406,8 @@ export default function LokalePage() {
                 </h2>
 
                 <p className="mt-4 leading-7 text-black/60">
-                  Najedź kursorem na wybrany lokal na planie.
-                  Tutaj pojawią się jego najważniejsze informacje.
+                  Najedź kursorem na lokal, aby zobaczyć jego dane.
+                  Kliknij, aby otworzyć kartę z rozkładem pomieszczeń.
                 </p>
               </div>
             ) : (
@@ -450,18 +489,14 @@ export default function LokalePage() {
                 </div>
 
                 <div className="mt-7 grid gap-3">
-                  <a
-                    href={`/karty-lokali/lokal-${selectedHome.id.replace(
-                      "/",
-                      "-"
-                    )}.png`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    type="button"
+                    onClick={() => openHomeCard(selectedHome.id)}
                     className="inline-flex h-12 items-center justify-center rounded-full bg-[#1f3d2b] px-5 font-medium text-white transition hover:bg-[#152b1e]"
                   >
-                    Otwórz kartę lokalu
+                    Zobacz układ i pomieszczenia
                     <ArrowRight className="ml-2 h-4 w-4" />
-                  </a>
+                  </button>
 
                   <a
                     href={`/historia-cen#lokal-${selectedHome.id.replace(
@@ -478,6 +513,68 @@ export default function LokalePage() {
           </div>
         </div>
       </section>
+
+      {/* MODAL Z KARTĄ LOKALU */}
+      {openCardHome && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-3 md:p-8"
+          onClick={() => setOpenCardId(null)}
+        >
+          <div
+            className="relative flex max-h-[95vh] w-full max-w-6xl flex-col overflow-hidden rounded-[2rem] bg-white shadow-2xl"
+            onClick={(event) => event.stopPropagation()}
+          >
+            {/* GÓRNA BELKA */}
+            <div className="flex items-center justify-between border-b border-black/10 px-5 py-4 md:px-8">
+              <div>
+                <div className="text-xs uppercase tracking-[0.22em] text-[#1f3d2b]/50">
+                  NovaDuo
+                </div>
+
+                <div className="mt-1 text-xl font-semibold md:text-2xl">
+                  Lokal {openCardHome.id} — układ pomieszczeń
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setOpenCardId(null)}
+                aria-label="Zamknij kartę lokalu"
+                className="flex h-11 w-11 items-center justify-center rounded-full bg-[#f6f3ec] text-[#1f3d2b] transition hover:bg-[#1f3d2b] hover:text-white"
+              >
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+
+            {/* KARTA LOKALU */}
+            <div className="overflow-auto bg-[#f6f3ec] p-3 md:p-6">
+              <img
+                src={getCardPath(openCardHome.id)}
+                alt={`Karta lokalu ${openCardHome.id} z układem i opisem pomieszczeń`}
+                className="mx-auto h-auto max-h-[75vh] max-w-full rounded-xl bg-white object-contain"
+              />
+            </div>
+
+            {/* DOLNA BELKA */}
+            <div className="flex flex-col gap-3 border-t border-black/10 bg-white px-5 py-4 sm:flex-row sm:items-center sm:justify-between md:px-8">
+              <div className="text-sm text-black/55">
+                Lokal {openCardHome.id}
+                <span className="mx-2">•</span>
+                {openCardHome.netArea} netto
+              </div>
+
+              <a
+                href={getCardPath(openCardHome.id)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-11 items-center justify-center rounded-full border border-[#1f3d2b]/20 px-5 text-sm font-medium text-[#1f3d2b] transition hover:bg-[#1f3d2b] hover:text-white"
+              >
+                Otwórz kartę w pełnym rozmiarze
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
