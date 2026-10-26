@@ -175,13 +175,13 @@ useEffect(() => {
     },
     {
       id: "58/3",
-      total_price: 1090000,
+      total_price: 1179000,
       net_area: 154.57,
       usable_area: 118.48,
       garden_area: 272,
       plot_no: "24/11",
       status: "Dostępny",
-      price_valid_from: REPORTING_START,
+      price_valid_from: "2026-09-02",
     },
     {
       id: "58/5",
