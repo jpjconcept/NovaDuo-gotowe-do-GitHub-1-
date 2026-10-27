@@ -1,6 +1,16 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import SiteHeader from "../../components/SiteHeader";
+
+import {
+  ArrowRight,
+  FileSpreadsheet,
+  History,
+  Info,
+  ShieldCheck,
+} from "lucide-react";
+
 import { supabase } from "@/lib/supabase";
 
 const DISPLAY_ORDER = [
@@ -63,7 +73,9 @@ function polishDate(value) {
 
 export default function PriceHistoryPage() {
   const [history, setHistory] = useState([]);
-  const [message, setMessage] = useState("Wczytywanie historii cen...");
+  const [message, setMessage] = useState(
+    "Wczytywanie historii cen..."
+  );
 
   useEffect(() => {
     let active = true;
@@ -82,7 +94,9 @@ export default function PriceHistoryPage() {
       }
 
       if (error) {
-        setMessage(`Nie udało się pobrać historii: ${error.message}`);
+        setMessage(
+          `Nie udało się pobrać historii cen: ${error.message}`
+        );
         return;
       }
 
@@ -111,7 +125,8 @@ export default function PriceHistoryPage() {
       .filter(
         (entry) =>
           entry.old_total_price !== null &&
-          Number(entry.old_total_price) !== Number(entry.new_total_price)
+          Number(entry.old_total_price) !==
+            Number(entry.new_total_price)
       )
       .map((entry) => ({
         key: entry.id,
@@ -122,100 +137,257 @@ export default function PriceHistoryPage() {
         kind: "Zmiana ceny",
       }));
 
-    return [...initialRows, ...changedRows].sort((first, second) => {
-      const dateResult = first.date.localeCompare(second.date);
+    return [...initialRows, ...changedRows].sort((a, b) => {
+      const dateResult = a.date.localeCompare(b.date);
 
       if (dateResult !== 0) {
         return dateResult;
       }
 
       return (
-        DISPLAY_ORDER.indexOf(first.unitId) -
-        DISPLAY_ORDER.indexOf(second.unitId)
+        DISPLAY_ORDER.indexOf(a.unitId) -
+        DISPLAY_ORDER.indexOf(b.unitId)
       );
     });
   }, [history]);
 
+  const changedRowsCount = rows.filter(
+    (row) => row.kind === "Zmiana ceny"
+  ).length;
+
   return (
-    <main className="min-h-screen bg-[#f6f3ec] px-5 py-12 text-[#1f241f]">
-      <div className="mx-auto max-w-6xl">
-        <a href="/" className="text-sm text-[#1f3d2b] underline">
-          ← Wróć do strony NovaDuo
-        </a>
+    <main className="min-h-screen bg-[#f6f3ec] text-[#1f241f]">
+      {/* WSPÓLNE MENU */}
+      <SiteHeader />
 
-        <h1 className="mt-6 text-4xl font-semibold tracking-tight">
-          Historia cen NovaDuo
-        </h1>
+      {/* HERO */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_20%,rgba(78,113,76,0.18),transparent_36%),linear-gradient(120deg,#f6f3ec,#e8eadb)]" />
 
-        <p className="mt-4 max-w-3xl leading-7 text-black/65">
-          Zestawienie zachowuje ceny publikowane od rozpoczęcia raportowania
-          23 lipca 2026 r. Garaż w bryle budynku oraz ogród do wyłącznego
-          korzystania są wliczone w cenę lokalu. Do ceny każdego lokalu
-          doliczane są dwa udziały drogowe po 1,00 PLN brutto.
-        </p>
+        <div className="relative mx-auto max-w-7xl px-6 py-16 md:py-24">
+          <div className="max-w-4xl">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#1f3d2b]/20 bg-white/60 px-4 py-2 text-sm font-medium text-[#1f3d2b]">
+              <History className="h-4 w-4" />
+              Ceny i historia cen
+            </div>
 
-        <div className="mt-6 rounded-2xl border border-[#1f3d2b]/15 bg-white p-5 text-sm leading-6 text-black/65">
-          Udział w działce ewid. 24/10 – droga wewnętrzna: 1,00 PLN brutto.
-          Udział w działce ewid. 24/3 – droga dojazdowa do drogi publicznej:
-          1,00 PLN brutto.
+            <h1 className="text-4xl font-semibold leading-tight tracking-tight md:text-6xl">
+              Historia cen
+              <br />
+              <span className="text-[#1f3d2b]">
+                lokali NovaDuo.
+              </span>
+            </h1>
+
+            <p className="mt-7 max-w-3xl text-lg leading-8 text-black/65">
+              Publikujemy historię cen lokali od rozpoczęcia
+              raportowania, czyli od 23 lipca 2026 r.
+              Poniższa tabela pokazuje ceny początkowe
+              oraz późniejsze rzeczywiste zmiany cen.
+            </p>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a
+                href="/lokale"
+                className="inline-flex h-12 items-center justify-center rounded-full bg-[#1f3d2b] px-7 font-medium text-white transition hover:bg-[#152b1e]"
+              >
+                Aktualne ceny lokali
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </a>
+
+              <a
+                href="/dokumenty"
+                className="inline-flex h-12 items-center justify-center rounded-full border border-[#1f3d2b]/20 bg-white/70 px-7 font-medium text-[#1f3d2b] transition hover:bg-white"
+              >
+                Dokumenty inwestycji
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* WYJAŚNIENIE */}
+      <section className="mx-auto max-w-7xl px-6 pb-8">
+        <div className="grid gap-5 md:grid-cols-3">
+          <div className="rounded-[2rem] bg-white p-7 shadow-sm">
+            <History className="h-7 w-7 text-[#1f3d2b]" />
+
+            <div className="mt-5 text-3xl font-semibold">
+              23.07.2026
+            </div>
+
+            <p className="mt-2 text-sm leading-6 text-black/55">
+              Początek publikowanej historii cen NovaDuo.
+            </p>
+          </div>
+
+          <div className="rounded-[2rem] bg-white p-7 shadow-sm">
+            <ShieldCheck className="h-7 w-7 text-[#1f3d2b]" />
+
+            <div className="mt-5 text-3xl font-semibold">
+              8 lokali
+            </div>
+
+            <p className="mt-2 text-sm leading-6 text-black/55">
+              Historia prowadzona jest indywidualnie
+              dla każdego lokalu.
+            </p>
+          </div>
+
+          <div className="rounded-[2rem] bg-[#1f3d2b] p-7 text-white shadow-sm">
+            <FileSpreadsheet className="h-7 w-7 text-[#e7c46a]" />
+
+            <div className="mt-5 text-3xl font-semibold">
+              {changedRowsCount}
+            </div>
+
+            <p className="mt-2 text-sm leading-6 text-white/65">
+              Zarejestrowanych zmian cen
+              od początku raportowania.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* INFORMACJA */}
+      <section className="mx-auto max-w-7xl px-6 py-8">
+        <div className="flex items-start gap-4 rounded-[1.75rem] border border-[#1f3d2b]/10 bg-[#e4e6d7] p-6 md:p-7">
+          <Info className="mt-1 h-6 w-6 shrink-0 text-[#1f3d2b]" />
+
+          <div className="leading-7 text-black/65">
+            <strong className="text-[#1f3d2b]">
+              Jak czytać tabelę?
+            </strong>
+
+            <p className="mt-2">
+              „Cena początkowa” oznacza cenę obowiązującą
+              w dniu rozpoczęcia raportowania. „Zmiana ceny”
+              pokazuje poprzednią i nową cenę lokalu.
+              Zmiana samego statusu lokalu — np. na
+              „Rezerwacja” — nie jest traktowana jako zmiana ceny.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* TABELA */}
+      <section className="mx-auto max-w-7xl px-6 py-12">
+        <div className="mb-8">
+          <div className="text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/55">
+            Pełna historia
+          </div>
+
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
+            Zmiany cen lokali NovaDuo
+          </h2>
+
+          <p className="mt-3 max-w-3xl leading-7 text-black/60">
+            Cena za 1 m² w tej tabeli obliczana jest
+            na podstawie powierzchni użytkowej lokalu.
+          </p>
         </div>
 
         {message && (
-          <div className="mt-8 rounded-2xl bg-white p-5 shadow">
+          <div className="mb-6 rounded-[1.5rem] bg-white p-5 shadow-sm">
             {message}
           </div>
         )}
 
-        <div className="mt-8 overflow-x-auto rounded-3xl bg-white shadow-xl">
-          <table className="w-full min-w-[980px] border-collapse">
-            <thead className="bg-[#eef2e8] text-left text-xs uppercase tracking-[0.12em] text-black/55">
+        <div className="overflow-x-auto rounded-[2rem] bg-white shadow-xl">
+          <table className="w-full min-w-[1080px] border-collapse">
+            <thead className="bg-[#e4e6d7] text-left text-xs uppercase tracking-[0.12em] text-black/55">
               <tr>
-                <th className="px-5 py-4">Data</th>
-                <th className="px-5 py-4">Lokal</th>
-                <th className="px-5 py-4">Rodzaj wpisu</th>
-                <th className="px-5 py-4">Poprzednia cena lokalu</th>
-                <th className="px-5 py-4">Cena lokalu</th>
-                <th className="px-5 py-4">Cena za 1 m²</th>
-                <th className="px-5 py-4">Udziały drogowe</th>
-                <th className="px-5 py-4">Cena łączna</th>
+                <th className="px-5 py-5">
+                  Data
+                </th>
+
+                <th className="px-5 py-5">
+                  Lokal
+                </th>
+
+                <th className="px-5 py-5">
+                  Rodzaj wpisu
+                </th>
+
+                <th className="px-5 py-5">
+                  Poprzednia cena
+                </th>
+
+                <th className="px-5 py-5">
+                  Cena lokalu
+                </th>
+
+                <th className="px-5 py-5">
+                  Cena za 1 m²
+                  <span className="mt-1 block normal-case tracking-normal text-black/40">
+                    pow. użytkowej
+                  </span>
+                </th>
+
+                <th className="px-5 py-5">
+                  Udziały drogowe
+                </th>
+
+                <th className="px-5 py-5">
+                  Cena łączna
+                </th>
               </tr>
             </thead>
 
             <tbody>
               {rows.map((row) => (
                 <tr
-                  id={`lokal-${row.unitId.replace("/", "-")}`}
                   key={row.key}
-                  className="border-t border-black/10"
+                  id={`lokal-${row.unitId.replace("/", "-")}`}
+                  className="border-t border-black/10 transition hover:bg-[#f8f7f2]"
                 >
-                  <td className="px-5 py-4">
+                  <td className="whitespace-nowrap px-5 py-5">
                     {polishDate(row.date)}
                   </td>
 
-                  <td className="px-5 py-4 font-semibold">
-                    {row.unitId}
+                  <td className="px-5 py-5">
+                    <span className="rounded-full bg-[#f6f3ec] px-3 py-2 font-semibold">
+                      {row.unitId}
+                    </span>
                   </td>
 
-                  <td className="px-5 py-4">{row.kind}</td>
-
-                  <td className="px-5 py-4">
-                    {row.oldPrice === null ? "—" : money(row.oldPrice)}
+                  <td className="px-5 py-5">
+                    <span
+                      className={`rounded-full px-3 py-2 text-xs font-medium ${
+                        row.kind === "Cena początkowa"
+                          ? "bg-[#e4e6d7] text-[#1f3d2b]"
+                          : "bg-[#fff1d6] text-[#805412]"
+                      }`}
+                    >
+                      {row.kind}
+                    </span>
                   </td>
 
-                  <td className="px-5 py-4 font-medium">
+                  <td className="whitespace-nowrap px-5 py-5 text-black/55">
+                    {row.oldPrice === null
+                      ? "—"
+                      : money(row.oldPrice)}
+                  </td>
+
+                  <td className="whitespace-nowrap px-5 py-5 font-semibold">
                     {money(row.newPrice)}
                   </td>
 
-                  <td className="px-5 py-4">
-                    {pricePerM2(row.newPrice, row.unitId)}
+                  <td className="whitespace-nowrap px-5 py-5">
+                    {pricePerM2(
+                      row.newPrice,
+                      row.unitId
+                    )}
                   </td>
 
-                  <td className="px-5 py-4">
+                  <td className="whitespace-nowrap px-5 py-5">
                     {money(ROAD_PRICE)}
                   </td>
 
-                  <td className="px-5 py-4 font-semibold text-[#1f3d2b]">
-                    {money(row.newPrice + ROAD_PRICE)}
+                  <td className="whitespace-nowrap px-5 py-5 text-lg font-semibold text-[#1f3d2b]">
+                    {money(
+                      row.newPrice + ROAD_PRICE
+                    )}
                   </td>
                 </tr>
               ))}
@@ -223,30 +395,95 @@ export default function PriceHistoryPage() {
           </table>
         </div>
 
-        <p className="mt-5 text-sm leading-6 text-black/55">
-          Cena za 1 m² jest wyliczana na podstawie ceny lokalu i powierzchni
-          użytkowej. Cena łączna obejmuje cenę lokalu oraz wartość dwóch
-          udziałów drogowych w łącznej wysokości 2,00 PLN brutto.
+        <p className="mt-5 text-sm leading-6 text-black/45">
+          Do ceny każdego lokalu doliczane są dwa udziały
+          w działkach drogowych po 1,00 PLN brutto,
+          czyli łącznie 2,00 PLN.
         </p>
+      </section>
 
-        <div className="mt-8 flex flex-wrap gap-3">
-          <a
-            href="/dane/novaduo-ceny.csv"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-full bg-[#1f3d2b] px-5 py-3 text-sm font-medium text-white"
-          >
-            Pobierz aktualny plik CSV
-          </a>
+      {/* CSV */}
+      <section className="bg-[#e4e6d7] py-16">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="grid gap-8 rounded-[2rem] bg-white p-8 shadow-sm lg:grid-cols-[1fr_auto] lg:items-center md:p-10">
+            <div>
+              <FileSpreadsheet className="h-8 w-8 text-[#1f3d2b]" />
 
-          <a
-            href="/#lokale"
-            className="rounded-full border border-black/15 bg-white px-5 py-3 text-sm font-medium"
-          >
-            Oferta lokali
-          </a>
+              <h2 className="mt-5 text-3xl font-semibold">
+                Aktualne dane cenowe
+              </h2>
+
+              <p className="mt-3 max-w-3xl leading-7 text-black/60">
+                Aktualne dane dotyczące cen lokali
+                udostępniamy również w formacie CSV.
+              </p>
+            </div>
+
+            <a
+              href="/dane/novaduo-ceny.csv"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-12 items-center justify-center rounded-full bg-[#1f3d2b] px-7 font-medium text-white transition hover:bg-[#152b1e]"
+            >
+              Otwórz aktualny CSV
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </a>
+          </div>
         </div>
-      </div>
+      </section>
+
+      {/* CTA */}
+      <section className="px-6 py-20">
+        <div className="mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] bg-[#10251b] px-7 py-12 text-white md:px-12 md:py-16">
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <div className="text-sm uppercase tracking-[0.25em] text-[#e7c46a]">
+                NovaDuo
+              </div>
+
+              <h2 className="mt-3 max-w-3xl text-3xl font-semibold md:text-4xl">
+                Sprawdź aktualną ofertę lokali.
+              </h2>
+
+              <p className="mt-4 max-w-2xl text-white/65">
+                Na interaktywnym planie znajdziesz aktualne
+                ceny, statusy, powierzchnie oraz położenie
+                wszystkich lokali.
+              </p>
+            </div>
+
+            <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
+              <a
+                href="/lokale"
+                className="inline-flex h-12 items-center justify-center rounded-full bg-white px-7 font-medium text-[#1f3d2b] transition hover:bg-[#e4e6d7]"
+              >
+                Zobacz lokale
+              </a>
+
+              <a
+                href="/#kontakt-deweloper"
+                className="inline-flex h-12 items-center justify-center rounded-full border border-white/25 px-7 font-medium text-white transition hover:bg-white/10"
+              >
+                Kontakt z JPJ Concept
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* STOPKA */}
+      <footer className="border-t border-black/10 bg-[#f6f3ec] py-10">
+        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 text-sm text-black/55 md:flex-row md:items-center md:justify-between">
+          <div>
+            © 2026 NovaDuo | JPJ Concept Sp. z o.o.
+          </div>
+
+          <div>
+            ul. Nowowiejska 58A, Pogroszew,
+            05-850 Ożarów Mazowiecki
+          </div>
+        </div>
+      </footer>
     </main>
   );
 }
