@@ -1,5 +1,7 @@
 import Link from "next/link";
+import SiteHeader from "../../components/SiteHeader";
 import PromoCarReveal from "@/components/PromoCarReveal";
+
 import {
   ArrowRight,
   CalendarDays,
@@ -7,7 +9,6 @@ import {
   CheckCircle2,
   FileText,
   Gift,
-  Home,
   MapPin,
   ShieldCheck,
 } from "lucide-react";
@@ -68,9 +69,9 @@ const features = [
   "ok. 154 m² powierzchni netto",
   "garaż w bryle każdego lokalu",
   "pompa ciepła i ogrzewanie podłogowe",
-  "rekuperacja",
-  "przygotowanie instalacji klimatyzacji",
-  "własna przestrzeń działki przy lokalu",
+  "rekuperator w standardzie",
+  "przygotowanie instalacji pod 3 klimatyzatory",
+  "działka do wyłącznego użytkowania",
   "kameralna inwestycja – tylko 8 lokali",
 ];
 
@@ -141,39 +142,23 @@ export default function PromocjaPage() {
         }}
       />
 
+      {/* PASEK PROMOCYJNY */}
       <div className="bg-[#1f3d2b] px-4 py-2.5 text-center text-sm font-medium text-white">
-        <span className="text-[#e7c46a]">PROMOCJA NOVADUO</span>
-        <span className="mx-2 text-white/40">•</span>
+        <span className="text-[#e7c46a]">
+          PROMOCJA NOVADUO
+        </span>
+
+        <span className="mx-2 text-white/40">
+          •
+        </span>
+
         Ford Puma z automatem o wartości katalogowej ok. 100 000 zł
       </div>
 
-      <nav className="sticky top-0 z-50 border-b border-black/10 bg-[#f6f3ec]/90 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-5 px-6 py-4">
-          <Link href="/" aria-label="NovaDuo – strona główna">
-            <img
-              src="/images/logo-novaduo.png"
-              alt="NovaDuo"
-              className="h-20 w-auto md:h-24"
-            />
-          </Link>
+      {/* WSPÓLNE MENU */}
+      <SiteHeader />
 
-          <div className="hidden items-center gap-7 text-sm text-black/65 md:flex">
-            <Link href="/">Strona główna</Link>
-            <Link href="/#lokale">Lokale i ceny</Link>
-            <a href="#jak-dziala">Jak działa</a>
-            <a href="#samochod">Samochód</a>
-            <a href="#faq">Pytania</a>
-          </div>
-
-          <Link
-            href="/#kontakt"
-            className="rounded-full bg-[#1f3d2b] px-5 py-3 text-sm text-white transition hover:bg-[#152b1e]"
-          >
-            Zapytaj o lokal
-          </Link>
-        </div>
-      </nav>
-
+      {/* HERO */}
       <section className="relative overflow-hidden border-b border-black/5 bg-[radial-gradient(circle_at_72%_38%,rgba(212,185,120,0.18),transparent_30%),linear-gradient(135deg,#f6f3ec_0%,#ffffff_48%,#eef0e7_100%)]">
         <div className="mx-auto grid max-w-7xl gap-8 px-6 py-14 md:py-20 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-10">
           <div>
@@ -183,20 +168,25 @@ export default function PromocjaPage() {
             </div>
 
             <h1 className="mt-6 text-4xl font-semibold leading-[1.04] tracking-tight md:text-6xl">
-              Nowy dom. Nowy samochód. <span className="text-[#b8913c]">Jedna cena.</span>
+              Nowy dom. Nowy samochód.{" "}
+              <span className="text-[#b8913c]">
+                Jedna cena.
+              </span>
             </h1>
 
             <p className="mt-6 max-w-2xl text-lg leading-8 text-black/65 md:text-xl">
-              Kup lokal w inwestycji NovaDuo w okresie obowiązywania promocji i
-              skorzystaj ze świadczenia promocyjnego w postaci fabrycznie nowego
-              Forda Puma z automatyczną skrzynią biegów o orientacyjnej wartości
-              katalogowej około 100 000 zł brutto.
+              Kup lokal w inwestycji NovaDuo w okresie
+              obowiązywania promocji i skorzystaj ze
+              świadczenia promocyjnego w postaci fabrycznie
+              nowego Forda Puma z automatyczną skrzynią biegów
+              o orientacyjnej wartości katalogowej około
+              100 000 zł brutto.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
-                href="/#lokale"
-                className="inline-flex h-12 items-center justify-center rounded-full bg-[#1f3d2b] px-7 py-3.5 font-medium text-white transition hover:bg-[#152b1e]"
+                href="/lokale"
+                className="inline-flex h-12 items-center justify-center rounded-full bg-[#1f3d2b] px-7 font-medium text-white transition hover:bg-[#152b1e]"
               >
                 Sprawdź dostępne lokale
                 <ArrowRight className="ml-2 h-4 w-4" />
@@ -204,16 +194,16 @@ export default function PromocjaPage() {
 
               <a
                 href="#jak-dziala"
-                className="inline-flex h-12 items-center justify-center rounded-full border border-black/15 bg-white px-7 py-3.5 font-medium transition hover:bg-black/[0.03]"
+                className="inline-flex h-12 items-center justify-center rounded-full border border-black/15 bg-white px-7 font-medium transition hover:bg-black/[0.03]"
               >
                 Poznaj zasady promocji
               </a>
             </div>
 
             <p className="mt-5 text-xs leading-5 text-black/45">
-              Promocja może zakończyć się wcześniej na zasadach określonych w
-              regulaminie. Prezentowany model i kolor samochodu mają charakter
-              poglądowy.
+              Promocja może zakończyć się wcześniej na zasadach
+              określonych w regulaminie. Prezentowany model
+              i kolor samochodu mają charakter poglądowy.
             </p>
           </div>
 
@@ -223,12 +213,17 @@ export default function PromocjaPage() {
         </div>
       </section>
 
-      <section id="jak-dziala" className="scroll-mt-32 bg-white py-20">
+      {/* JAK DZIAŁA */}
+      <section
+        id="jak-dziala"
+        className="scroll-mt-40 bg-white py-20"
+      >
         <div className="mx-auto max-w-7xl px-6">
           <div className="mx-auto max-w-3xl text-center">
             <div className="text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/55">
               Proste zasady
             </div>
+
             <h2 className="mt-3 text-4xl font-semibold tracking-tight md:text-5xl">
               Jak działa promocja?
             </h2>
@@ -243,20 +238,31 @@ export default function PromocjaPage() {
                 <div className="text-5xl font-semibold text-[#b8913c]">
                   {step.number}
                 </div>
-                <h3 className="mt-5 text-2xl font-semibold">{step.title}</h3>
-                <p className="mt-4 leading-7 text-black/60">{step.description}</p>
+
+                <h3 className="mt-5 text-2xl font-semibold">
+                  {step.title}
+                </h3>
+
+                <p className="mt-4 leading-7 text-black/60">
+                  {step.description}
+                </p>
               </article>
             ))}
           </div>
 
           <div className="mt-8 rounded-3xl border border-[#1f3d2b]/10 bg-[#e4e6d7] p-6 text-center text-sm leading-6 text-black/60">
-            Samochód zostanie wydany w terminie do 30 dni od spełnienia
-            wszystkich warunków określonych w regulaminie promocji.
+            Samochód zostanie wydany w terminie do 30 dni
+            od spełnienia wszystkich warunków określonych
+            w regulaminie promocji.
           </div>
         </div>
       </section>
 
-      <section id="samochod" className="scroll-mt-32 py-20">
+      {/* SAMOCHÓD */}
+      <section
+        id="samochod"
+        className="scroll-mt-40 py-20"
+      >
         <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full bg-[#1f3d2b] px-4 py-2 text-sm text-white">
@@ -269,39 +275,50 @@ export default function PromocjaPage() {
             </h2>
 
             <p className="mt-6 text-lg leading-8 text-black/65">
-              Modelem referencyjnym promocji jest fabrycznie nowy Ford Puma z
-              automatyczną skrzynią biegów o orientacyjnej wartości katalogowej
-              około 100 000 zł brutto.
+              Modelem referencyjnym promocji jest fabrycznie
+              nowy Ford Puma z automatyczną skrzynią biegów
+              o orientacyjnej wartości katalogowej około
+              100 000 zł brutto.
             </p>
 
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
               {[
                 [Car, "Automatyczna skrzynia biegów"],
                 [ShieldCheck, "Fabrycznie nowy samochód"],
-                [CalendarDays, "Produkcja nie wcześniej niż 2027 r."],
-                [Gift, "Wartość katalogowa min. 95 000 zł brutto"],
+                [
+                  CalendarDays,
+                  "Produkcja nie wcześniej niż 2027 r.",
+                ],
+                [
+                  Gift,
+                  "Wartość katalogowa min. 95 000 zł brutto",
+                ],
               ].map(([Icon, label]) => (
                 <div
                   key={label}
                   className="flex items-center gap-3 rounded-2xl bg-white p-5 shadow-sm"
                 >
                   <Icon className="h-6 w-6 shrink-0 text-[#1f3d2b]" />
-                  <span className="font-medium">{label}</span>
+                  <span className="font-medium">
+                    {label}
+                  </span>
                 </div>
               ))}
             </div>
 
             <p className="mt-7 text-sm leading-6 text-black/50">
-              Dokładna wersja, kolor i wyposażenie będą zależały od aktualnej
-              oferty producenta i dostępności w momencie realizacji świadczenia.
-              Jeżeli model Ford Puma zostanie wycofany lub istotnie zmieniony,
-              może zostać zastąpiony innym fabrycznie nowym samochodem zgodnie z
-              regulaminem promocji.
+              Dokładna wersja, kolor i wyposażenie będą zależały
+              od aktualnej oferty producenta i dostępności
+              w momencie realizacji świadczenia. Jeżeli model
+              Ford Puma zostanie wycofany lub istotnie zmieniony,
+              może zostać zastąpiony innym fabrycznie nowym
+              samochodem zgodnie z regulaminem promocji.
             </p>
           </div>
 
           <div className="relative overflow-hidden rounded-[2rem] border border-[#b8913c]/15 bg-white p-5 shadow-2xl md:p-8">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(185,218,255,0.22),transparent_58%)]" />
+
             <img
               src="/images/promocja-auto.png"
               alt="Ford Puma z czerwoną kokardą i kluczykami – promocja NovaDuo"
@@ -311,6 +328,7 @@ export default function PromocjaPage() {
         </div>
       </section>
 
+      {/* DOM NAJWAŻNIEJSZY */}
       <section className="bg-[#1f3d2b] py-20 text-white">
         <div className="mx-auto max-w-7xl px-6">
           <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
@@ -318,13 +336,17 @@ export default function PromocjaPage() {
               <div className="text-sm uppercase tracking-[0.28em] text-white/50">
                 NovaDuo
               </div>
+
               <h2 className="mt-3 text-4xl font-semibold tracking-tight md:text-5xl">
-                Samochód jest dodatkiem. Najważniejszy jest Twój nowy dom.
+                Samochód jest dodatkiem.
+                Najważniejszy jest Twój nowy dom.
               </h2>
+
               <p className="mt-6 max-w-xl text-lg leading-8 text-white/70">
-                NovaDuo to kameralna inwestycja w Pogroszewie, w gminie Ożarów
-                Mazowiecki. Tylko osiem lokali, duża powierzchnia, garaż i
-                nowoczesny standard techniczny.
+                NovaDuo to kameralna inwestycja
+                w Pogroszewie, w gminie Ożarów Mazowiecki.
+                Tylko osiem lokali, duża powierzchnia,
+                garaż i nowoczesny standard techniczny.
               </p>
             </div>
 
@@ -335,7 +357,10 @@ export default function PromocjaPage() {
                   className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 p-5"
                 >
                   <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#e7c46a]" />
-                  <span className="leading-6 text-white/85">{feature}</span>
+
+                  <span className="leading-6 text-white/85">
+                    {feature}
+                  </span>
                 </div>
               ))}
             </div>
@@ -343,6 +368,7 @@ export default function PromocjaPage() {
         </div>
       </section>
 
+      {/* CTA CENY */}
       <section className="bg-[#ead09a]/25 py-16">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-8 px-6 text-center lg:flex-row lg:text-left">
           <div>
@@ -350,39 +376,47 @@ export default function PromocjaPage() {
               <CalendarDays className="h-4 w-4" />
               Promocja do 31.12.2026 r.
             </div>
+
             <h2 className="mt-3 text-3xl font-semibold md:text-4xl">
               Sprawdź aktualne lokale i ceny NovaDuo
             </h2>
+
             <p className="mt-3 text-black/55">
-              Ceny lokali pozostających w sprzedaży mogą zmieniać się w trakcie
-              trwania promocji.
+              Ceny lokali pozostających w sprzedaży mogą
+              zmieniać się w trakcie trwania promocji.
             </p>
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row">
             <Link
-              href="/#lokale"
+              href="/lokale"
               className="inline-flex items-center justify-center rounded-full bg-[#1f3d2b] px-7 py-3.5 font-medium text-white"
             >
               Zobacz lokale i ceny
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
+
             <Link
-              href="/#kontakt"
+              href="/#kontakt-deweloper"
               className="inline-flex items-center justify-center rounded-full border border-[#1f3d2b]/20 bg-white px-7 py-3.5 font-medium text-[#1f3d2b]"
             >
-              Umów spotkanie
+              Umów prezentację
             </Link>
           </div>
         </div>
       </section>
 
-      <section id="faq" className="scroll-mt-32 bg-white py-20">
+      {/* FAQ */}
+      <section
+        id="faq"
+        className="scroll-mt-40 bg-white py-20"
+      >
         <div className="mx-auto max-w-5xl px-6">
           <div className="text-center">
             <div className="text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/55">
               Najczęstsze pytania
             </div>
+
             <h2 className="mt-3 text-4xl font-semibold tracking-tight md:text-5xl">
               Promocja NovaDuo
             </h2>
@@ -394,14 +428,20 @@ export default function PromocjaPage() {
                 key={item.question}
                 className="rounded-3xl border border-black/5 bg-[#f6f3ec] p-7"
               >
-                <h3 className="text-xl font-semibold">{item.question}</h3>
-                <p className="mt-3 leading-7 text-black/60">{item.answer}</p>
+                <h3 className="text-xl font-semibold">
+                  {item.question}
+                </h3>
+
+                <p className="mt-3 leading-7 text-black/60">
+                  {item.answer}
+                </p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
+      {/* REGULAMIN */}
       <section className="py-20">
         <div className="mx-auto max-w-5xl px-6">
           <div className="rounded-[2rem] bg-white p-8 shadow-xl md:p-10">
@@ -411,18 +451,24 @@ export default function PromocjaPage() {
                   <FileText className="h-4 w-4" />
                   Regulamin
                 </div>
+
                 <h2 className="mt-3 text-3xl font-semibold">
                   Regulamin promocji „Nowy Dom. Nowy Samochód.”
                 </h2>
+
                 <p className="mt-3 max-w-2xl leading-7 text-black/55">
-                  Regulamin promocji jest już dostępny. Pobierz dokument PDF i
-                  zapoznaj się ze szczegółowymi warunkami udziału w promocji.
+                  Regulamin promocji jest dostępny.
+                  Pobierz dokument PDF i zapoznaj się
+                  ze szczegółowymi warunkami udziału
+                  w promocji.
                 </p>
               </div>
 
               {REGULAMIN_READY ? (
                 <a
                   href="/regulamin-promocji-novaduo.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex shrink-0 items-center justify-center rounded-full bg-[#1f3d2b] px-7 py-3.5 font-medium text-white"
                 >
                   Pobierz regulamin PDF
@@ -437,40 +483,58 @@ export default function PromocjaPage() {
         </div>
       </section>
 
+      {/* KONTAKT */}
       <section className="bg-[#1f3d2b] py-14 text-white">
         <div className="mx-auto flex max-w-7xl flex-col gap-6 px-6 md:flex-row md:items-center md:justify-between">
           <div>
             <div className="flex items-center gap-2 text-white/60">
-              <MapPin className="h-4 w-4" /> Pogroszew, ul. Nowowiejska 58
+              <MapPin className="h-4 w-4" />
+              Pogroszew, ul. Nowowiejska 58
             </div>
+
             <h2 className="mt-2 text-3xl font-semibold">
               Chcesz zobaczyć NovaDuo na miejscu?
             </h2>
           </div>
 
           <Link
-            href="/#kontakt"
+            href="/#kontakt-deweloper"
             className="inline-flex items-center justify-center rounded-full bg-white px-7 py-3.5 font-medium text-[#1f3d2b]"
           >
-            Skontaktuj się z nami
+            Kontakt z JPJ Concept
             <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
         </div>
       </section>
 
+      {/* STOPKA */}
       <footer className="border-t border-black/10 bg-[#f6f3ec] py-10">
         <div className="mx-auto flex max-w-7xl flex-col gap-5 px-6 text-sm text-black/55 md:flex-row md:items-end md:justify-between">
           <div>
-            <div>© 2026 NovaDuo | JPJ Concept Sp. z o.o.</div>
+            <div>
+              © 2026 NovaDuo | JPJ Concept Sp. z o.o.
+            </div>
+
             <div className="mt-3 flex flex-wrap gap-4">
-              <Link href="/" className="hover:text-[#1f3d2b]">
-                Strona główna
-              </Link>
-              <Link href="/#lokale" className="hover:text-[#1f3d2b]">
+              <Link
+                href="/lokale"
+                className="hover:text-[#1f3d2b]"
+              >
                 Lokale i ceny
               </Link>
-              <Link href="/historia-cen" className="hover:text-[#1f3d2b]">
+
+              <Link
+                href="/historia-cen"
+                className="hover:text-[#1f3d2b]"
+              >
                 Historia cen
+              </Link>
+
+              <Link
+                href="/dokumenty"
+                className="hover:text-[#1f3d2b]"
+              >
+                Dokumenty
               </Link>
             </div>
           </div>
