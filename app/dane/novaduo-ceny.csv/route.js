@@ -2,33 +2,10 @@ import { supabase } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
-export const runtime = "nodejs";
 
 const REPORTING_START = "2026-07-23";
 const ROAD_VALID_FROM = "2026-07-23";
 const ROAD_TOTAL_PRICE = 2;
-
-const HISTORY_CACHE_TTL_MS = 60 * 1000;
-const QUERY_TIMEOUT_MS = 3500;
-const QUERY_ATTEMPTS = 2;
-
-const UNIT_USABLE_AREAS = {
-  "58/1": 118.48,
-  "58/3": 118.48,
-  "58/5": 118.48,
-  "58/7": 123.62,
-  "58/2": 118.48,
-  "58/4": 118.48,
-  "58/6": 118.48,
-  "58/8": 118.48,
-};
-
-let historyCache = {
-  data: null,
-  expiresAt: 0,
-};
-
-let historyRequestInFlight = null;
 
 const displayOrder = [
   "58/1",
@@ -41,18 +18,12 @@ const displayOrder = [
   "58/8",
 ];
 
-const taskOneUnits = new Set(["58/1", "58/3", "58/5", "58/7"]);
-
-const INITIAL_PRICES = {
-  "58/1": 1279000,
-  "58/3": 1090000,
-  "58/5": 1179000,
-  "58/7": 1279000,
-  "58/2": 1279000,
-  "58/4": 1179000,
-  "58/6": 1179000,
-  "58/8": 1279000,
-};
+const taskOneUnits = new Set([
+  "58/1",
+  "58/3",
+  "58/5",
+  "58/7",
+]);
 
 const HEADERS = [
   "Nazwa dewelopera",
@@ -117,6 +88,7 @@ const HEADERS = [
 
 function csvEscape(value) {
   const text = String(value ?? "x");
+
   return `"${text.replaceAll('"', '""')}"`;
 }
 
@@ -124,135 +96,9 @@ function csvLine(values) {
   return values.map(csvEscape).join(";");
 }
 
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-function errorMessage(error) {
-  if (error instanceof Error) {
-    return error.message;
-  }
-
-  return String(error ?? "Nieznany błąd");
-}
-
-async function loadHistoryFromSupabase() {
-  let lastError = null;
-
-  for (let attempt = 1; attempt <= QUERY_ATTEMPTS; attempt += 1) {
-    try {
-      const result = await supabase
-        .from("unit_price_history")
-        .select(
-          "id, unit_id, old_total_price, new_total_price, changed_at"
-        )
-        .order("changed_at", { ascending: true })
-        .abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS));
-
-      if (result.error) {
-        throw new Error(result.error.message);
-      }
-
-      return result.data ?? [];
-    } catch (error) {
-      lastError = error;
-
-      if (attempt < QUERY_ATTEMPTS) {
-        await sleep(250 * attempt);
-      }
-    }
-  }
-
-  throw new Error(
-    `Nie udało się pobrać historii cen po ${QUERY_ATTEMPTS} próbach: ${errorMessage(
-      lastError
-    )}`
-  );
-}
-
-async function getHistory() {
-  const now = Date.now();
-
-  if (historyCache.data && historyCache.expiresAt > now) {
-    return historyCache.data;
-  }
-
-  if (historyRequestInFlight) {
-    return historyRequestInFlight;
-  }
-
-  historyRequestInFlight = (async () => {
-    try {
-      const data = await loadHistoryFromSupabase();
-
-      historyCache = {
-        data,
-        expiresAt: Date.now() + HISTORY_CACHE_TTL_MS,
-      };
-
-      return data;
-    } catch (error) {
-      if (historyCache.data) {
-        console.warn(
-          "Supabase chwilowo niedostępny. Używam ostatniej poprawnej historii z pamięci:",
-          error
-        );
-
-        return historyCache.data;
-      }
-
-      throw error;
-    } finally {
-      historyRequestInFlight = null;
-    }
-  })();
-
-  return historyRequestInFlight;
-}
-
-function cacheHeaders(reportDate, today) {
-  const isHistorical = reportDate < today;
-
-  return {
-    "Cache-Control": "public, max-age=0, must-revalidate",
-    "Vercel-CDN-Cache-Control": isHistorical
-      ? "public, s-maxage=604800, stale-while-revalidate=2592000"
-      : "public, s-maxage=300, stale-while-revalidate=86400",
-  };
-}
-
-function getWarsawDate(value = new Date()) {
-  const parts = new Intl.DateTimeFormat("en-CA", {
-    timeZone: "Europe/Warsaw",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).formatToParts(value);
-
-  const values = Object.fromEntries(
-    parts
-      .filter((part) => part.type !== "literal")
-      .map((part) => [part.type, part.value])
-  );
-
-  return `${values.year}-${values.month}-${values.day}`;
-}
-
-function isValidIsoDate(value) {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(String(value ?? ""))) {
-    return false;
-  }
-
-  const date = new Date(`${value}T12:00:00Z`);
-
-  return (
-    !Number.isNaN(date.getTime()) &&
-    date.toISOString().slice(0, 10) === value
-  );
-}
-
 function dateTime(value, fallback = REPORTING_START) {
   const date = String(value || fallback).slice(0, 10);
+
   return `${date} 00:00`;
 }
 
@@ -270,78 +116,26 @@ function pricePerSquareMeter(totalPrice, usableArea) {
   const price = Number(totalPrice);
   const area = Number(usableArea);
 
-  if (!Number.isFinite(price) || !Number.isFinite(area) || area <= 0) {
-    throw new Error("Nieprawidłowa cena albo powierzchnia użytkowa.");
+  if (
+    !Number.isFinite(price) ||
+    !Number.isFinite(area) ||
+    area <= 0
+  ) {
+    throw new Error(
+      "Nieprawidłowa cena albo powierzchnia użytkowa."
+    );
   }
 
-  return (price / area).toFixed(2);
+  // Sześć miejsc zapewnia zgodność iloczynu
+  // z ceną lokalu po zaokrągleniu do grosza.
+  return (price / area).toFixed(6);
 }
 
-function buildSnapshots(history, reportDate) {
-  const snapshots = Object.fromEntries(
-    displayOrder.map((unitId) => [
-      unitId,
-      {
-        totalPrice: INITIAL_PRICES[unitId],
-        validFrom: REPORTING_START,
-      },
-    ])
-  );
-
-  for (const entry of history) {
-    const unitId = String(entry.unit_id ?? "");
-
-    if (!snapshots[unitId]) {
-      continue;
-    }
-
-    const newPrice = Number(entry.new_total_price);
-
-    if (!Number.isFinite(newPrice) || newPrice <= 0) {
-      continue;
-    }
-
-    const oldPrice =
-      entry.old_total_price === null
-        ? null
-        : Number(entry.old_total_price);
-
-    if (
-      oldPrice !== null &&
-      Number.isFinite(oldPrice) &&
-      oldPrice === newPrice
-    ) {
-      continue;
-    }
-
-    const changedAt = new Date(entry.changed_at);
-
-    if (Number.isNaN(changedAt.getTime())) {
-      continue;
-    }
-
-    const changeDate = getWarsawDate(changedAt);
-
-    if (
-      changeDate < REPORTING_START ||
-      changeDate > reportDate
-    ) {
-      continue;
-    }
-
-    snapshots[unitId] = {
-      totalPrice: newPrice,
-      validFrom: changeDate,
-    };
-  }
-
-  return snapshots;
-}
-
-function buildRow(unit, snapshot) {
-  const basePrice = Number(snapshot.totalPrice);
-  const validFrom = dateTime(snapshot.validFrom);
-  const totalWithRoads = basePrice + ROAD_TOTAL_PRICE;
+function buildRow(unit) {
+  const basePrice = Number(unit.total_price);
+  const validFrom = dateTime(unit.price_valid_from);
+  const totalWithRoads =
+    basePrice + ROAD_TOTAL_PRICE;
 
   return [
     "JPJ Concept Sp. z o.o.",
@@ -362,6 +156,8 @@ function buildRow(unit, snapshot) {
     "58A",
     "x",
     "05-850",
+
+    // Adres lokalu, w którym prowadzona jest sprzedaż
     "Mazowieckie",
     "warszawski zachodni",
     "Ożarów Mazowiecki",
@@ -370,8 +166,14 @@ function buildRow(unit, snapshot) {
     "58A",
     "x",
     "05-850",
+
+    // Dodatkowe lokalizacje sprzedaży
     "x",
-    "Telefon: +48 600 397 399; e-mail: kontakt@jpjconcept.pl; agent nieruchomości: Anna Bieńka, +48 886 200 190; e-mail biura sprzedaży: info@bienka-nieruchomosci.pl",
+
+    // Sposób kontaktu nabywcy z deweloperem
+    "Telefon: +48 600 397 399; e-mail: kontakt@jpjconcept.pl",
+
+    // Lokalizacja przedsięwzięcia
     "Mazowieckie",
     "warszawski zachodni",
     "Ożarów Mazowiecki",
@@ -379,162 +181,135 @@ function buildRow(unit, snapshot) {
     "Nowowiejska",
     "58",
     "05-850",
+
+    // Rodzaj nieruchomości
     "lokal mieszkalny",
+
+    // Numer lokalu
     unit.id,
-    pricePerSquareMeter(basePrice, unit.usable_area),
+
+    // Cena za m² powierzchni użytkowej
+    pricePerSquareMeter(
+      basePrice,
+      unit.usable_area
+    ),
+
+    // Data ceny za m²
     validFrom,
+
+    // Cena lokalu
     basePrice.toFixed(2),
+
+    // Data ceny lokalu
     validFrom,
+
+    // Cena łączna wraz z prawami drogowymi
     totalWithRoads.toFixed(2),
+
+    // Data ceny łącznej
     validFrom,
+
+    // Części nieruchomości
     "x",
     "x",
     "x",
     "x",
+
+    // Pomieszczenia przynależne
     "x",
     "x",
     "x",
     "x",
+
+    // Prawa niezbędne do korzystania z lokalu
     "Udział we współwłasności działki ewid. 24/10 – droga wewnętrzna: 1,00 zł; udział we współwłasności działki ewid. 24/3 – droga dojazdowa do drogi publicznej: 1,00 zł",
+
     ROAD_TOTAL_PRICE.toFixed(2),
+
     dateTime(ROAD_VALID_FROM),
+
+    // Inne świadczenia pieniężne
     "x",
     "x",
     "x",
+
+    // Prospekt
     prospectusFor(unit.id),
   ];
 }
 
-export async function HEAD(request) {
-  const today = getWarsawDate();
-  const requestUrl = new URL(request.url);
-  const reportDate = requestUrl.searchParams.get("date") || today;
-
-  if (
-    !isValidIsoDate(reportDate) ||
-    reportDate < REPORTING_START ||
-    reportDate > today
-  ) {
-    return new Response(null, {
-      status: 400,
-      headers: {
-        "Cache-Control": "no-store",
-      },
-    });
-  }
-
-  return new Response(null, {
-    status: 200,
-    headers: {
-      "Content-Type": "text/csv; charset=utf-8",
-      "Content-Disposition": `inline; filename="novaduo-ceny-${reportDate}.csv"`,
-      ...cacheHeaders(reportDate, today),
-      "Access-Control-Allow-Origin": "*",
-      "X-Content-Type-Options": "nosniff",
-      "X-NovaDuo-Data-Date": reportDate,
-    },
-  });
-}
-
-export async function GET(request) {
+export async function GET() {
   try {
-    const today = getWarsawDate();
-    const requestUrl = new URL(request.url);
-
-    const reportDate =
-      requestUrl.searchParams.get("date") || today;
-
-    if (!isValidIsoDate(reportDate)) {
-      return new Response(
-        "Nieprawidłowy format daty. Użyj formatu RRRR-MM-DD.",
-        {
-          status: 400,
-          headers: {
-            "Content-Type": "text/plain; charset=utf-8",
-            "Cache-Control": "no-store",
-          },
-        }
+    const { data, error } = await supabase
+      .from("units")
+      .select(
+        "id, usable_area, total_price, price_valid_from"
       );
+
+    if (error) {
+      throw new Error(error.message);
     }
 
-    if (reportDate < REPORTING_START) {
-      return new Response(
-        `Historia raportów rozpoczyna się ${REPORTING_START}.`,
-        {
-          status: 400,
-          headers: {
-            "Content-Type": "text/plain; charset=utf-8",
-            "Cache-Control": "no-store",
-          },
-        }
-      );
-    }
-
-    if (reportDate > today) {
-      return new Response(
-        "Nie można wygenerować raportu dla przyszłej daty.",
-        {
-          status: 400,
-          headers: {
-            "Content-Type": "text/plain; charset=utf-8",
-            "Cache-Control": "no-store",
-          },
-        }
-      );
-    }
-
-    const history = await getHistory();
-
-    const units = displayOrder.map((id) => ({
-      id,
-      usable_area: UNIT_USABLE_AREAS[id],
-    }));
-
-    const snapshots = buildSnapshots(
-      history,
-      reportDate
+    const units = [...(data ?? [])].sort(
+      (first, second) =>
+        displayOrder.indexOf(first.id) -
+        displayOrder.indexOf(second.id)
     );
 
-    const rows = units.map((unit) => {
-      const snapshot = snapshots[unit.id];
+    if (units.length !== displayOrder.length) {
+      throw new Error(
+        `Oczekiwano ${displayOrder.length} lokali, pobrano ${units.length}.`
+      );
+    }
 
-      if (!snapshot) {
-        throw new Error(
-          `Nie udało się odtworzyć ceny lokalu ${unit.id}.`
-        );
-      }
+    const rows = units.map(buildRow);
 
-      return buildRow(unit, snapshot);
-    });
-
-    if (rows.some((row) => row.length !== HEADERS.length)) {
-      throw new Error("Nieprawidłowa liczba kolumn raportu.");
+    if (
+      rows.some(
+        (row) => row.length !== HEADERS.length
+      )
+    ) {
+      throw new Error(
+        "Nieprawidłowa liczba kolumn raportu."
+      );
     }
 
     const csv =
       "\ufeff" +
-      [csvLine(HEADERS), ...rows.map(csvLine)].join("\r\n");
+      [
+        csvLine(HEADERS),
+        ...rows.map(csvLine),
+      ].join("\r\n");
 
     return new Response(csv, {
       status: 200,
       headers: {
-        "Content-Type": "text/csv; charset=utf-8",
-        "Content-Disposition": `inline; filename="novaduo-ceny-${reportDate}.csv"`,
-        ...cacheHeaders(reportDate, today),
-        "Access-Control-Allow-Origin": "*",
-        "X-Content-Type-Options": "nosniff",
-        "X-NovaDuo-Data-Date": reportDate,
+        "Content-Type":
+          "text/csv; charset=utf-8",
+
+        "Content-Disposition":
+          'inline; filename="novaduo-ceny.csv"',
+
+        "Cache-Control":
+          "no-store, no-cache, must-revalidate, max-age=0",
+
+        Pragma: "no-cache",
+        Expires: "0",
       },
     });
   } catch (error) {
-    console.error("Błąd generowania CSV NovaDuo:", error);
+    console.error(
+      "Błąd generowania CSV NovaDuo:",
+      error
+    );
 
     return new Response(
-      `Nie udało się wygenerować pliku CSV: ${errorMessage(error)}`,
+      `Nie udało się wygenerować pliku CSV: ${error.message}`,
       {
         status: 500,
         headers: {
-          "Content-Type": "text/plain; charset=utf-8",
+          "Content-Type":
+            "text/plain; charset=utf-8",
           "Cache-Control": "no-store",
         },
       }
