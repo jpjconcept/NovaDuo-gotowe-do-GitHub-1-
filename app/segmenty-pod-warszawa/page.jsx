@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SiteHeader from "../../components/SiteHeader";
 import {
   ArrowRight,
   Building2,
@@ -222,33 +223,7 @@ export default function SegmentyPodWarszawaPage() {
         }}
       />
 
-      <nav className="sticky top-0 z-50 border-b border-black/10 bg-[#f6f3ec]/90 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <Link href="/" aria-label="NovaDuo – strona główna">
-            <img
-              src="/images/logo-novaduo.png"
-              alt="NovaDuo"
-              className="h-24 w-auto md:h-28"
-            />
-          </Link>
-
-          <div className="hidden items-center gap-7 text-sm text-black/65 md:flex">
-            <a href="#inwestycja">Inwestycja</a>
-            <a href="#standard">Standard</a>
-            <a href="#lokalizacja">Lokalizacja</a>
-            <a href="#oferta">Lokale i ceny</a>
-            <a href="#galeria">Galeria</a>
-            <a href="#pytania">Pytania</a>
-          </div>
-
-          <a
-            href="#kontakt"
-            className="rounded-full bg-[#1f3d2b] px-5 py-3 text-sm text-white transition hover:bg-[#152b1e]"
-          >
-            Zapytaj o lokal
-          </a>
-        </div>
-      </nav>
+      <SiteHeader />
 
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(78,113,76,0.22),transparent_38%),linear-gradient(120deg,#f6f3ec,#e8eadb)]" />
@@ -468,21 +443,23 @@ export default function SegmentyPodWarszawaPage() {
             </div>
 
             <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">
-  Segmenty pod Warszawą – na pograniczu gmin Ożarów Mazowiecki i Stare Babice
-</h2>
+              Segmenty pod Warszawą – na pograniczu gmin Ożarów Mazowiecki i
+              Stare Babice
+            </h2>
 
             <div className="mt-7 space-y-5 text-lg leading-8 text-black/65">
-  <p>
-    NovaDuo powstaje przy ul. Nowowiejskiej 58 w Pogroszewie, na
-    pograniczu gmin Ożarów Mazowiecki i Stare Babice.
-  </p>
+              <p>
+                NovaDuo powstaje przy ul. Nowowiejskiej 58 w Pogroszewie, na
+                pograniczu gmin Ożarów Mazowiecki i Stare Babice.
+              </p>
 
-  <p>
-    Lokalizacja zapewnia wygodny dostęp do infrastruktury Ożarowa
-    Mazowieckiego i Starych Babic, a jednocześnie pozwala zamieszkać
-    w spokojnym otoczeniu zabudowy jednorodzinnej, niedaleko Warszawy.
-  </p>
-</div>
+              <p>
+                Lokalizacja zapewnia wygodny dostęp do infrastruktury Ożarowa
+                Mazowieckiego i Starych Babic, a jednocześnie pozwala zamieszkać
+                w spokojnym otoczeniu zabudowy jednorodzinnej, niedaleko
+                Warszawy.
+              </p>
+            </div>
           </div>
 
           <div className="overflow-hidden rounded-[2rem] bg-white shadow-2xl">
@@ -507,10 +484,10 @@ export default function SegmentyPodWarszawaPage() {
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <div className="overflow-hidden rounded-[2rem] bg-white shadow-2xl">
             <img
-            src="/images/novaduo_rezerwacje_v2.webp"
-alt="Plan usytuowania segmentów NovaDuo w Pogroszewie"
-className="w-full object-contain"
-/>
+              src="/images/novaduo_rezerwacje_v2.webp"
+              alt="Plan usytuowania segmentów NovaDuo w Pogroszewie"
+              className="w-full object-contain"
+            />
           </div>
 
           <div>
