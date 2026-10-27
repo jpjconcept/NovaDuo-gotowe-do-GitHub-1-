@@ -625,7 +625,7 @@ export default function DomyZGarazemPodWarszawaPage() {
             </p>
 
             <Link
-              href="/#lokale"
+              href="/lokale"
               className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-[#1f3d2b] px-7 text-white transition hover:bg-[#152b1e]"
             >
               Sprawdź lokale z garażami
@@ -890,7 +890,7 @@ export default function DomyZGarazemPodWarszawaPage() {
                 Strona główna NovaDuo
               </Link>
 
-              <Link href="/#lokale" className="hover:text-[#1f3d2b]">
+              <Link href="/lokale" className="hover:text-[#1f3d2b]">
                 Lokale i ceny
               </Link>
 
