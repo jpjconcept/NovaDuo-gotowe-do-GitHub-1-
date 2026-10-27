@@ -270,7 +270,7 @@ export default function OFirmiePage() {
           </div>
 
           <Link
-            href="/#lokale"
+            href="/lokale"
             className="rounded-full bg-[#1f3d2b] px-5 py-3 text-sm text-white transition hover:bg-[#152b1e]"
           >
             Zobacz lokale
@@ -301,7 +301,7 @@ export default function OFirmiePage() {
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
               <Link
-                href="/#lokale"
+                href="/lokale"
                 className="inline-flex h-12 items-center justify-center rounded-full bg-[#1f3d2b] px-7 text-white transition hover:bg-[#152b1e]"
               >
                 Poznaj ofertę NovaDuo
@@ -438,7 +438,7 @@ export default function OFirmiePage() {
             </div>
 
             <Link
-              href="/#lokale"
+              href="/lokale"
               className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-white px-7 font-medium text-[#1f3d2b] transition hover:bg-[#eef1e7]"
             >
               Sprawdź aktualne lokale i ceny
@@ -641,7 +641,7 @@ export default function OFirmiePage() {
             </p>
 
             <Link
-              href="/#lokale"
+              href="/lokale"
               className="mt-7 inline-flex h-12 w-full items-center justify-center rounded-full bg-[#1f3d2b] px-6 text-white transition hover:bg-[#152b1e]"
             >
               Przejdź do oferty NovaDuo
