@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SiteHeader from "../../components/SiteHeader";
 import {
   ArrowRight,
   Building2,
@@ -295,34 +296,7 @@ export default function DomyZGarazemPodWarszawaPage() {
         }}
       />
 
-      <nav className="sticky top-0 z-50 border-b border-black/10 bg-[#f6f3ec]/90 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <Link href="/" aria-label="NovaDuo – strona główna">
-            <img
-              src="/images/logo-novaduo.png"
-              alt="NovaDuo"
-              className="h-24 w-auto md:h-28"
-            />
-          </Link>
-
-          <div className="hidden items-center gap-7 text-sm text-black/65 md:flex">
-            <a href="#inwestycja">Inwestycja</a>
-            <a href="#garaze">Garaże</a>
-            <a href="#standard">Standard</a>
-            <a href="#lokalizacja">Lokalizacja</a>
-            <a href="#oferta">Lokale i ceny</a>
-            <a href="#galeria">Galeria</a>
-            <a href="#pytania">Pytania</a>
-          </div>
-
-          <a
-            href="#kontakt"
-            className="rounded-full bg-[#1f3d2b] px-5 py-3 text-sm text-white transition hover:bg-[#152b1e]"
-          >
-            Zapytaj o lokal
-          </a>
-        </div>
-      </nav>
+      <SiteHeader />
 
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(78,113,76,0.22),transparent_38%),linear-gradient(120deg,#f6f3ec,#e8eadb)]" />
@@ -339,9 +313,9 @@ export default function DomyZGarazemPodWarszawaPage() {
             </h1>
 
             <p className="mt-7 max-w-2xl text-lg leading-8 text-black/65">
-              NovaDuo oferuje przestronne lokale z garażem w bryle każdego budynku,
-              prywatnym ogrodem oraz nowoczesnymi instalacjami. Inwestycja
-              powstaje w Pogroszewie, w gminie Ożarów Mazowiecki.
+              NovaDuo oferuje przestronne lokale z garażem w bryle każdego
+              budynku, prywatnym ogrodem oraz nowoczesnymi instalacjami.
+              Inwestycja powstaje w Pogroszewie, w gminie Ożarów Mazowiecki.
             </p>
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
@@ -416,9 +390,10 @@ export default function DomyZGarazemPodWarszawaPage() {
             </p>
 
             <p>
-              Przestronny lokal, własny garaż i prywatny ogród tworzą funkcjonalną
-              alternatywę dla mieszkania w mieście, szczególnie dla rodzin
-              potrzebujących wygodnej i dobrze zorganizowanej przestrzeni.
+              Przestronny lokal, własny garaż i prywatny ogród tworzą
+              funkcjonalną alternatywę dla mieszkania w mieście, szczególnie
+              dla rodzin potrzebujących wygodnej i dobrze zorganizowanej
+              przestrzeni.
             </p>
           </div>
         </div>
@@ -455,9 +430,9 @@ export default function DomyZGarazemPodWarszawaPage() {
               </h2>
 
               <p className="mt-6 text-lg leading-8 text-white/70">
-                Garaż połączony z bryłą budynku zwiększa wygodę codziennego użytkowania
-                domu i chroni samochód przed niekorzystnymi warunkami
-                atmosferycznymi.
+                Garaż połączony z bryłą budynku zwiększa wygodę codziennego
+                użytkowania domu i chroni samochód przed niekorzystnymi
+                warunkami atmosferycznymi.
               </p>
             </div>
 
@@ -618,8 +593,8 @@ export default function DomyZGarazemPodWarszawaPage() {
             </h2>
 
             <p className="mt-6 text-lg leading-8 text-black/65">
-              Każdy lokal posiada garaż w bryle budynku. Poszczególne lokale różnią
-              się położeniem oraz powierzchnią przypisanej przestrzeni
+              Każdy lokal posiada garaż w bryle budynku. Poszczególne lokale
+              różnią się położeniem oraz powierzchnią przypisanej przestrzeni
               ogrodowej. Aktualne ceny, statusy sprzedaży i karty lokali
               publikujemy w głównej ofercie NovaDuo.
             </p>
