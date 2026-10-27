@@ -470,7 +470,7 @@ export default function DomyZOgrodemPodWarszawaPage() {
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <Link
-                  href="/#lokale"
+                  href="/lokale"
                   className="inline-flex h-12 items-center justify-center rounded-full bg-[#1f3d2b] px-7 text-white transition hover:bg-[#152b1e]"
                 >
                   Zobacz dostępne lokale
@@ -750,7 +750,7 @@ export default function DomyZOgrodemPodWarszawaPage() {
             </p>
 
             <Link
-              href="/#lokale"
+              href="/lokale"
               className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-[#1f3d2b] px-7 text-white transition hover:bg-[#152b1e]"
             >
               Sprawdź lokale i powierzchnie ogrodów
@@ -1004,7 +1004,7 @@ export default function DomyZOgrodemPodWarszawaPage() {
                 Strona główna NovaDuo
               </Link>
 
-              <Link href="/#lokale" className="hover:text-[#1f3d2b]">
+              <Link href="/lokale" className="hover:text-[#1f3d2b]">
                 Lokale i ceny
               </Link>
 
