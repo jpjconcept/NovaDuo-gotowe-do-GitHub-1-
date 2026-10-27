@@ -1,29 +1,28 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import SiteHeader from "../components/SiteHeader";
+
 import {
   ArrowRight,
   Building2,
   Car,
   CheckCircle2,
-  Gift,
   Home,
   LayoutGrid,
   Mail,
   MapPin,
-  Menu,
+  Maximize2,
   Phone,
   Ruler,
   ShieldCheck,
   ThermometerSun,
   Trees,
   Wind,
-  X,
 } from "lucide-react";
 
 export default function Page() {
   const [showDeveloperContact, setShowDeveloperContact] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [heroIndex, setHeroIndex] = useState(0);
 
   const heroImages = [
@@ -88,21 +87,10 @@ export default function Page() {
     }
   };
 
-  const handleMobileNavigation = (item) => {
-    setMobileMenuOpen(false);
-
-    trackEvent("click_navigation", {
-      menu_item: item,
-      device_menu: "mobile",
-    });
-  };
-
   const handleDeveloperContactClick = (location) => {
     trackEvent("click_developer_contact", {
       location,
     });
-
-    setMobileMenuOpen(false);
   };
 
   const advantages = [
@@ -130,6 +118,11 @@ export default function Page() {
       icon: Building2,
       title: "Nowoczesna architektura",
       text: "Prosta bryła, płaski dach i współczesna elewacja nadają NovaDuo nowoczesny charakter.",
+    },
+    {
+      icon: Maximize2,
+      title: "Przestrzeń między budynkami ma znaczenie",
+      text: "NovaDuo zostało zaprojektowane tak, aby ograniczyć typowe dla zwartej zabudowy wrażenie mieszkania „okno w okno”. Odpowiednie odsunięcie budynków i 8-metrowa droga wewnętrzna zwiększają prywatność oraz poczucie otwartej przestrzeni.",
     },
     {
       icon: Car,
@@ -173,7 +166,7 @@ export default function Page() {
 
   return (
     <main className="min-h-screen bg-[#f6f3ec] text-[#1f241f]">
-      {/* GÓRNY PASEK PROMOCJI - ZOSTAJE */}
+      {/* GÓRNY PASEK PROMOCJI */}
       <a
         href="/promocja"
         onClick={() =>
@@ -200,211 +193,10 @@ export default function Page() {
         </span>
       </a>
 
-      {/* MENU */}
-      <nav className="sticky top-0 z-50 border-b border-black/10 bg-[#f6f3ec]/95 backdrop-blur-xl">
-        <div className="mx-auto max-w-7xl px-4 md:px-6">
-          <div className="flex items-center justify-between gap-3 py-3">
-            <a href="/" className="shrink-0">
-              <img
-                src="/images/logo-novaduo.png"
-                alt="NovaDuo"
-                className="h-14 w-auto sm:h-16 md:h-24"
-              />
-            </a>
+      {/* WSPÓLNE MENU */}
+      <SiteHeader />
 
-            {/* MOBILE */}
-            <div className="flex items-center gap-2 md:hidden">
-              <button
-                type="button"
-                aria-expanded={mobileMenuOpen}
-                aria-label={
-                  mobileMenuOpen ? "Zamknij menu" : "Otwórz menu"
-                }
-                onClick={() => {
-                  setMobileMenuOpen((current) => !current);
-
-                  if (!mobileMenuOpen) {
-                    trackEvent("open_mobile_menu");
-                  }
-                }}
-                className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-[#1f3d2b]/20 bg-white px-4 text-sm font-semibold text-[#1f3d2b]"
-              >
-                {mobileMenuOpen ? (
-                  <>
-                    <X className="h-4 w-4" />
-                    Zamknij
-                  </>
-                ) : (
-                  <>
-                    <Menu className="h-4 w-4" />
-                    Menu
-                  </>
-                )}
-              </button>
-
-              <a
-                href="#kontakt-deweloper"
-                onClick={() =>
-                  handleDeveloperContactClick("mobile_navigation")
-                }
-                className="inline-flex h-10 shrink-0 items-center justify-center rounded-full bg-[#1f3d2b] px-4 text-xs font-medium text-white sm:text-sm"
-              >
-                Kontakt
-              </a>
-            </div>
-
-            {/* DESKTOP KONTAKT */}
-            <a
-              href="#kontakt-deweloper"
-              onClick={() =>
-                handleDeveloperContactClick("top_navigation")
-              }
-              className="hidden h-11 shrink-0 items-center justify-center rounded-full bg-[#1f3d2b] px-6 text-sm font-medium text-white transition hover:bg-[#152b1e] md:inline-flex"
-            >
-              Kontakt
-            </a>
-          </div>
-
-          {/* MENU DESKTOP */}
-          <div className="hidden border-t border-black/5 md:block">
-            <div className="flex items-center justify-center gap-5 py-3 text-sm text-black/70">
-              <a
-                href="/inwestycja"
-                className="whitespace-nowrap transition hover:text-[#1f3d2b]"
-              >
-                Inwestycja
-              </a>
-
-              <a
-                href="/lokale"
-                className="whitespace-nowrap font-semibold text-[#1f3d2b]"
-              >
-                Lokale
-              </a>
-
-              <a
-                href="/standard"
-                className="whitespace-nowrap transition hover:text-[#1f3d2b]"
-              >
-                Standard
-              </a>
-
-              <a
-                href="/lokalizacja"
-                className="whitespace-nowrap transition hover:text-[#1f3d2b]"
-              >
-                Lokalizacja
-              </a>
-
-              <a
-                href="/galeria"
-                className="whitespace-nowrap transition hover:text-[#1f3d2b]"
-              >
-                Galeria
-              </a>
-
-              <a
-                href="/finansowanie"
-                className="whitespace-nowrap transition hover:text-[#1f3d2b]"
-              >
-                Finansowanie
-              </a>
-
-              <a
-                href="/dokumenty"
-                className="whitespace-nowrap transition hover:text-[#1f3d2b]"
-              >
-                Dokumenty
-              </a>
-
-              <a
-                href="/historia-cen"
-                className="whitespace-nowrap transition hover:text-[#1f3d2b]"
-              >
-                Ceny i historia cen
-              </a>
-
-              {/* WYRÓŻNIONA PROMOCJA */}
-              <a
-                href="/promocja"
-                onClick={() =>
-                  trackEvent("click_promotion", {
-                    location: "desktop_navigation",
-                  })
-                }
-                className="inline-flex h-9 items-center gap-2 whitespace-nowrap rounded-full bg-[#e7c46a] px-4 font-semibold text-[#10251b] shadow-sm transition hover:bg-[#f0d681]"
-              >
-                <Gift className="h-4 w-4" />
-                Promocja
-              </a>
-            </div>
-          </div>
-
-          {/* MENU MOBILE */}
-          {mobileMenuOpen && (
-            <div className="border-t border-black/10 pb-4 pt-3 md:hidden">
-              <div className="overflow-hidden rounded-[1.5rem] border border-black/10 bg-white shadow-xl">
-                <a
-                  href="/promocja"
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-
-                    trackEvent("click_promotion", {
-                      location: "mobile_navigation",
-                    });
-                  }}
-                  className="flex items-center justify-between border-b border-[#d7b358]/30 bg-[#f7edce] px-5 py-4 font-semibold text-[#7a5916]"
-                >
-                  <span className="flex items-center gap-2">
-                    <Gift className="h-5 w-5" />
-                    Promocja
-                  </span>
-
-                  <ArrowRight className="h-4 w-4" />
-                </a>
-
-                {[
-                  ["Inwestycja", "/inwestycja", "inwestycja"],
-                  ["Lokale", "/lokale", "lokale"],
-                  ["Standard", "/standard", "standard"],
-                  ["Lokalizacja", "/lokalizacja", "lokalizacja"],
-                  ["Galeria", "/galeria", "galeria"],
-                  ["Finansowanie", "/finansowanie", "finansowanie"],
-                  ["Dokumenty", "/dokumenty", "dokumenty"],
-                  [
-                    "Ceny i historia cen",
-                    "/historia-cen",
-                    "historia_cen",
-                  ],
-                ].map(([label, href, eventName], index, array) => (
-                  <a
-                    key={label}
-                    href={href}
-                    onClick={() =>
-                      handleMobileNavigation(eventName)
-                    }
-                    className={`flex items-center justify-between px-5 py-4 font-medium ${
-                      index < array.length - 1
-                        ? "border-b border-black/5"
-                        : ""
-                    } ${
-                      label === "Lokale"
-                        ? "bg-[#e4e6d7]/50 font-semibold text-[#1f3d2b]"
-                        : "text-[#1f241f]"
-                    }`}
-                  >
-                    {label}
-
-                    <ArrowRight className="h-4 w-4 text-black/35" />
-                  </a>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </nav>
-
-      {/* HERO NOVADUO - TERAZ OD RAZU PO MENU */}
+      {/* HERO */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_25%,rgba(78,113,76,0.20),transparent_38%),linear-gradient(120deg,#f6f3ec,#e7eadc)]" />
 
@@ -488,7 +280,7 @@ export default function Page() {
             </div>
           </div>
 
-          {/* AUTOMATYCZNY SLIDER */}
+          {/* SLIDER */}
           <div className="relative">
             <div className="overflow-hidden rounded-[2rem] bg-black/5 shadow-2xl">
               <img
@@ -518,7 +310,7 @@ export default function Page() {
         </div>
       </section>
 
-      {/* 4 PRZEWAGI */}
+      {/* 4 NAJWAŻNIEJSZE PRZEWAGI */}
       <section className="mx-auto max-w-7xl px-6 py-20">
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           <div className="rounded-[2rem] bg-white p-7 shadow-sm">
