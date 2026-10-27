@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SiteHeader from "../../components/SiteHeader";
 import {
   ArrowRight,
   Building2,
@@ -295,34 +296,7 @@ export default function DomyZOgrodemPodWarszawaPage() {
         }}
       />
 
-      <nav className="sticky top-0 z-50 border-b border-black/10 bg-[#f6f3ec]/90 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <Link href="/" aria-label="NovaDuo – strona główna">
-            <img
-              src="/images/logo-novaduo.png"
-              alt="NovaDuo"
-              className="h-24 w-auto md:h-28"
-            />
-          </Link>
-
-          <div className="hidden items-center gap-7 text-sm text-black/65 md:flex">
-            <a href="#inwestycja">Inwestycja</a>
-            <a href="#ogrody">Ogrody</a>
-            <a href="#standard">Standard</a>
-            <a href="#lokalizacja">Lokalizacja</a>
-            <a href="#oferta">Lokale i ceny</a>
-            <a href="#galeria">Galeria</a>
-            <a href="#pytania">Pytania</a>
-          </div>
-
-          <a
-            href="#kontakt"
-            className="rounded-full bg-[#1f3d2b] px-5 py-3 text-sm text-white transition hover:bg-[#152b1e]"
-          >
-            Zapytaj o lokal
-          </a>
-        </div>
-      </nav>
+      <SiteHeader />
 
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(78,113,76,0.22),transparent_38%),linear-gradient(120deg,#f6f3ec,#e8eadb)]" />
@@ -496,7 +470,9 @@ export default function DomyZOgrodemPodWarszawaPage() {
             <div className="grid gap-5 sm:grid-cols-2">
               <article className="rounded-3xl border border-black/5 bg-[#f6f3ec] p-7 shadow-sm">
                 <Trees className="mb-5 h-8 w-8 text-[#1f3d2b]" />
-                <h3 className="text-2xl font-semibold">Prywatny ogród 255–424 m²</h3>
+                <h3 className="text-2xl font-semibold">
+                  Prywatny ogród 255–424 m²
+                </h3>
                 <p className="mt-3 leading-7 text-black/60">
                   Miejsce na taras, wypoczynek, zabawę dzieci, nasadzenia i własną
                   aranżację zieleni — bez wychodzenia poza teren domu.
@@ -523,7 +499,9 @@ export default function DomyZOgrodemPodWarszawaPage() {
 
               <article className="rounded-3xl border border-black/5 bg-[#f6f3ec] p-7 shadow-sm">
                 <MapPin className="mb-5 h-8 w-8 text-[#1f3d2b]" />
-                <h3 className="text-2xl font-semibold">Pogroszew, Ożarów Mazowiecki</h3>
+                <h3 className="text-2xl font-semibold">
+                  Pogroszew, Ożarów Mazowiecki
+                </h3>
                 <p className="mt-3 leading-7 text-black/60">
                   Lokalizacja pod Warszawą, w otoczeniu zabudowy jednorodzinnej i
                   terenów zielonych, z dostępem do infrastruktury Ożarowa
@@ -535,23 +513,21 @@ export default function DomyZOgrodemPodWarszawaPage() {
 
           <div className="mt-10 rounded-3xl border border-[#1f3d2b]/10 bg-white p-7 md:p-8">
             <p className="text-base leading-7 text-black/60">
-              Szukasz domu w konkretnym rejonie? Zobacz również ofertę
-              {" "}
+              Szukasz domu w konkretnym rejonie? Zobacz również ofertę{" "}
               <Link
                 href="/domy-ozarow-mazowiecki"
                 className="font-semibold text-[#1f3d2b] underline decoration-[#1f3d2b]/30 underline-offset-4"
               >
                 domów w gminie Ożarów Mazowiecki
-              </Link>, stronę poświęconą
-              {" "}
+              </Link>
+              , stronę poświęconą{" "}
               <Link
                 href="/segmenty-pod-warszawa"
                 className="font-semibold text-[#1f3d2b] underline decoration-[#1f3d2b]/30 underline-offset-4"
               >
                 segmentom pod Warszawą
               </Link>{" "}
-              oraz
-              {" "}
+              oraz{" "}
               <Link
                 href="/segmenty-pogroszew"
                 className="font-semibold text-[#1f3d2b] underline decoration-[#1f3d2b]/30 underline-offset-4"
