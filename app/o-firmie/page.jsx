@@ -649,7 +649,7 @@ export default function OFirmiePage() {
             </Link>
 
             <Link
-              href="/#kontakt"
+              href="/#kontakt-deweloper"
               className="mt-3 inline-flex h-12 w-full items-center justify-center rounded-full border border-black/15 px-6"
             >
               Formularz kontaktowy
