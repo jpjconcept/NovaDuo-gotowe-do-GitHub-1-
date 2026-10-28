@@ -1,4 +1,5 @@
 import SiteHeader from "../../components/SiteHeader";
+import TrackedDocumentLink from "../../components/TrackedDocumentLink";
 
 import {
   ArrowRight,
@@ -142,10 +143,10 @@ export default function DokumentyPage() {
 
         <div className="mt-12 grid gap-6 lg:grid-cols-2">
           {/* ZADANIE 1 */}
-          <a
+          <TrackedDocumentLink
             href="/prospekt-novaduo-zadanie-1-do-publikacji.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
+            documentName="Prospekt NovaDuo – Zadanie nr 1"
+            documentCategory="prospekt"
             className="group rounded-[2rem] border border-[#1f3d2b]/10 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
           >
             <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#e4e6d7] text-[#1f3d2b]">
@@ -179,13 +180,13 @@ export default function DokumentyPage() {
               Otwórz prospekt PDF
               <ArrowRight className="ml-2 h-4 w-4 transition group-hover:translate-x-1" />
             </span>
-          </a>
+          </TrackedDocumentLink>
 
           {/* ZADANIE 2 */}
-          <a
+          <TrackedDocumentLink
             href="/prospekt-novaduo-zadanie-2-do-publikacji.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
+            documentName="Prospekt NovaDuo – Zadanie nr 2"
+            documentCategory="prospekt"
             className="group rounded-[2rem] border border-[#1f3d2b]/10 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
           >
             <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#e4e6d7] text-[#1f3d2b]">
@@ -219,7 +220,7 @@ export default function DokumentyPage() {
               Otwórz prospekt PDF
               <ArrowRight className="ml-2 h-4 w-4 transition group-hover:translate-x-1" />
             </span>
-          </a>
+          </TrackedDocumentLink>
         </div>
 
         <div className="mt-8 flex items-start gap-4 rounded-[1.75rem] border border-[#1f3d2b]/10 bg-[#e4e6d7] p-6">
@@ -256,11 +257,11 @@ export default function DokumentyPage() {
 
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {unitCards.map((unit) => (
-              <a
+              <TrackedDocumentLink
                 key={unit.id}
                 href={unit.href}
-                target="_blank"
-                rel="noopener noreferrer"
+                documentName={`Karta lokalu ${unit.id}`}
+                documentCategory="karta_lokalu"
                 className="group rounded-[1.75rem] bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
               >
                 <Building2 className="h-6 w-6 text-[#1f3d2b]" />
@@ -277,7 +278,7 @@ export default function DokumentyPage() {
                   Otwórz kartę
                   <ArrowRight className="ml-2 h-4 w-4 transition group-hover:translate-x-1" />
                 </div>
-              </a>
+              </TrackedDocumentLink>
             ))}
           </div>
 
@@ -360,10 +361,10 @@ export default function DokumentyPage() {
           </a>
 
           {/* CSV */}
-          <a
+          <TrackedDocumentLink
             href="/dane/novaduo-ceny.csv"
-            target="_blank"
-            rel="noopener noreferrer"
+            documentName="Aktualne ceny NovaDuo – CSV"
+            documentCategory="dane_csv"
             className="group rounded-[2rem] bg-[#1f3d2b] p-7 text-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
           >
             <FileSpreadsheet className="h-8 w-8 text-[#e7c46a]" />
@@ -381,7 +382,7 @@ export default function DokumentyPage() {
               Otwórz plik CSV
               <ArrowRight className="ml-2 h-4 w-4 transition group-hover:translate-x-1" />
             </span>
-          </a>
+          </TrackedDocumentLink>
         </div>
       </section>
 
