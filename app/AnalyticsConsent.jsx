@@ -25,6 +25,16 @@ function updateGoogleConsent(isGranted) {
   });
 }
 
+function sendAnalyticsEvent(eventName, parameters = {}) {
+  if (typeof window === "undefined") return;
+  if (typeof window.gtag !== "function") return;
+
+  window.gtag("event", eventName, {
+    page_path: window.location.pathname,
+    ...parameters,
+  });
+}
+
 export default function AnalyticsConsent() {
   const [consent, setConsent] = useState(undefined);
   const [showPanel, setShowPanel] = useState(false);
@@ -47,6 +57,57 @@ export default function AnalyticsConsent() {
     setConsent(null);
     setShowPanel(true);
   }, []);
+
+  useEffect(() => {
+    if (consent !== "granted") return;
+
+    const handleClick = (event) => {
+      const link = event.target.closest("a");
+
+      if (!link) return;
+
+      const href = link.getAttribute("href");
+
+      if (!href) return;
+
+      // Kliknięcie telefonu
+      if (href.startsWith("tel:")) {
+        sendAnalyticsEvent("click_phone", {
+          contact_method: "phone",
+        });
+
+        return;
+      }
+
+      // Kliknięcie e-mail
+      if (href.startsWith("mailto:")) {
+        sendAnalyticsEvent("click_email", {
+          contact_method: "email",
+        });
+
+        return;
+      }
+
+      // Kliknięcie prowadzące do strony Lokale
+      try {
+        const url = new URL(href, window.location.origin);
+
+        if (url.pathname === "/lokale" || url.pathname === "/lokale/") {
+          sendAnalyticsEvent("click_lokale", {
+            destination: "lokale",
+          });
+        }
+      } catch {
+        // Nie robimy nic dla nieprawidłowego adresu.
+      }
+    };
+
+    document.addEventListener("click", handleClick);
+
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  }, [consent]);
 
   const acceptAnalytics = () => {
     localStorage.setItem(CONSENT_KEY, "granted");
