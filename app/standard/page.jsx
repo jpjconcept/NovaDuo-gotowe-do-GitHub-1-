@@ -258,7 +258,7 @@ export default function StandardPage() {
         </div>
       </section>
 
-      {/* BUDYNEK */}
+      {/* MATERIAŁY I KONSTRUKCJA */}
       <section className="border-b border-black/5 bg-white/70 py-20">
         <div className="mx-auto max-w-7xl px-6">
           <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
@@ -266,62 +266,126 @@ export default function StandardPage() {
               <Building2 className="h-9 w-9 text-[#1f3d2b]" />
 
               <div className="mt-5 text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/55">
-                Konstrukcja budynku
+                Materiały, na których nie oszczędzamy
               </div>
 
-              <h2 className="mt-3 text-4xl font-semibold tracking-tight">
-                Solidna konstrukcja
-                i nowoczesne materiały.
+              <h2 className="mt-3 text-4xl font-semibold tracking-tight md:text-5xl">
+                Solidność zaczyna się
+                <br />
+                od tego, czego później nie widać.
               </h2>
 
-              <p className="mt-5 leading-8 text-black/65">
-                Budynki NovaDuo realizowane są w technologii
-                tradycyjnej z wykorzystaniem materiałów dobranych
-                pod kątem trwałości, parametrów cieplnych
-                i komfortu akustycznego.
-              </p>
+              <div className="mt-6 space-y-5 leading-8 text-black/65">
+                <p>
+                  W NovaDuo jakość budynku zaczyna się od konstrukcji i materiałów.
+                  Dlatego nie szukamy najtańszych rozwiązań, tylko zestawu, który
+                  ma zapewnić trwałość, komfort cieplny i możliwie wysoki komfort
+                  akustyczny.
+                </p>
+
+                <p>
+                  Ściany zewnętrzne pełniące funkcję nośną wykonujemy z bloczków
+                  <strong className="font-semibold text-[#1f241f]">
+                    {" "}
+                    Ytong 24 cm
+                  </strong>,
+                  a następnie ocieplamy je
+                  <strong className="font-semibold text-[#1f241f]">
+                    {" "}
+                    18 cm grafitowego styropianu
+                  </strong>.
+                  To przemyślane połączenie solidnej ściany murowanej z grubą
+                  warstwą izolacji cieplnej.
+                </p>
+              </div>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
-              {[
-                {
-                  title: "Fundamenty i stropy",
-                  text: "Elementy konstrukcyjne wykonywane w technologii żelbetowej.",
-                },
-                {
-                  title: "Ściany zewnętrzne",
-                  text: "Ściany wykonywane m.in. z bloczków Ytong o grubości 24 cm.",
-                },
-                {
-                  title: "Ściany akustyczne",
-                  text: "W miejscach wymagających zwiększonej izolacyjności akustycznej zastosowano rozwiązania z bloczków Silka.",
-                },
-                {
-                  title: "Płaski dach",
-                  text: "Nowoczesna forma architektoniczna z dachem płaskim i odpowiednim systemem izolacji.",
-                },
-                {
-                  title: "Bez skosów",
-                  text: "Płaski dach pozwala zachować pełnowartościowe piętro bez typowych ograniczeń poddasza.",
-                },
-                {
-                  title: "Całość w standardzie deweloperskim",
-                  text: "Cała oferowana przestrzeń lokalu jest wykonywana w standardzie deweloperskim.",
-                },
-              ].map((item) => (
-                <div
-                  key={item.title}
-                  className="rounded-[1.5rem] bg-[#f6f3ec] p-6"
-                >
-                  <h3 className="font-semibold">
-                    {item.title}
-                  </h3>
+              <div className="rounded-[1.75rem] bg-[#f6f3ec] p-7">
+                <ThermometerSun className="h-7 w-7 text-[#1f3d2b]" />
 
-                  <p className="mt-2 text-sm leading-6 text-black/60">
-                    {item.text}
-                  </p>
-                </div>
-              ))}
+                <h3 className="mt-5 text-xl font-semibold">
+                  Ytong 24 cm + 18 cm grafitowego EPS
+                </h3>
+
+                <p className="mt-3 text-sm leading-7 text-black/60">
+                  Zewnętrzne ściany nośne z betonu komórkowego Ytong łączymy
+                  z grubą warstwą grafitowej izolacji. To rozwiązanie nastawione
+                  na solidność konstrukcji i ograniczanie strat ciepła.
+                </p>
+              </div>
+
+              <div className="rounded-[1.75rem] bg-[#f6f3ec] p-7">
+                <Volume2 className="h-7 w-7 text-[#1f3d2b]" />
+
+                <h3 className="mt-5 text-xl font-semibold">
+                  Silka E24S pomiędzy lokalami
+                </h3>
+
+                <p className="mt-3 text-sm leading-7 text-black/60">
+                  Ściany międzylokalowe wykonujemy z masywnych bloczków
+                  silikatowych Silka E24S. Duża masa takiej przegrody pomaga
+                  ograniczać przenoszenie dźwięków i zwiększa poczucie
+                  prywatności pomiędzy sąsiadującymi lokalami.
+                </p>
+              </div>
+
+              <div className="rounded-[1.75rem] bg-[#f6f3ec] p-7">
+                <Ruler className="h-7 w-7 text-[#1f3d2b]" />
+
+                <h3 className="mt-5 text-xl font-semibold">
+                  Ytong 12 cm wewnątrz lokalu
+                </h3>
+
+                <p className="mt-3 text-sm leading-7 text-black/60">
+                  Ściany wewnętrzne również są murowane z bloczków Ytong.
+                  Jednorodna struktura betonu komórkowego ułatwia późniejsze
+                  wykonywanie otworów i mocowań. Przy zastosowaniu właściwych
+                  łączników można bezpiecznie montować także cięższe elementy
+                  wyposażenia, np. szafki kuchenne czy zabudowy ścienne.
+                </p>
+              </div>
+
+              <div className="rounded-[1.75rem] bg-[#f6f3ec] p-7">
+                <Building2 className="h-7 w-7 text-[#1f3d2b]" />
+
+                <h3 className="mt-5 text-xl font-semibold">
+                  Monolityczne stropy żelbetowe 18 cm
+                </h3>
+
+                <p className="mt-3 text-sm leading-7 text-black/60">
+                  Strop nad parterem i nad piętrem wykonujemy jako monolityczny
+                  strop żelbetowy o grubości 18 cm. To kolejny element, na którym
+                  nie chcemy oszczędzać kosztem trwałości i komfortu użytkowania.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-12 overflow-hidden rounded-[2rem] bg-[#1f3d2b] p-8 text-white md:p-10">
+            <div className="grid gap-8 lg:grid-cols-[auto_1fr] lg:items-center">
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10">
+                <Home className="h-7 w-7 text-[#e7c46a]" />
+              </div>
+
+              <div>
+                <h3 className="text-2xl font-semibold md:text-3xl">
+                  Nie oszczędzamy na tym, czego po odbiorze nie widać.
+                </h3>
+
+                <p className="mt-4 max-w-4xl leading-8 text-white/70">
+                  Ytong, 18 cm grafitowego ocieplenia, Silka pomiędzy lokalami,
+                  żelbetowe stropy, pompa ciepła, rekuperacja i ogrzewanie
+                  podłogowe tworzą spójny standard NovaDuo. Chcemy, aby jakość
+                  była odczuwalna nie tylko w dniu odbioru, ale również podczas
+                  codziennego użytkowania domu.
+                </p>
+
+                <p className="mt-5 text-xl font-semibold text-[#e7c46a]">
+                  Komfort i solidność własnego domu w cenie porównywalnej
+                  z mieszkaniem w Warszawie.
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -458,9 +522,9 @@ export default function StandardPage() {
               </h2>
 
               <p className="mt-4 max-w-2xl text-white/65">
-                Pompa ciepła, rekuperator, garaż oraz wiele
-                przygotowanych instalacji otrzymujesz już
-                razem z lokalem NovaDuo.
+                Ytong, Silka, 18 cm grafitowego ocieplenia, pompa ciepła,
+                rekuperator, garaż oraz przygotowane instalacje tworzą standard
+                NovaDuo — nie listę kosztownych dopłat po odbiorze.
               </p>
             </div>
 
