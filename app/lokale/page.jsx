@@ -258,18 +258,7 @@ function buildHome(unit) {
 }
 
 function getCardPath(id) {
-  const cardMap = {
-    "58/1": "/karty-lokali/lokal-58-3.png",
-    "58/3": "/karty-lokali/lokal-58-1.png",
-    "58/5": "/karty-lokali/lokal-58-7.png",
-    "58/7": "/karty-lokali/lokal-58-5.png",
-    "58/2": "/karty-lokali/lokal-58-2.png",
-    "58/4": "/karty-lokali/lokal-58-4.png",
-    "58/6": "/karty-lokali/lokal-58-6.png",
-    "58/8": "/karty-lokali/lokal-58-8.png",
-  };
-
-  return cardMap[id] || `/karty-lokali/lokal-${id.replace("/", "-")}.png`;
+  return `/karty-lokali/lokal-${id.replace("/", "-")}.png`;
 }
 
 function trackLocalView(id, source = "card") {
@@ -306,9 +295,7 @@ export default function LokalePage() {
   );
 
   const [homes, setHomes] = useState(fallbackHomes);
-
   const [selectedId, setSelectedId] = useState(null);
-
   const [openCardId, setOpenCardId] = useState(null);
 
   const selectedHome =
