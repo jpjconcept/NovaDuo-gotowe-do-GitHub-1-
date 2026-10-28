@@ -261,6 +261,28 @@ function getCardPath(id) {
   return `/karty-lokali/lokal-${id.replace("/", "-")}.png`;
 }
 
+function trackLocalView(id, source = "card") {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  if (
+    window.localStorage.getItem("novaduo-analytics-consent") !== "granted"
+  ) {
+    return;
+  }
+
+  if (typeof window.gtag !== "function") {
+    return;
+  }
+
+  window.gtag("event", "view_lokal", {
+    lokal_id: id,
+    view_source: source,
+    page_path: window.location.pathname,
+  });
+}
+
 export default function LokalePage() {
   const fallbackHomes = useMemo(
     () =>
@@ -342,6 +364,7 @@ export default function LokalePage() {
 
     setSelectedId(id);
     setOpenCardId(id);
+    trackLocalView(id, "open_card");
   }
 
   function closeCard() {
@@ -369,6 +392,7 @@ export default function LokalePage() {
 
     setOpenCardId(nextHome.id);
     setSelectedId(nextHome.id);
+    trackLocalView(nextHome.id, "modal_navigation");
   }
 
   useEffect(() => {
