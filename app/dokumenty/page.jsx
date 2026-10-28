@@ -25,22 +25,22 @@ const unitCards = [
   {
     id: "58/1",
     task: "Zadanie nr 1",
-    href: "/karty-lokali/lokal-58-1.png",
+    href: "/karty-lokali/lokal-58-3.png",
   },
   {
     id: "58/3",
     task: "Zadanie nr 1",
-    href: "/karty-lokali/lokal-58-3.png",
+    href: "/karty-lokali/lokal-58-1.png",
   },
   {
     id: "58/5",
     task: "Zadanie nr 1",
-    href: "/karty-lokali/lokal-58-5.png",
+    href: "/karty-lokali/lokal-58-7.png",
   },
   {
     id: "58/7",
     task: "Zadanie nr 1",
-    href: "/karty-lokali/lokal-58-7.png",
+    href: "/karty-lokali/lokal-58-5.png",
   },
   {
     id: "58/2",
@@ -67,7 +67,6 @@ const unitCards = [
 export default function DokumentyPage() {
   return (
     <main className="min-h-screen bg-[#f6f3ec] text-[#1f241f]">
-      {/* WSPÓLNE MENU */}
       <SiteHeader />
 
       {/* HERO */}
@@ -142,7 +141,6 @@ export default function DokumentyPage() {
         </div>
 
         <div className="mt-12 grid gap-6 lg:grid-cols-2">
-          {/* ZADANIE 1 */}
           <TrackedDocumentLink
             href="/prospekt-novaduo-zadanie-1-do-publikacji.pdf"
             documentName="Prospekt NovaDuo – Zadanie nr 1"
@@ -182,7 +180,6 @@ export default function DokumentyPage() {
             </span>
           </TrackedDocumentLink>
 
-          {/* ZADANIE 2 */}
           <TrackedDocumentLink
             href="/prospekt-novaduo-zadanie-2-do-publikacji.pdf"
             documentName="Prospekt NovaDuo – Zadanie nr 2"
@@ -316,7 +313,6 @@ export default function DokumentyPage() {
         </div>
 
         <div className="mt-12 grid gap-5 md:grid-cols-3">
-          {/* LOKALE */}
           <a
             href="/lokale"
             className="group rounded-[2rem] bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
@@ -338,7 +334,6 @@ export default function DokumentyPage() {
             </span>
           </a>
 
-          {/* HISTORIA */}
           <a
             href="/historia-cen"
             className="group rounded-[2rem] bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
@@ -360,7 +355,6 @@ export default function DokumentyPage() {
             </span>
           </a>
 
-          {/* CSV */}
           <TrackedDocumentLink
             href="/dane/novaduo-ceny.csv"
             documentName="Aktualne ceny NovaDuo – CSV"
