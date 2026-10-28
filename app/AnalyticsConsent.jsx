@@ -35,6 +35,47 @@ function sendAnalyticsEvent(eventName, parameters = {}) {
   });
 }
 
+function getDocumentInfo(href) {
+  try {
+    const url = new URL(href, window.location.origin);
+    const pathname = url.pathname;
+    const lowerPath = pathname.toLowerCase();
+
+    const supportedExtensions = [".pdf", ".png", ".csv"];
+
+    const extension = supportedExtensions.find((item) =>
+      lowerPath.endsWith(item)
+    );
+
+    if (!extension) {
+      return null;
+    }
+
+    const fileName = decodeURIComponent(
+      pathname.split("/").pop() || pathname
+    );
+
+    let category = "inny";
+
+    if (lowerPath.includes("prospekt")) {
+      category = "prospekt";
+    } else if (lowerPath.includes("/karty-lokali/")) {
+      category = "karta_lokalu";
+    } else if (lowerPath.endsWith(".csv")) {
+      category = "dane_csv";
+    }
+
+    return {
+      documentName: fileName,
+      documentType: extension.replace(".", ""),
+      documentCategory: category,
+      documentPath: pathname,
+    };
+  } catch {
+    return null;
+  }
+}
+
 export default function AnalyticsConsent() {
   const [consent, setConsent] = useState(undefined);
   const [showPanel, setShowPanel] = useState(false);
@@ -62,7 +103,13 @@ export default function AnalyticsConsent() {
     if (consent !== "granted") return;
 
     const handleClick = (event) => {
-      const link = event.target.closest("a");
+      const target = event.target;
+
+      if (!(target instanceof Element)) {
+        return;
+      }
+
+      const link = target.closest("a");
 
       if (!link) return;
 
@@ -83,6 +130,20 @@ export default function AnalyticsConsent() {
       if (href.startsWith("mailto:")) {
         sendAnalyticsEvent("click_email", {
           contact_method: "email",
+        });
+
+        return;
+      }
+
+      // Otwarcie dokumentu
+      const documentInfo = getDocumentInfo(href);
+
+      if (documentInfo) {
+        sendAnalyticsEvent("open_document", {
+          document_name: documentInfo.documentName,
+          document_type: documentInfo.documentType,
+          document_category: documentInfo.documentCategory,
+          document_path: documentInfo.documentPath,
         });
 
         return;
