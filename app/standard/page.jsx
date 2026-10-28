@@ -6,7 +6,6 @@ import {
   Car,
   CheckCircle2,
   Droplets,
-  Home,
   KeyRound,
   Ruler,
   ShieldCheck,
@@ -60,11 +59,6 @@ export default function StandardPage() {
 
   const additionalStandard = [
     {
-      icon: KeyRound,
-      title: "Indywidualny wideofon",
-      text: "Każdy lokal otrzymuje własny wideofon umożliwiający obsługę wejścia przy bramie.",
-    },
-    {
       icon: Car,
       title: "Garaż w bryle budynku",
       text: "Każdy lokal posiada własny garaż z segmentową bramą garażową, napędem elektrycznym i sterowaniem pilotem.",
@@ -78,16 +72,6 @@ export default function StandardPage() {
       icon: Droplets,
       title: "Szambo 10 m³",
       text: "Każdy lokal posiada własny zbiornik bezodpływowy o pojemności 10 m³.",
-    },
-    {
-      icon: ShieldCheck,
-      title: "Zamknięte osiedle",
-      text: "Teren inwestycji będzie ogrodzony, a brama wjazdowa wyposażona w napęd i sterowanie pilotem.",
-    },
-    {
-      icon: Zap,
-      title: "Oświetlenie części wspólnej",
-      text: "Droga wewnętrzna i części wspólne inwestycji posiadają własne oświetlenie.",
     },
   ];
 
@@ -324,6 +308,7 @@ export default function StandardPage() {
             </div>
           </div>
 
+          {/* AKUSTYKA */}
           <div className="mt-12 grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
             <div>
               <div className="text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/55">
@@ -380,38 +365,114 @@ export default function StandardPage() {
             </div>
           </div>
 
+          {/* PREMIUM */}
           <div className="mt-12 rounded-[2rem] border border-black/5 bg-white p-8 shadow-sm md:p-10">
-            <div className="grid gap-7 lg:grid-cols-[auto_1fr] lg:items-start">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#e4e6d7]">
-                <Home className="h-7 w-7 text-[#1f3d2b]" />
-              </div>
+            <div>
+              <h3 className="text-3xl font-semibold tracking-tight md:text-4xl">
+                Premium to nie dodatki. To sposób budowania.
+              </h3>
 
-              <div>
-                <h3 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                  Premium to nie dodatki. To sposób budowania.
-                </h3>
+              <p className="mt-5 max-w-4xl leading-8 text-black/65">
+                Dla nas standard premium nie oznacza wyłącznie efektownych
+                elementów widocznych na pierwszy rzut oka. To przede wszystkim
+                jakość konstrukcji, izolacji i instalacji, które wpływają
+                na komfort użytkowania przez wiele lat.
+              </p>
 
-                <p className="mt-5 max-w-4xl leading-8 text-black/65">
-                  Dla nas standard premium nie oznacza wyłącznie efektownych
-                  elementów widocznych na pierwszy rzut oka. To przede wszystkim
-                  jakość konstrukcji, izolacji i instalacji, które wpływają
-                  na komfort użytkowania przez wiele lat.
-                </p>
-
-                <p className="mt-4 max-w-4xl leading-8 text-black/65">
-                  Dlatego w standardzie NovaDuo znajdują się również
-                  <strong className="font-semibold text-[#1f241f]">
-                    {" "}pompa ciepła, rekuperacja, ogrzewanie podłogowe,
-                    przygotowanie pod klimatyzację, instalację alarmową
-                    i monitoring
-                  </strong>,
-                  a każdy lokal posiada własny garaż oraz indywidualne
-                  opomiarowanie.
-                </p>
-              </div>
+              <p className="mt-4 max-w-4xl leading-8 text-black/65">
+                Dlatego w standardzie NovaDuo znajdują się również
+                <strong className="font-semibold text-[#1f241f]">
+                  {" "}pompa ciepła, rekuperacja, ogrzewanie podłogowe,
+                  przygotowanie pod klimatyzację, instalację alarmową
+                  i monitoring
+                </strong>.
+              </p>
             </div>
           </div>
 
+          {/* OSIEDLE */}
+          <div className="mt-12">
+            <div className="max-w-4xl">
+              <div className="text-sm uppercase tracking-[0.28em] text-[#1f3d2b]/55">
+                Osiedle i bezpieczeństwo
+              </div>
+
+              <h3 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
+                Komfort zaczyna się już przy wjeździe na osiedle.
+              </h3>
+
+              <p className="mt-5 max-w-3xl text-lg leading-8 text-black/65">
+                NovaDuo to nie tylko standard samego budynku.
+                Dbamy również o uporządkowaną przestrzeń wspólną,
+                bezpieczeństwo i codzienną wygodę mieszkańców.
+              </p>
+            </div>
+
+            <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+              <div className="rounded-[2rem] bg-[#1f3d2b] p-7 text-white">
+                <ShieldCheck className="h-8 w-8 text-[#e7c46a]" />
+
+                <h4 className="mt-5 text-xl font-semibold">
+                  Ogrodzone osiedle
+                </h4>
+
+                <p className="mt-3 text-sm leading-7 text-white/70">
+                  Teren inwestycji będzie ogrodzony, tworząc uporządkowaną
+                  i wyraźnie wydzieloną przestrzeń dla mieszkańców NovaDuo.
+                </p>
+              </div>
+
+              <div className="rounded-[2rem] bg-[#1f3d2b] p-7 text-white">
+                <KeyRound className="h-8 w-8 text-[#e7c46a]" />
+
+                <h4 className="mt-5 text-xl font-semibold">
+                  Brama wjazdowa na pilota
+                </h4>
+
+                <p className="mt-3 text-sm leading-7 text-white/70">
+                  Wjazd na teren inwestycji będzie odbywał się przez
+                  automatyczną bramę wyposażoną w napęd i sterowanie pilotem.
+                </p>
+              </div>
+
+              <div className="rounded-[2rem] bg-[#1f3d2b] p-7 text-white">
+                <Zap className="h-8 w-8 text-[#e7c46a]" />
+
+                <h4 className="mt-5 text-xl font-semibold">
+                  Własne oświetlenie
+                </h4>
+
+                <p className="mt-3 text-sm leading-7 text-white/70">
+                  Droga wewnętrzna oraz części wspólne inwestycji
+                  będą posiadały własne oświetlenie zwiększające komfort
+                  korzystania z osiedla po zmroku.
+                </p>
+              </div>
+
+              <div className="rounded-[2rem] bg-[#1f3d2b] p-7 text-white">
+                <KeyRound className="h-8 w-8 text-[#e7c46a]" />
+
+                <h4 className="mt-5 text-xl font-semibold">
+                  Indywidualny wideofon
+                </h4>
+
+                <p className="mt-3 text-sm leading-7 text-white/70">
+                  Każdy lokal otrzyma własny wideofon umożliwiający
+                  obsługę wejścia przy bramie bezpośrednio z domu.
+                </p>
+              </div>
+            </div>
+
+            <p className="mt-8 max-w-4xl text-lg leading-8 text-black/65">
+              To kolejne elementy pokazujące nasze podejście do NovaDuo:
+              <strong className="font-semibold text-[#1f241f]">
+                {" "}premium to nie pojedynczy dodatek, ale suma przemyślanych
+                rozwiązań tworzących wygodny dom i uporządkowane otoczenie.
+              </strong>
+            </p>
+          </div>
+
+          {/* PODSUMOWANIE */}
           <div className="mt-12 overflow-hidden rounded-[2rem] bg-[#1f3d2b] p-8 text-white md:p-10">
             <div className="grid gap-8 lg:grid-cols-[auto_1fr] lg:items-center">
               <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10">
@@ -425,10 +486,9 @@ export default function StandardPage() {
 
                 <p className="mt-4 max-w-4xl leading-8 text-white/70">
                   Ytong, 18 cm grafitowego ocieplenia, Silka pomiędzy
-                  lokalami, żelbetowe stropy, pompa ciepła, rekuperacja
-                  i ogrzewanie podłogowe tworzą spójny standard NovaDuo.
-                  To suma rozwiązań przygotowanych z myślą o codziennym
-                  komforcie mieszkańców i jakości na lata.
+                  lokalami, żelbetowe stropy, pompa ciepła, rekuperacja,
+                  ogrzewanie podłogowe oraz przemyślana infrastruktura
+                  osiedla tworzą spójny standard NovaDuo.
                 </p>
 
                 <p className="mt-5 text-xl font-semibold text-[#e7c46a]">
@@ -441,7 +501,7 @@ export default function StandardPage() {
         </div>
       </section>
 
-      {/* DODATKOWY STANDARD */}
+      {/* CODZIENNA WYGODA */}
       <section className="py-20">
         <div className="mx-auto max-w-7xl px-6">
           <div className="max-w-4xl">
@@ -454,7 +514,7 @@ export default function StandardPage() {
             </h2>
           </div>
 
-          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 grid gap-5 md:grid-cols-3">
             {additionalStandard.map((item) => {
               const Icon = item.icon;
 
@@ -529,28 +589,28 @@ export default function StandardPage() {
               </div>
 
               <div className="rounded-[2rem] bg-white p-7 shadow-sm">
-                <KeyRound className="h-7 w-7 text-[#1f3d2b]" />
-
-                <h3 className="mt-5 text-xl font-semibold">
-                  Wideofon
-                </h3>
-
-                <p className="mt-3 text-sm leading-7 text-black/60">
-                  Indywidualny wideofon dla każdego lokalu
-                  przy bramie wjazdowej.
-                </p>
-              </div>
-
-              <div className="rounded-[2rem] bg-white p-7 shadow-sm">
                 <Wind className="h-7 w-7 text-[#1f3d2b]" />
 
                 <h3 className="mt-5 text-xl font-semibold">
-                  3 klimatyzatory
+                  Przygotowanie pod klimatyzację
                 </h3>
 
                 <p className="mt-3 text-sm leading-7 text-black/60">
                   Przygotowanie instalacji pod późniejszy
                   montaż trzech jednostek klimatyzacji.
+                </p>
+              </div>
+
+              <div className="rounded-[2rem] bg-white p-7 shadow-sm">
+                <Zap className="h-7 w-7 text-[#1f3d2b]" />
+
+                <h3 className="mt-5 text-xl font-semibold">
+                  Instalacje wykonane na etapie budowy
+                </h3>
+
+                <p className="mt-3 text-sm leading-7 text-black/60">
+                  Najważniejsze przewody przygotowujemy przed wykończeniem,
+                  ograniczając potrzebę późniejszej ingerencji w ściany.
                 </p>
               </div>
             </div>
@@ -573,8 +633,9 @@ export default function StandardPage() {
 
               <p className="mt-4 max-w-2xl text-white/65">
                 Ytong, Silka, 18 cm grafitowego ocieplenia, pompa ciepła,
-                rekuperator, garaż oraz przygotowane instalacje tworzą standard
-                NovaDuo — nie listę kosztownych dopłat po odbiorze.
+                rekuperator, garaż, indywidualny wideofon, ogrodzone osiedle
+                i przygotowane instalacje tworzą standard NovaDuo —
+                nie listę kosztownych dopłat po odbiorze.
               </p>
             </div>
 
