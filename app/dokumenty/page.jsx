@@ -25,22 +25,22 @@ const unitCards = [
   {
     id: "58/1",
     task: "Zadanie nr 1",
-    href: "/karty-lokali/lokal-58-3.png",
+    href: "/karty-lokali/lokal-58-1.png",
   },
   {
     id: "58/3",
     task: "Zadanie nr 1",
-    href: "/karty-lokali/lokal-58-1.png",
+    href: "/karty-lokali/lokal-58-3.png",
   },
   {
     id: "58/5",
     task: "Zadanie nr 1",
-    href: "/karty-lokali/lokal-58-7.png",
+    href: "/karty-lokali/lokal-58-5.png",
   },
   {
     id: "58/7",
     task: "Zadanie nr 1",
-    href: "/karty-lokali/lokal-58-5.png",
+    href: "/karty-lokali/lokal-58-7.png",
   },
   {
     id: "58/2",
