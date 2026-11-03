@@ -797,6 +797,60 @@ export default function Page() {
               <br />
               REGON: 540927078
             </div>
+
+            {/* WIZYTÓWKA GOOGLE */}
+            <div className="mt-6 max-w-md rounded-[1.5rem] border border-[#1f3d2b]/10 bg-white p-6 shadow-sm">
+              <div className="flex items-start gap-4">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#e4e6d7] text-[#1f3d2b]">
+                  <MapPin className="h-5 w-5" />
+                </div>
+
+                <div>
+                  <div className="text-xs uppercase tracking-[0.18em] text-black/45">
+                    NovaDuo w Google
+                  </div>
+
+                  <div className="mt-1 font-semibold text-[#1f241f]">
+                    Profil inwestycji w Mapach Google
+                  </div>
+
+                  <p className="mt-2 text-sm leading-6 text-black/55">
+                    Sprawdź lokalizację NovaDuo, dane kontaktowe i wyznacz trasę
+                    do inwestycji w Pogroszewie.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=NovaDuo%20Pogroszew"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() =>
+                    trackEvent("click_google_profile", {
+                      location: "footer",
+                    })
+                  }
+                  className="inline-flex h-11 items-center justify-center rounded-full bg-[#1f3d2b] px-5 text-center text-sm font-medium text-white transition hover:bg-[#152b1e]"
+                >
+                  Zobacz profil w Google
+                </a>
+
+                <a
+                  href="https://www.google.com/maps/dir/?api=1&destination=Nowowiejska+58%2C+Pogroszew"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() =>
+                    trackEvent("click_google_directions", {
+                      location: "footer",
+                    })
+                  }
+                  className="inline-flex h-11 items-center justify-center rounded-full border border-[#1f3d2b]/20 bg-white px-5 text-center text-sm font-medium text-[#1f3d2b] transition hover:bg-[#f6f3ec]"
+                >
+                  Wyznacz trasę
+                </a>
+              </div>
+            </div>
           </div>
 
           <div className="md:text-right">
