@@ -90,20 +90,14 @@ export default function StandardPage() {
               Standard NovaDuo
             </div>
 
-            <h1 className="text-4xl font-semibold leading-tight tracking-tight md:text-6xl">
-              Więcej w standardzie.
-              <br />
-              <span className="text-[#1f3d2b]">
-                Mniej wydatków po odbiorze.
-              </span>
-            </h1>
+           <h1 className="text-4xl font-semibold leading-tight tracking-tight md:text-6xl">
+  Podwyższony standard NovaDuo.
+</h1>
 
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-black/65">
-              W NovaDuo wiele rozwiązań, które w innych inwestycjach
-              bywają dodatkiem lub pozostają po stronie kupującego,
-              przygotowujemy już na etapie budowy.
-            </p>
-
+<p className="mt-7 max-w-2xl text-lg leading-8 text-black/65">
+  Elementy, za które w innych inwestycjach trzeba dopłacać,
+  tutaj są częścią domu.
+</p>
             <p className="mt-4 max-w-2xl text-xl font-semibold leading-8 text-[#1f3d2b]">
               Pompa ciepła i rekuperator są w cenie lokalu.
             </p>
