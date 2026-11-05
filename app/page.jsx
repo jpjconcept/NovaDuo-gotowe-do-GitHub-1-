@@ -491,15 +491,14 @@ export default function Page() {
               Standard NovaDuo
             </div>
 
-            <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
-              Ważne elementy są już w cenie.
-            </h2>
+          <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
+  Podwyższony standard NovaDuo.
+</h2>
 
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-black/65">
-              Pompa ciepła i rekuperator nie są dodatkowymi opcjami.
-              Otrzymujesz je razem z lokalem — bez dodatkowej dopłaty
-              za urządzenia.
-            </p>
+<p className="mt-5 max-w-3xl text-lg leading-8 text-black/65">
+  Elementy, za które w innych inwestycjach trzeba dopłacać,
+  tutaj są częścią domu.
+</p>
           </div>
 
           <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
