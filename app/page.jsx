@@ -166,33 +166,6 @@ export default function Page() {
 
   return (
     <main className="min-h-screen bg-[#f6f3ec] text-[#1f241f]">
-      {/* GÓRNY PASEK PROMOCJI */}
-      <a
-        href="/promocja"
-        onClick={() =>
-          trackEvent("click_promotion", {
-            location: "top_banner",
-          })
-        }
-        className="block bg-[#10251b] px-4 py-3 text-center text-sm font-medium text-white transition hover:bg-[#152b1e]"
-      >
-        <span className="font-semibold text-[#e7c46a]">
-          🎁 PROMOCJA DO 31.12.2026
-        </span>
-
-        <span className="mx-2 hidden text-white/40 sm:inline">
-          •
-        </span>
-
-        <span className="block sm:inline">
-          Ford Puma z automatem w ramach zakupu NovaDuo
-        </span>
-
-        <span className="ml-2 font-semibold text-[#e7c46a]">
-          SPRAWDŹ →
-        </span>
-      </a>
-
       {/* WSPÓLNE MENU */}
       <SiteHeader />
 
@@ -491,14 +464,14 @@ export default function Page() {
               Standard NovaDuo
             </div>
 
-          <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
-  Podwyższony standard NovaDuo.
-</h2>
+            <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
+              Podwyższony standard NovaDuo.
+            </h2>
 
-<p className="mt-5 max-w-3xl text-lg leading-8 text-black/65">
-  Elementy, za które w innych inwestycjach trzeba dopłacać,
-  tutaj są częścią domu.
-</p>
+            <p className="mt-5 max-w-3xl text-lg leading-8 text-black/65">
+              Elementy, za które w innych inwestycjach trzeba dopłacać,
+              tutaj są częścią domu.
+            </p>
           </div>
 
           <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
@@ -797,7 +770,6 @@ export default function Page() {
               REGON: 540927078
             </div>
 
-            {/* WIZYTÓWKA GOOGLE */}
             <div className="mt-6 max-w-md rounded-[1.5rem] border border-[#1f3d2b]/10 bg-white p-6 shadow-sm">
               <div className="flex items-start gap-4">
                 <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#e4e6d7] text-[#1f3d2b]">
@@ -912,18 +884,6 @@ export default function Page() {
                 className="hover:text-[#1f3d2b]"
               >
                 Historia cen
-              </a>
-
-              <a
-                href="/promocja"
-                onClick={() =>
-                  trackEvent("click_promotion", {
-                    location: "footer",
-                  })
-                }
-                className="font-semibold text-[#b07f24]"
-              >
-                Promocja
               </a>
             </div>
 
