@@ -1,6 +1,7 @@
+
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import SiteHeader from "../../components/SiteHeader";
 
 import {
@@ -9,6 +10,9 @@ import {
   Building2,
   CheckCircle2,
   MapPin,
+  Minus,
+  Plus,
+  RotateCcw,
   Ruler,
   Trees,
   X,
@@ -281,6 +285,303 @@ function trackLocalView(id, source = "card") {
     view_source: source,
     page_path: window.location.pathname,
   });
+}
+
+// Pelnoekranowy podglad karty z powiekszaniem i przesuwaniem.
+function FullscreenCardViewer({
+  home,
+  onClose,
+  onPrevious,
+  onNext,
+  showNavigation,
+}) {
+  const viewportRef = useRef(null);
+  const dragRef = useRef(null);
+  const [zoom, setZoom] = useState(1);
+  const [dragging, setDragging] = useState(false);
+  const [imageSize, setImageSize] = useState({
+    width: 1536,
+    height: 1024,
+  });
+  const [viewportSize, setViewportSize] = useState({
+    width: 1,
+    height: 1,
+  });
+
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, []);
+
+  useEffect(() => {
+    const element = viewportRef.current;
+    if (!element) return;
+
+    const updateViewport = () => {
+      setViewportSize({
+        width: Math.max(1, element.clientWidth),
+        height: Math.max(1, element.clientHeight),
+      });
+    };
+
+    updateViewport();
+
+    const observer = new ResizeObserver(updateViewport);
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
+
+  const fitScale = Math.min(
+    viewportSize.width / imageSize.width,
+    viewportSize.height / imageSize.height
+  );
+
+  const pictureWidth = Math.max(
+    1,
+    imageSize.width * fitScale * zoom
+  );
+
+  const pictureHeight = Math.max(
+    1,
+    imageSize.height * fitScale * zoom
+  );
+
+  useEffect(() => {
+    const element = viewportRef.current;
+    if (!element) return;
+
+    const frame = requestAnimationFrame(() => {
+      element.scrollLeft =
+        (element.scrollWidth - element.clientWidth) / 2;
+      element.scrollTop =
+        (element.scrollHeight - element.clientHeight) / 2;
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, [zoom, pictureWidth, pictureHeight]);
+
+  function changeZoom(amount) {
+    setZoom((current) =>
+      Math.min(
+        4,
+        Math.max(
+          1,
+          Math.round((current + amount) * 100) / 100
+        )
+      )
+    );
+  }
+
+  function startDrag(event) {
+    if (
+      zoom <= 1 ||
+      event.pointerType !== "mouse" ||
+      event.button !== 0
+    ) {
+      return;
+    }
+
+    const element = event.currentTarget;
+
+    dragRef.current = {
+      x: event.clientX,
+      y: event.clientY,
+      left: element.scrollLeft,
+      top: element.scrollTop,
+    };
+
+    element.setPointerCapture(event.pointerId);
+    setDragging(true);
+  }
+
+  function moveDrag(event) {
+    if (!dragRef.current) return;
+
+    const element = event.currentTarget;
+
+    element.scrollLeft =
+      dragRef.current.left -
+      (event.clientX - dragRef.current.x);
+
+    element.scrollTop =
+      dragRef.current.top -
+      (event.clientY - dragRef.current.y);
+  }
+
+  function stopDrag(event) {
+    dragRef.current = null;
+    setDragging(false);
+
+    if (
+      event.currentTarget.hasPointerCapture(
+        event.pointerId
+      )
+    ) {
+      event.currentTarget.releasePointerCapture(
+        event.pointerId
+      );
+    }
+  }
+
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Karta lokalu ${home.id}`}
+      className="fixed inset-0 z-[100] flex h-[100dvh] w-screen flex-col bg-white"
+    >
+      <div className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-b border-black/10 bg-white px-3 py-3 sm:px-6">
+        <div className="min-w-0">
+          <div className="text-xs uppercase tracking-[0.18em] text-black/40">
+            NovaDuo – karta lokalu
+          </div>
+
+          <div className="text-lg font-semibold text-[#1f3d2b] sm:text-2xl">
+            Lokal {home.id}
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => changeZoom(-0.5)}
+            disabled={zoom <= 1}
+            aria-label="Pomniejsz kartę"
+            title="Pomniejsz"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-[#f6f3ec] text-[#1f3d2b] disabled:opacity-35"
+          >
+            <Minus className="h-5 w-5" />
+          </button>
+
+          <span className="w-12 text-center text-sm font-semibold text-[#1f3d2b]">
+            {Math.round(zoom * 100)}%
+          </span>
+
+          <button
+            type="button"
+            onClick={() => changeZoom(0.5)}
+            disabled={zoom >= 4}
+            aria-label="Powiększ kartę"
+            title="Powiększ"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-[#f6f3ec] text-[#1f3d2b] disabled:opacity-35"
+          >
+            <Plus className="h-5 w-5" />
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setZoom(1)}
+            aria-label="Dopasuj kartę do ekranu"
+            title="Dopasuj do ekranu"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-[#f6f3ec] text-[#1f3d2b]"
+          >
+            <RotateCcw className="h-5 w-5" />
+          </button>
+
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Zamknij kartę lokalu"
+            title="Zamknij"
+            className="ml-1 flex h-10 w-10 items-center justify-center rounded-full bg-[#1f3d2b] text-white"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+      </div>
+
+      <div className="relative min-h-0 flex-1 bg-[#f3f2ed]">
+        <div
+          ref={viewportRef}
+          className="absolute inset-0 overflow-auto overscroll-contain"
+          style={{
+            cursor:
+              zoom > 1
+                ? dragging
+                  ? "grabbing"
+                  : "grab"
+                : "default",
+          }}
+          onPointerDown={startDrag}
+          onPointerMove={moveDrag}
+          onPointerUp={stopDrag}
+          onPointerCancel={stopDrag}
+          onDoubleClick={() =>
+            setZoom((current) =>
+              current === 1 ? 2 : 1
+            )
+          }
+        >
+          <div
+            className="flex items-center justify-center"
+            style={{
+              width: Math.max(
+                viewportSize.width,
+                pictureWidth
+              ),
+              height: Math.max(
+                viewportSize.height,
+                pictureHeight
+              ),
+            }}
+          >
+            <img
+              src={getCardPath(home.id)}
+              alt={`Karta lokalu ${home.id}`}
+              draggable={false}
+              onLoad={(event) => {
+                const image = event.currentTarget;
+
+                setImageSize({
+                  width: image.naturalWidth || 1536,
+                  height: image.naturalHeight || 1024,
+                });
+              }}
+              style={{
+                display: "block",
+                width: pictureWidth,
+                height: pictureHeight,
+                maxWidth: "none",
+                userSelect: "none",
+              }}
+            />
+          </div>
+        </div>
+
+        {showNavigation && (
+          <>
+            <button
+              type="button"
+              onClick={onPrevious}
+              aria-label="Poprzedni lokal"
+              className="absolute left-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-[#1f3d2b] shadow-lg sm:left-6"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </button>
+
+            <button
+              type="button"
+              onClick={onNext}
+              aria-label="Następny lokal"
+              className="absolute right-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-[#1f3d2b] shadow-lg sm:right-6"
+            >
+              <ArrowRight className="h-5 w-5" />
+            </button>
+          </>
+        )}
+      </div>
+
+      <div className="shrink-0 bg-white px-3 py-2 text-center text-xs text-black/50">
+        Powiększ przyciskami + i −. Przesuwaj powiększoną
+        kartę palcem lub myszką.
+      </div>
+    </div>
+  );
 }
 
 export default function LokalePage() {
@@ -817,71 +1118,16 @@ export default function LokalePage() {
         </div>
       </section>
 
-      {/* MODAL KARTY LOKALU */}
+      {/* PEŁNOEKRANOWY PODGLĄD KARTY LOKALU */}
       {openCardHome && (
-        <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm"
-          onMouseDown={(event) => {
-            if (event.target === event.currentTarget) {
-              closeCard();
-            }
-          }}
-        >
-          <div className="relative flex max-h-[94vh] w-full max-w-6xl flex-col overflow-hidden rounded-[2rem] bg-white shadow-2xl">
-            {/* GÓRNY PASEK */}
-            <div className="flex items-center justify-between gap-4 border-b border-black/10 px-5 py-4">
-              <div>
-                <div className="text-xs uppercase tracking-[0.18em] text-black/40">
-                  Karta lokalu
-                </div>
-
-                <div className="mt-1 text-xl font-semibold">
-                  Lokal {openCardHome.id}
-                </div>
-              </div>
-
-              <button
-                type="button"
-                onClick={closeCard}
-                aria-label="Zamknij kartę lokalu"
-                className="flex h-11 w-11 items-center justify-center rounded-full bg-[#f6f3ec] text-[#1f3d2b] transition hover:bg-[#e4e6d7]"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-
-            {/* OBRAZ */}
-            <div className="relative min-h-0 flex-1 overflow-auto bg-[#f3f2ed] p-4 md:p-6">
-              <img
-                src={getCardPath(openCardHome.id)}
-                alt={`Karta lokalu ${openCardHome.id}`}
-                className="mx-auto max-h-[75vh] w-auto max-w-full object-contain"
-              />
-
-              {availableForModal.length > 1 && (
-                <>
-                  <button
-                    type="button"
-                    onClick={() => moveCard(-1)}
-                    aria-label="Poprzedni lokal"
-                    className="fixed left-3 top-1/2 z-[110] flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-[#1f3d2b] shadow-xl transition hover:bg-white md:left-8"
-                  >
-                    <ArrowLeft className="h-5 w-5" />
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => moveCard(1)}
-                    aria-label="Następny lokal"
-                    className="fixed right-3 top-1/2 z-[110] flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-[#1f3d2b] shadow-xl transition hover:bg-white md:right-8"
-                  >
-                    <ArrowRight className="h-5 w-5" />
-                  </button>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
+        <FullscreenCardViewer
+          key={openCardHome.id}
+          home={openCardHome}
+          onClose={closeCard}
+          onPrevious={() => moveCard(-1)}
+          onNext={() => moveCard(1)}
+          showNavigation={availableForModal.length > 1}
+        />
       )}
 
       {/* STOPKA */}
