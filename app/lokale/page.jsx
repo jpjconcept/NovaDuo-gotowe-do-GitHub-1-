@@ -31,65 +31,71 @@ const DISPLAY_ORDER = [
   "58/8",
 ];
 
+// Pozycje lokali na nowej wizualizacji NovaDuo.
+// Procenty zapewniają dopasowanie przy zmianie rozmiaru ekranu.
+
 const HOTSPOTS = [
   {
     id: "58/2",
-    left: "29.5%",
-    top: "12%",
-    width: "10.3%",
-    height: "15%",
+    left: "27.8%",
+    top: "22%",
+    width: "8.9%",
+    height: "12%",
   },
   {
     id: "58/4",
-    left: "39.8%",
-    top: "12%",
-    width: "10.3%",
-    height: "15%",
+    left: "36.8%",
+    top: "22%",
+    width: "8.9%",
+    height: "12%",
   },
   {
     id: "58/6",
-    left: "50.1%",
-    top: "12%",
-    width: "10.3%",
-    height: "15%",
+    left: "45.8%",
+    top: "22%",
+    width: "8.9%",
+    height: "12%",
   },
   {
     id: "58/8",
-    left: "60.4%",
-    top: "12%",
-    width: "10.3%",
-    height: "15%",
+    left: "54.3%",
+    top: "22%",
+    width: "8.9%",
+    height: "12%",
   },
   {
     id: "58/1",
-    left: "29.5%",
-    top: "68.2%",
-    width: "10.3%",
-    height: "15%",
+    left: "27.8%",
+    top: "65.5%",
+    width: "8.9%",
+    height: "12%",
   },
   {
     id: "58/3",
-    left: "39.8%",
-    top: "68.2%",
-    width: "10.3%",
-    height: "15%",
+    left: "36.8%",
+    top: "65.5%",
+    width: "8.9%",
+    height: "12%",
   },
   {
     id: "58/5",
-    left: "50.1%",
-    top: "68.2%",
-    width: "10.3%",
-    height: "15%",
+    left: "45.8%",
+    top: "65.5%",
+    width: "8.9%",
+    height: "12%",
   },
   {
     id: "58/7",
-    left: "60.4%",
-    top: "68.2%",
-    width: "10.3%",
-    height: "15%",
+    left: "54.3%",
+    top: "65.5%",
+    width: "8.9%",
+    height: "12%",
   },
 ];
 
+
+// Dane awaryjne, gdy baza Supabase jest niedostępna.
+// Podczas normalnej pracy wyświetlane są dane z bazy.
 const FALLBACK_UNITS = [
   {
     id: "58/1",
@@ -134,7 +140,7 @@ const FALLBACK_UNITS = [
     usable_area: 118.48,
     garden_area: 408,
     plot_no: "24/8",
-    status: "Dostępny",
+    status: "Rezerwacja",
   },
   {
     id: "58/4",
@@ -287,7 +293,7 @@ function trackLocalView(id, source = "card") {
   });
 }
 
-// Pelnoekranowy podglad karty z powiekszaniem i przesuwaniem.
+// Pełnoekranowa karta lokalu z możliwością powiększania.
 function FullscreenCardViewer({
   home,
   onClose,
@@ -297,12 +303,15 @@ function FullscreenCardViewer({
 }) {
   const viewportRef = useRef(null);
   const dragRef = useRef(null);
+
   const [zoom, setZoom] = useState(1);
   const [dragging, setDragging] = useState(false);
+
   const [imageSize, setImageSize] = useState({
     width: 1536,
     height: 1024,
   });
+
   const [viewportSize, setViewportSize] = useState({
     width: 1,
     height: 1,
@@ -358,6 +367,7 @@ function FullscreenCardViewer({
     const frame = requestAnimationFrame(() => {
       element.scrollLeft =
         (element.scrollWidth - element.clientWidth) / 2;
+
       element.scrollTop =
         (element.scrollHeight - element.clientHeight) / 2;
     });
@@ -720,32 +730,31 @@ export default function LokalePage() {
     };
   }, [openCardId, homes]);
 
+  // Kolorowa ramka pojawia się po wskazaniu lokalu.
+  // Pozostałe obszary są przezroczyste.
   function getHotspotStyle(home, isSelected) {
     const type = getStatusType(home?.status);
 
-    if (type === "sold") {
-      return {
-        backgroundColor: isSelected
-          ? "rgba(185, 45, 45, 0.60)"
-          : "rgba(185, 45, 45, 0.42)",
-        borderColor: "#b92d2d",
-      };
-    }
+    const color =
+      type === "sold"
+        ? "#b92d2d"
+        : type === "reserved"
+          ? "#e1841c"
+          : "#2e7d32";
 
-    if (type === "reserved") {
-      return {
-        backgroundColor: isSelected
-          ? "rgba(225, 132, 28, 0.58)"
-          : "rgba(225, 132, 28, 0.34)",
-        borderColor: "#e1841c",
-      };
-    }
+    const background =
+      type === "sold"
+        ? "rgba(185,45,45,0.25)"
+        : type === "reserved"
+          ? "rgba(225,132,28,0.22)"
+          : "rgba(46,125,50,0.19)";
 
     return {
-      backgroundColor: isSelected
-        ? "rgba(46, 125, 50, 0.52)"
-        : "rgba(46, 125, 50, 0.26)",
-      borderColor: "#2e7d32",
+      backgroundColor: isSelected ? background : "transparent",
+      borderColor: isSelected ? color : "transparent",
+      boxShadow: isSelected
+        ? `inset 0 0 0 1px ${color}`
+        : "none",
     };
   }
 
@@ -807,7 +816,7 @@ export default function LokalePage() {
           <div className="overflow-hidden rounded-[2rem] border border-black/5 bg-white p-4 shadow-xl md:p-6">
             <div className="relative mx-auto w-full overflow-hidden rounded-[1.5rem]">
               <img
-                src="/images/novaduo_rezerwacje_v2.webp"
+                src="/images/novaduo-usytuowanie-2026.webp"
                 alt="Plan usytuowania lokali NovaDuo"
                 className="block h-auto w-full"
               />
@@ -830,7 +839,7 @@ export default function LokalePage() {
                     key={home.id}
                     type="button"
                     aria-label={`Lokal ${home.id} – ${home.status}`}
-                    disabled={sold}
+                    aria-disabled={sold}
                     onMouseEnter={() =>
                       setSelectedId(home.id)
                     }
@@ -951,7 +960,7 @@ export default function LokalePage() {
                       <Trees className="h-5 w-5 text-[#1f3d2b]" />
 
                       <div className="mt-3 text-xs uppercase tracking-[0.15em] text-black/40">
-                        Działka do wyłącznego użytkowania
+                        Powierzchnia działki
                       </div>
 
                       <div className="mt-2 text-xl font-semibold">
